@@ -10,7 +10,8 @@ public class User {
     private String role_id ;
     private String remark ;
     private Date last_date ;
-    
+    /**用于显示格式化的日期**/
+    private String parsedate ;
 
     public Integer getId() {
         return id;
@@ -68,6 +69,14 @@ public class User {
 
 	public void setRealname(String realname) {
 		this.realname = realname;
+	}
+
+	public String getParsedate() {
+		return parsedate;
+	}
+
+	public void setParsedate(String parsedate) {
+		this.parsedate = parsedate;
 	}
 
 }

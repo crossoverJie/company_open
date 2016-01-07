@@ -1,6 +1,7 @@
 package com.cn.hnust.controller;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
@@ -23,6 +24,9 @@ public class LoginController {
 	@RequestMapping("/check")
 	public void login(User user, Model model,HttpServletResponse response,HttpServletRequest request) throws IOException{
 		User u = userService.findByLogin(user) ;
+		Date date = new Date() ;
+		u.setLast_date(date) ;
+		userService.updateByPrimaryKeySelective(u) ;
 		if(u != null){
 			request.getSession().setAttribute("user", u) ;
 			response.getWriter().print("true") ;

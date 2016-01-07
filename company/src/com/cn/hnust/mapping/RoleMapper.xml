@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.IRoleDao" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Role" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="role_name" property="role_name" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, role_name, REMARK
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Role" >
+    insert into t_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       id,
+      <if test="role_name != null" >
+        role_name,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      SEQ_T_Role.Nextval,
+      <if test="role_name != null" >
+        #{role_name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Role" >
+    update t_role
+    <set >
+      <if test="role_name != null" >
+        #{role_name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="findAllCount" resultType="int">
+  	select count(*) from t_role
+  </select>
+  
+  <!-- 查询 -->
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+     <include refid="Base_Column_List" />
+    from t_role TB
+    where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="role_name != null" >
+      and role_name like '%${role_name}%' 
+    </if>
+    order by id desc
+  </select>
+  
+</mapper>

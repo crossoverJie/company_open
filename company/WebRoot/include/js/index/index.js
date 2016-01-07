@@ -33,3 +33,7 @@ function getMain(obj,url){
 		});
 	}
 }
+
+function loginOut(){
+	window.location="loginOut" ;
+}

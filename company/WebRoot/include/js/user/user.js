@@ -21,6 +21,11 @@ datagridD = [{
 	title : '备注',
 	width : 100,
 	align : 'center'
+},{
+	field : 'parsedate',
+	title : '最后登录日期',
+	width : 100,
+	align : 'center'
 }
 
 ];

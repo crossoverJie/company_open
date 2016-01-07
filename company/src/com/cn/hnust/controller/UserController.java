@@ -1,12 +1,13 @@
 package com.cn.hnust.controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +53,15 @@ public class UserController {
 	public void getUserList(@ModelAttribute User user,HttpServletResponse response ,int page,int rows){
 		response.setCharacterEncoding("utf-8");
 		Page<User> users = userService.findByParams(user,page,rows) ;
+		for(User u :users.getRows()){
+			Date date = u.getLast_date() ;
+			if(date != null){
+				SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd") ;
+				String strDate = sm.format(date) ;
+				u.setParsedate(strDate) ;
+			}
+		}
+		
 		String json = JSON.toJSONString(users) ;
 		try {
 			response.getWriter().print(json) ;
@@ -97,5 +107,11 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace() ;
 		}
+	}
+	@RequestMapping("/loginOut")
+	public String loginOut(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		HttpSession session = request.getSession() ;
+		session.removeAttribute("user") ;
+		return "redirect:../login.jsp" ;
 	}
 }
