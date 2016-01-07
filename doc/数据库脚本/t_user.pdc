@@ -1,0 +1,47 @@
+-- Create table
+create table T_USER
+(
+  id       NUMBER not null,
+  username VARCHAR2(50) not null,
+  password VARCHAR2(50) not null,
+  realname VARCHAR2(50),
+  role_id  VARCHAR2(50),
+  remark   VARCHAR2(1000)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column T_USER.id
+  is '自增长ID';
+comment on column T_USER.username
+  is '用户名';
+comment on column T_USER.password
+  is '密码';
+comment on column T_USER.realname
+  is '真实姓名';
+comment on column T_USER.role_id
+  is '对应的角色ID';
+comment on column T_USER.remark
+  is '备注';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_USER
+  add constraint PK_T_USER primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );

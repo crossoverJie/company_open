@@ -1,0 +1,38 @@
+-- Create table
+create table T_ROLE
+(
+  id        NUMBER not null,
+  role_name VARCHAR2(1000) not null,
+  remark    VARCHAR2(1000)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column T_ROLE.id
+  is '自增长ID';
+comment on column T_ROLE.role_name
+  is '角色名称';
+comment on column T_ROLE.remark
+  is '备注';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_ROLE
+  add constraint PK_T_ROLE primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );

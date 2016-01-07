@@ -1,0 +1,7 @@
+-- Create sequence 
+create sequence SEQ_T_ROLE
+minvalue 1001
+maxvalue 9999999999999999
+start with 1001
+increment by 1
+cache 20;
