@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.IUserDao" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="role_id" property="role_id" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="last_date" property="last_date" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.cn.hnust.pojo.User" >
+    insert into t_user (ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+       id,
+     
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="role_id != null" >
+        role_id,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="last_date != null" >
+        last_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      SEQ_T_USER.Nextval,
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="role_id != null" >
+        #{role_id,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="last_date != null" >
+        #{last_date,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.User" >
+    update t_user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+    <!-- 登录所用的查询 -->
+  <select id="findByLogin" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_user 
+    where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="username != null" >
+      and username = #{username,jdbcType=DECIMAL} 
+    </if>
+    <if test="password != null" >
+      and password = #{password,jdbcType=DECIMAL}
+    </if>
+    order by id desc
+  </select>
+  
+  <select id="findAllCount" resultType="int">
+  	select count(*) from t_user
+  </select>
+  
+  <!-- 查询 -->
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+     <include refid="Base_Column_List" />
+    from t_user TB
+    where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="username != null" >
+      and username like '%${username}%' 
+    </if>
+    <if test="realname != null" >
+      and realname like '%${realname}%' 
+    </if>
+    order by id desc
+  </select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cn.hnust.pojo.User" >
+    update t_user
+    set user_name = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
