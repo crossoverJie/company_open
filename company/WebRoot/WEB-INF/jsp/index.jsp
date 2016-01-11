@@ -6,8 +6,8 @@
 			+ path + "/";
 %>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
 <link href="<%=path%>/include/default/easyui.css" type="text/css"
 	rel="stylesheet" />
@@ -50,6 +50,9 @@
 				</p>
 				<p>
 					<a href="javascript:void(0)" onClick="getMain(this,'role/turnToRoleList')">角色管理</a>
+				</p>
+				<p>
+					<a href="javascript:void(0)" onClick="getMain(this,'function/turnTofunctionList')">功能管理</a>
 				</p>
 			</div>
 			

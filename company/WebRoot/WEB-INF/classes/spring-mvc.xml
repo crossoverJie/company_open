@@ -53,6 +53,7 @@
     		<!-- <mvc:mapping path="/**"/>拦截所有 -->
     		<mvc:mapping path="/user/**"/>
     		<mvc:mapping path="/role/**"/>
+    		<mvc:mapping path="/function/**"/>
     		<bean class="com.cn.hnust.intercept.Intercept"></bean>
     	</mvc:interceptor>
     </mvc:interceptors>

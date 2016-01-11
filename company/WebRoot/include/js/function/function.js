@@ -7,9 +7,19 @@ datagridD = [{
 	//hidden : true,
 	width : 50
 }, {
-	field : 'role_name',
-	title : '角色名',
+	field : 'parent_id',
+	title : '父节点',
 	width : 200,
+	align : 'center'
+},{
+	field : 'function_name',
+	title : '功能名称',
+	width : 100,
+	align : 'center'
+},{
+	field : 'function_url',
+	title : '功能地址',
+	width : 100,
 	align : 'center'
 },{
 	field : 'remark',
@@ -26,7 +36,7 @@ tabrs = [ {
 	text : '查询',
 	iconCls : 'icon-search',
 	handler : function() {
-		queryRole();
+		queryFunction();
 	}
 
 }, '-', {
@@ -39,41 +49,50 @@ tabrs = [ {
 	text : '删除',
 	iconCls : 'icon-remove',
 	handler : function() {
-		removeRole();
+		removeFunction();
 	}
 }, '-', {
 	text : '编辑',
 	iconCls : 'icon-edit',
 	handler : function() {
-		modifyRole();
+		modifyFunction();
 	}
 } 
 ];
 
-function queryRole(){
-	$("#queryRoleWin").window("open") ;
+function queryFunction(){
+	$("#queryFunctionWin").window("open") ;
 }
 function add(){
-	$("#addRoleWin").window("open") ;
+	$("#addFunctionWin").window("open") ;
+	var type = $("#function_type_add").combobox("getValue") ;
+	if(type == "1"){
+		$("#function_name_add").attr("disabled","disabled") ;
+	}
 }
 
 function submitQuery(){
-	var role_name = $("#role_name_query").val() ;
-	if(role_name==""){
-		role_name=undefined;
+	var username = $("#username_query").val() ;
+	var realname = $("#realname_query").val() ;
+	if(username==""){
+		username=undefined;
+	}
+	if(realname ==""){
+		realname=undefined;
 	}
 	var json ={
-		"role_name":role_name
+		"username":username,
+		"realname":realname
 	};
-	$("#role_list").datagrid('options').url = 'role/getRoleList';
-	$("#role_list").datagrid('options').queryParams = json;
-	$("#role_list").datagrid('load');
-	$('#queryRoleWin').window("close");
+	$("#function_list").datagrid('options').url = 'user/getFunctionList';
+	$("#function_list").datagrid('options').queryParams = json;
+	$("#function_list").datagrid('load');
+	$('#queryFunctionWin').window("close");
 	
 }
 
-function modifyRole(){
-	var target = $('#role_list').datagrid('getSelections');
+function modifyFunction(){
+	var target = $('#function_list').datagrid('getSelections');
 	if (target.length < 1) {
 		$.messager.show( {
 			msg : '请选择一条数据进行修改!',
@@ -85,8 +104,9 @@ function modifyRole(){
 			title : '提示'
 		});
 	}else{
-		$("#modifyRoleWin").window("open") ;
-		$("#role_name_edit").val(target[0].role_name);
+		$("#modifyFunctionWin").window("open") ;
+		$("#username_edit").val(target[0].username);
+		$("#realname_edit").val(target[0].realname);
 		$("#remark_edit").val(target[0].remark) ;
 	}
 }
@@ -98,11 +118,11 @@ function closeWin(obj){
  * 保存修改
  */
 function saveEdit(){
-	var target = $('#role_list').datagrid('getSelections');
-	var role_name = $("#role_name_edit").val() ;
+	var target = $('#function_list').datagrid('getSelections');
+	var username = $("#username_edit").val() ;
 	var realname = $("#realname_edit").val() ;
 	var remark = $("#remark_edit").val() ;
-	if(role_name ==""|| remark ==""){
+	if(username =="" || realname == "" || remark ==""){
 		$("#showMsg_edit").html("请将数据填写完整");
 		return ;
 	}else{
@@ -110,13 +130,14 @@ function saveEdit(){
 	}
 	var json ={
 		"id":target[0].id,
-		"role_name":role_name,
+		"username":username,
+		"realname":realname,
 		"remark":remark
 	}
 	
     $.ajax({            
         type:"POST",   //post提交方式默认是get
-        url:"role/edit", 
+        url:"user/edit", 
         data:json, 
         error:function(request) {      // 设置表单提交出错                 
             $("#showMsg").html(request);  //登录错误提示信息
@@ -126,10 +147,10 @@ function saveEdit(){
         	  	  $("#showMsg_edit").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#role_list").datagrid('reload');	
-        		  	$("#modifyRoleWin").window("close") ;
+        		  	$("#function_list").datagrid('reload');	
+        		  	$("#modifyFunctionWin").window("close") ;
         			$.messager.show( {
-        				msg : '修改成功',
+        				msg : '新增成功',
         				title : '提示'
         			});
         	  }
@@ -140,9 +161,12 @@ function saveEdit(){
  * 新增用户之前的验证
  */
 function turnToAdd(){
-	var role_name = $("#role_name_add").val() ;
+	var function_type = $("#function_type_add").combobox("getValue") ;
+	var function_name = $("#function_name_add").val() ;
+	var function_url = $("#function_url_add").val() ;
+	var remark= $("remark_add").val() ;
 	var remark = $("#remark_add").val() ;
-	if(role_name =="" || remark =="" ){
+	if(function_name =="" || remark =="" ){
 		$("#showMsg").html("请将数据填写完整");
 		return ;
 	}else{
@@ -150,13 +174,13 @@ function turnToAdd(){
 	}
 	
 	var json = {
-		"role_name": role_name,
+		"function_name": function_name,
 		"remark":remark
 	};
 
     $.ajax({            
         type:"POST",   //post提交方式默认是get
-        url:"role/create", 
+        url:"function/create", 
         data:json, 
         error:function(request) {      // 设置表单提交出错                 
             $("#showMsg").html(request);  //登录错误提示信息
@@ -166,8 +190,8 @@ function turnToAdd(){
         	  	  $("#showMsg").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#role_list").datagrid('reload');	
-        		  	$("#addRoleWin").window("close") ;
+        		  	$("#function_list").datagrid('reload');	
+        		  	$("#addFunctionWin").window("close") ;
         			$.messager.show( {
         				msg : '新增成功',
         				title : '提示'
@@ -178,10 +202,10 @@ function turnToAdd(){
 }
 
 //删除数据
-function removeRole() {
+function removeFunction() {
 
 	var list = new Array();
-	var rows = $('#role_list').datagrid('getSelections');
+	var rows = $('#function_list').datagrid('getSelections');
 	if (rows.length != 0) {
 		$.messager.confirm('询问', '您确定要删除所选中的数据吗?', function(answer) {
 			if (answer) {
@@ -189,12 +213,12 @@ function removeRole() {
 					list.push(rows[i].id);
 				}
 				$.ajax( {
-					type:"get", 
-					url : 'role/delete?ids=' + list + '',
+					type:"POST", 
+					url : 'user/delete?ids=' + list + '',
 					cache : false,
 					success : function(r) {
-					$("#role_list").datagrid('clearSelections'); // 清空选择状态
-					$("#role_list").datagrid('reload');
+					$("#function_list").datagrid('clearSelections'); // 清空选择状态
+					$("#function_list").datagrid('reload');
 					$.messager.show( {
 						msg : "删除成功！",
 						title : '提示'
@@ -213,11 +237,11 @@ function removeRole() {
 }
 
 $(function(){
-	$("#addRoleWin").window("close") ;
-	$("#modifyRoleWin").window("close") ;
-	$("#queryRoleWin").window("close") ;
-	$('#role_list').datagrid({
-		url : 'role/getRoleList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
+	$("#addFunctionWin").window("close") ;
+	$("#modifyFunctionWin").window("close") ;
+	$("#queryFunctionWin").window("close") ;
+	$('#function_list').datagrid({
+		url : 'function/getFunctionList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
 		frozenColumns : [ [ {
 			field : 'ck',
 			checkbox : true
@@ -239,6 +263,18 @@ $(function(){
 
 		}
 	});
+	
+	$("#function_type_add").combobox({
+		onSelect:function(obj){
+			var type = obj.value;
+			if(type=='2'){
+				$("#function_name_add").removeAttr("disabled") ;
+			}else if(type='1'){
+				$("#function_name_add").attr("disabled","disabled") ;
+			}
+		}
+	});
+	
 }) ;
 
 function formClear(obj){

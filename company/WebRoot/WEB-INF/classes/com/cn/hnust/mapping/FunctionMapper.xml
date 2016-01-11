@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cn.hnust.dao.IRoleDao" >
-  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Role" >
+<mapper namespace="com.cn.hnust.dao.IFunctionDao" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Function" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="role_name" property="role_name" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parent_id" jdbcType="INTEGER" />
+    <result column="function_name" property="function_name" jdbcType="VARCHAR" />
+    <result column="function_url" property="function_url" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, role_name, REMARK
+    ID, parent_id, function_name,function_url,remark
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -23,35 +25,53 @@
   </delete>
   
   
-  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Role" >
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
     insert into t_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
-      <if test="role_name != null" >
-        role_name,
+      <if test="parent_id != null" >
+        parent_id,
+      </if>
+      <if test="function_name != null" >
+        function_name,
+      </if>
+      <if test="function_url != null" >
+        function_url,
       </if>
       <if test="remark != null" >
         remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      SEQ_T_Role.Nextval,
-      <if test="role_name != null" >
-        #{role_name,jdbcType=VARCHAR},
+      SEQ_T_Function.Nextval,
+      <if test="parent_id != null" >
+        #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="function_name != null" >
+        #{function_name,jdbcType=VARCHAR},
+      </if>
+      <if test="function_url != null" >
+        #{function_url,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Role" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
     update t_role
     <set >
-      <if test="role_name != null" >
-        role_name = #{role_name,jdbcType=VARCHAR},
+      <if test="parent_id != null" >
+        #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="function_name != null" >
+        #{function_name,jdbcType=VARCHAR},
+      </if>
+      <if test="function_url != null" >
+        #{function_urle,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
-        remark = #{remark,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -71,8 +91,14 @@
     <if test="id != null" >
       and ID = #{id,jdbcType=DECIMAL}
     </if>
-    <if test="role_name != null" >
-      and role_name like '%${role_name}%' 
+    <if test="parent_id != null" >
+      and parent_id = #{parent_id,jdbcType=DECIMAL}
+    </if>
+    <if test="function_name != null" >
+      and function_name like '%${function_name}%' 
+    </if>
+    <if test="function_url != null" >
+      and function_url like '%${function_url}%' 
     </if>
     order by id desc
   </select>

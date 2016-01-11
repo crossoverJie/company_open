@@ -48,10 +48,10 @@
     update t_role
     <set >
       <if test="role_name != null" >
-        #{role_name,jdbcType=VARCHAR},
+        role_name = #{role_name,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+        remark = #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

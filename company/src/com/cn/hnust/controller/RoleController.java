@@ -45,4 +45,24 @@ public class RoleController {
 		
 	}
 	
+	@RequestMapping("/delete")
+	public void delete(String ids ,HttpServletResponse response) throws IOException{
+		String[] str_ids = ids.split(",") ;
+		for(String id : str_ids){
+			roleService.deleteByPrimaryKey(Integer.parseInt(id)) ;
+			response.getWriter().print("ture");
+		}
+	}
+	
+	@RequestMapping("/edit")
+	public void edit(Role role,HttpServletResponse response) throws IOException{
+		try {
+			roleService.updateByPrimaryKeySelective(role) ;
+			response.getWriter().print("true") ;
+		} catch (Exception e) {
+			response.getWriter().print("false") ;
+			e.printStackTrace();
+		}
+	}
+	
 }

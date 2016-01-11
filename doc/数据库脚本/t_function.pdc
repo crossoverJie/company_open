@@ -1,0 +1,44 @@
+-- Create table
+create table T_FUNCTION
+(
+  id            NUMBER not null,
+  parent_id     NUMBER,
+  function_name VARCHAR2(1000),
+  function_url  VARCHAR2(500),
+  remark        VARCHAR2(100)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column T_FUNCTION.id
+  is '自增ID';
+comment on column T_FUNCTION.parent_id
+  is '父节点ID';
+comment on column T_FUNCTION.function_name
+  is '功能名称';
+comment on column T_FUNCTION.function_url
+  is '功能地址';
+comment on column T_FUNCTION.remark
+  is '备注';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_FUNCTION
+  add constraint PK_T_FUNCTION primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );

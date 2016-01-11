@@ -166,7 +166,7 @@ function saveEdit(){
         		  	$("#user_list").datagrid('reload');	
         		  	$("#modifyUserWin").window("close") ;
         			$.messager.show( {
-        				msg : '新增成功',
+        				msg : '修改成功',
         				title : '提示'
         			});
         	  }
