@@ -49,7 +49,7 @@
 					<a href="javascript:void(0)" onClick="getMain(this,'user/turnToUserList')">用户管理</a>
 				</p>
 				<p>
-					<a href="javascript:void(0)" onClick="getMain(this,'user/turnToUserList')">角色管理</a>
+					<a href="javascript:void(0)" onClick="getMain(this,'role/turnToRoleList')">角色管理</a>
 				</p>
 			</div>
 			

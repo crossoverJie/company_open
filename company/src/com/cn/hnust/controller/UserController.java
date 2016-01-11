@@ -3,8 +3,10 @@ package com.cn.hnust.controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,7 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
+import com.cn.hnust.pojo.Role;
 import com.cn.hnust.pojo.User;
+import com.cn.hnust.service.IRoleService;
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.Page;
 
@@ -25,6 +29,9 @@ import com.cn.hnust.util.Page;
 public class UserController {
 	@Resource
 	private IUserService userService;
+	
+	@Resource
+	private IRoleService roleService ;
 	
 	@RequestMapping("/showUser")
 	public String toIndex(HttpServletRequest request,Model model){
@@ -54,6 +61,12 @@ public class UserController {
 		response.setCharacterEncoding("utf-8");
 		Page<User> users = userService.findByParams(user,page,rows) ;
 		for(User u :users.getRows()){
+			//将角色ID转换为角色名称
+			String role_id = u.getRole_id() ;
+			if(role_id != null){
+				Role role = roleService.selectByPrimaryKey(Integer.parseInt(role_id)) ;
+				u.setRolename(role.getRole_name()) ;
+			}
 			Date date = u.getLast_date() ;
 			if(date != null){
 				SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd") ;
@@ -63,6 +76,18 @@ public class UserController {
 		}
 		
 		String json = JSON.toJSONString(users) ;
+		try {
+			response.getWriter().print(json) ;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	@RequestMapping("/getAllRoles")
+	public void getAllRoles(HttpServletResponse response){
+		response.setCharacterEncoding("utf-8") ;
+		List<Role> roles = roleService.findAll() ;
+		String json = JSON.toJSONString(roles) ;
 		try {
 			response.getWriter().print(json) ;
 		} catch (IOException e) {

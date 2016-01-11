@@ -7,28 +7,13 @@ datagridD = [{
 	//hidden : true,
 	width : 50
 }, {
-	field : 'username',
-	title : '用户名',
+	field : 'role_name',
+	title : '角色名',
 	width : 200,
-	align : 'center'
-},{
-	field : 'realname',
-	title : '真实姓名',
-	width : 100,
 	align : 'center'
 },{
 	field : 'remark',
 	title : '备注',
-	width : 100,
-	align : 'center'
-},{
-	field : 'rolename',
-	title : '角色名称',
-	width : 100,
-	align : 'center'
-},{
-	field : 'parsedate',
-	title : '最后登录日期',
 	width : 100,
 	align : 'center'
 }
@@ -41,7 +26,7 @@ tabrs = [ {
 	text : '查询',
 	iconCls : 'icon-search',
 	handler : function() {
-		queryUser();
+		queryRole();
 	}
 
 }, '-', {
@@ -54,28 +39,22 @@ tabrs = [ {
 	text : '删除',
 	iconCls : 'icon-remove',
 	handler : function() {
-		removeUser();
+		removeRole();
 	}
 }, '-', {
 	text : '编辑',
 	iconCls : 'icon-edit',
 	handler : function() {
-		modifyUser();
+		modifyRole();
 	}
 } 
 ];
 
-function queryUser(){
-	$("#queryUserWin").window("open") ;
+function queryRole(){
+	$("#queryRoleWin").window("open") ;
 }
 function add(){
-	$("#role_id_add").combobox({
-		url:"user/getAllRoles",
-		valueField : "id" ,
-		textField:"role_name"
-			
-	}) ;
-	$("#addUserWin").window("open") ;
+	$("#addRoleWin").window("open") ;
 }
 
 function submitQuery(){
@@ -91,15 +70,15 @@ function submitQuery(){
 		"username":username,
 		"realname":realname
 	};
-	$("#user_list").datagrid('options').url = 'user/getUserList';
-	$("#user_list").datagrid('options').queryParams = json;
-	$("#user_list").datagrid('load');
-	$('#queryUserWin').window("close");
+	$("#role_list").datagrid('options').url = 'user/getRoleList';
+	$("#role_list").datagrid('options').queryParams = json;
+	$("#role_list").datagrid('load');
+	$('#queryRoleWin').window("close");
 	
 }
 
-function modifyUser(){
-	var target = $('#user_list').datagrid('getSelections');
+function modifyRole(){
+	var target = $('#role_list').datagrid('getSelections');
 	if (target.length < 1) {
 		$.messager.show( {
 			msg : '请选择一条数据进行修改!',
@@ -111,14 +90,7 @@ function modifyUser(){
 			title : '提示'
 		});
 	}else{
-		$("#role_id_edit").combobox({
-			url:"user/getAllRoles",
-			valueField : "id" ,
-			textField:"role_name"
-				
-		}) ;
-		$("#modifyUserWin").window("open") ;
-		$("#role_id_edit").combobox("setValue",target[0].role_id) ;
+		$("#modifyRoleWin").window("open") ;
 		$("#username_edit").val(target[0].username);
 		$("#realname_edit").val(target[0].realname);
 		$("#remark_edit").val(target[0].remark) ;
@@ -132,11 +104,10 @@ function closeWin(obj){
  * 保存修改
  */
 function saveEdit(){
-	var target = $('#user_list').datagrid('getSelections');
+	var target = $('#role_list').datagrid('getSelections');
 	var username = $("#username_edit").val() ;
 	var realname = $("#realname_edit").val() ;
 	var remark = $("#remark_edit").val() ;
-	var role_id =$("#role_id_edit").combobox("getValue") ;
 	if(username =="" || realname == "" || remark ==""){
 		$("#showMsg_edit").html("请将数据填写完整");
 		return ;
@@ -147,8 +118,7 @@ function saveEdit(){
 		"id":target[0].id,
 		"username":username,
 		"realname":realname,
-		"remark":remark,
-		"role_id":role_id
+		"remark":remark
 	}
 	
     $.ajax({            
@@ -163,8 +133,8 @@ function saveEdit(){
         	  	  $("#showMsg_edit").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#user_list").datagrid('reload');	
-        		  	$("#modifyUserWin").window("close") ;
+        		  	$("#role_list").datagrid('reload');	
+        		  	$("#modifyRoleWin").window("close") ;
         			$.messager.show( {
         				msg : '新增成功',
         				title : '提示'
@@ -177,36 +147,23 @@ function saveEdit(){
  * 新增用户之前的验证
  */
 function turnToAdd(){
-	var username = $("#username_add").val() ;
-	var realname = $("#realname_add").val() ;
+	var role_name = $("#role_name_add").val() ;
 	var remark = $("#remark_add").val() ;
-	var pwd1 = $("#pwd1").val() ;
-	var pwd2 = $("#pwd2").val() ;
-	var role_id = $("#role_id_add").combobox("getValue") ;
-	if(username =="" || realname == "" || remark =="" || pwd1 == "" || pwd2 ==""){
+	if(role_name =="" || remark =="" ){
 		$("#showMsg").html("请将数据填写完整");
-		return ;
-	}else{
-		$("#showMsg").html("");
-	}
-	if(pwd1 != pwd2){
-		$("#showMsg").html("两次密码输入不同！");
 		return ;
 	}else{
 		$("#showMsg").html("");
 	}
 	
 	var json = {
-		"username": username,
-		"realname":realname,
-		"remark":remark,
-		"password":pwd1,
-		"role_id":role_id
+		"role_name": role_name,
+		"remark":remark
 	};
 
     $.ajax({            
         type:"POST",   //post提交方式默认是get
-        url:"user/create", 
+        url:"role/create", 
         data:json, 
         error:function(request) {      // 设置表单提交出错                 
             $("#showMsg").html(request);  //登录错误提示信息
@@ -216,8 +173,8 @@ function turnToAdd(){
         	  	  $("#showMsg").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#user_list").datagrid('reload');	
-        		  	$("#addUserWin").window("close") ;
+        		  	$("#role_list").datagrid('reload');	
+        		  	$("#addRoleWin").window("close") ;
         			$.messager.show( {
         				msg : '新增成功',
         				title : '提示'
@@ -228,10 +185,10 @@ function turnToAdd(){
 }
 
 //删除数据
-function removeUser() {
+function removeRole() {
 
 	var list = new Array();
-	var rows = $('#user_list').datagrid('getSelections');
+	var rows = $('#role_list').datagrid('getSelections');
 	if (rows.length != 0) {
 		$.messager.confirm('询问', '您确定要删除所选中的数据吗?', function(answer) {
 			if (answer) {
@@ -243,8 +200,8 @@ function removeUser() {
 					url : 'user/delete?ids=' + list + '',
 					cache : false,
 					success : function(r) {
-					$("#user_list").datagrid('clearSelections'); // 清空选择状态
-					$("#user_list").datagrid('reload');
+					$("#role_list").datagrid('clearSelections'); // 清空选择状态
+					$("#role_list").datagrid('reload');
 					$.messager.show( {
 						msg : "删除成功！",
 						title : '提示'
@@ -263,11 +220,11 @@ function removeUser() {
 }
 
 $(function(){
-	$("#addUserWin").window("close") ;
-	$("#modifyUserWin").window("close") ;
-	$("#queryUserWin").window("close") ;
-	$('#user_list').datagrid({
-		url : 'user/getUserList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
+	$("#addRoleWin").window("close") ;
+	$("#modifyRoleWin").window("close") ;
+	$("#queryRoleWin").window("close") ;
+	$('#role_list').datagrid({
+		url : 'role/getRoleList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
 		frozenColumns : [ [ {
 			field : 'ck',
 			checkbox : true

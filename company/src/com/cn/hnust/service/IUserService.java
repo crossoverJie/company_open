@@ -1,6 +1,5 @@
 package com.cn.hnust.service;
 
-import java.util.List;
 
 import com.cn.hnust.pojo.User;
 import com.cn.hnust.util.Page;

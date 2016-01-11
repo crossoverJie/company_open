@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.annotation.Resource;
-import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.IUserService;

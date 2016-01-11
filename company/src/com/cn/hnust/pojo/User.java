@@ -12,6 +12,9 @@ public class User {
     private Date last_date ;
     /**用于显示格式化的日期**/
     private String parsedate ;
+    
+    /**角色名称**/
+    private String rolename ;
 
     public Integer getId() {
         return id;
@@ -77,6 +80,14 @@ public class User {
 
 	public void setParsedate(String parsedate) {
 		this.parsedate = parsedate;
+	}
+
+	public String getRolename() {
+		return rolename;
+	}
+
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
 	}
 
 }

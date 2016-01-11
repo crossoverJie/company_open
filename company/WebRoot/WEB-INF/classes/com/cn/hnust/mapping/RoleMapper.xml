@@ -77,4 +77,8 @@
     order by id desc
   </select>
   
+  <select id="findAll" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" />
+  	from t_role
+  </select>
 </mapper>

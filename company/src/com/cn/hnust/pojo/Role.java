@@ -8,15 +8,9 @@ package com.cn.hnust.pojo;
  */
 public class Role {
 
-	private int id ;
+	private Integer id ;
 	private String role_name ;
 	private String remark ;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getRemark() {
 		return remark;
 	}
@@ -28,5 +22,11 @@ public class Role {
 	}
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }
