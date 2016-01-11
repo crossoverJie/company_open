@@ -22,14 +22,19 @@ public class LoginController {
 	@RequestMapping("/check")
 	public void login(User user, Model model,HttpServletResponse response,HttpServletRequest request) throws IOException{
 		User u = userService.findByLogin(user) ;
-		Date date = new Date() ;
-		u.setLast_date(date) ;
-		userService.updateByPrimaryKeySelective(u) ;
-		if(u != null){
-			request.getSession().setAttribute("user", u) ;
-			response.getWriter().print("true") ;
-		}else{
+		if(u== null){
+			response.setContentType("html/text");
 			response.getWriter().print("false") ;
+		}else{
+			Date date = new Date() ;
+			u.setLast_date(date) ;
+			userService.updateByPrimaryKeySelective(u) ;
+			if(u != null){
+				request.getSession().setAttribute("user", u) ;
+				response.getWriter().print("true") ;
+			}else{
+				response.getWriter().print("false") ;
+			}
 		}
 	}
 }
