@@ -20,10 +20,18 @@
   </select>
 
   
+  <!-- 根据父节点删除 --> 
+  <delete id="deleteByPrentId" parameterType="java.lang.Integer" >
+    delete from t_function
+    where parent_id = #{id,jdbcType=INTEGER}
+  </delete>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from t_function
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  
   
   
   <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
@@ -63,16 +71,16 @@
     update t_function
     <set >
       <if test="parent_id != null" >
-        #{parent_id,jdbcType=VARCHAR},
+       parent_id= #{parent_id,jdbcType=VARCHAR},
       </if>
       <if test="function_name != null" >
-        #{function_name,jdbcType=VARCHAR},
+       function_name= #{function_name,jdbcType=VARCHAR},
       </if>
       <if test="function_url != null" >
-        #{function_urle,jdbcType=VARCHAR},
+       function_url= #{function_url,jdbcType=VARCHAR},
       </if>
       <if test="remark != null" >
-        #{remark,jdbcType=VARCHAR},
+        remark=#{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

@@ -84,4 +84,12 @@ public class FunctionServiceImpl implements IFunctionService {
 		return dao.findAll(f);
 	}
 
+	/**
+	 * 根据父节点删除ID
+	 */
+	@Override
+	public int deleteByPrentId(Integer parent_id) {
+		return dao.deleteByPrentId(parent_id);
+	}
+
 }

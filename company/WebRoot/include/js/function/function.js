@@ -57,6 +57,12 @@ tabrs = [ {
 	handler : function() {
 		modifyFunction();
 	}
+}, '-', {
+	text : '刷新',
+	iconCls : 'icon-reload',
+	handler : function() {
+		refresh();
+	}
 } 
 ];
 
@@ -80,19 +86,19 @@ function add(){
 }
 
 function submitQuery(){
-	var username = $("#username_query").val() ;
-	var realname = $("#realname_query").val() ;
-	if(username==""){
-		username=undefined;
+	var function_name = $("#function_name_query").val() ;
+	var function_url = $("#function_url_query").val() ;
+	if(function_name==""){
+		function_name=undefined;
 	}
-	if(realname ==""){
-		realname=undefined;
+	if(function_url ==""){
+		function_url=undefined;
 	}
 	var json ={
-		"username":username,
-		"realname":realname
+		"function_name":function_name,
+		"function_url":function_url
 	};
-	$("#function_list").treegrid('options').url = 'user/getFunctionList';
+	$("#function_list").treegrid('options').url = 'function/getFunctionList';
 	$("#function_list").treegrid('options').queryParams = json;
 	$("#function_list").treegrid('load');
 	$('#queryFunctionWin').window("close");
@@ -113,8 +119,8 @@ function modifyFunction(){
 		});
 	}else{
 		$("#modifyFunctionWin").window("open") ;
-		$("#username_edit").val(target[0].username);
-		$("#realname_edit").val(target[0].realname);
+		$("#function_name_edit").val(target[0].name);
+		$("#function_url_edit").val(target[0].function_url);
 		$("#remark_edit").val(target[0].remark) ;
 	}
 }
@@ -127,10 +133,10 @@ function closeWin(obj){
  */
 function saveEdit(){
 	var target = $('#function_list').treegrid('getSelections');
-	var username = $("#username_edit").val() ;
-	var realname = $("#realname_edit").val() ;
+	var function_name = $("#function_name_edit").val() ;
+	var function_url = $("#function_url_edit").val() ;
 	var remark = $("#remark_edit").val() ;
-	if(username =="" || realname == "" || remark ==""){
+	if(function_name =="" || function_url == "" || remark ==""){
 		$("#showMsg_edit").html("请将数据填写完整");
 		return ;
 	}else{
@@ -138,14 +144,14 @@ function saveEdit(){
 	}
 	var json ={
 		"id":target[0].id,
-		"username":username,
-		"realname":realname,
+		"function_name":function_name,
+		"function_url":function_url,
 		"remark":remark
 	}
 	
     $.ajax({            
         type:"POST",   //post提交方式默认是get
-        url:"user/edit", 
+        url:"function/edit", 
         data:json, 
         error:function(request) {      // 设置表单提交出错                 
             $("#showMsg").html(request);  //登录错误提示信息
@@ -158,7 +164,7 @@ function saveEdit(){
         		  	$("#function_list").treegrid('reload');	
         		  	$("#modifyFunctionWin").window("close") ;
         			$.messager.show( {
-        				msg : '新增成功',
+        				msg : '修改成功',
         				title : '提示'
         			});
         	  }
@@ -232,17 +238,18 @@ function turnToAdd(){
 function removeFunction() {
 
 	var list = new Array();
+	var parent_id= "";
 	var rows = $('#function_list').treegrid('getSelections');
-	alert(rows.length) ;
 	if (rows.length != 0) {
 		$.messager.confirm('询问', '您确定要删除所选中的数据吗?', function(answer) {
 			if (answer) {
 				for ( var i = 0; i < rows.length; i++) {
 					list.push(rows[i].id);
+					parent_id = rows[0].parent_id;
 				}
 				$.ajax( {
 					type:"POST", 
-					url : 'function/delete?ids=' + list + '',
+					url : 'function/delete?ids=' + list + '&parent_id='+parent_id,
 					cache : false,
 					success : function(r) {
 					$("#function_list").treegrid('clearSelections'); // 清空选择状态
@@ -310,4 +317,8 @@ $(function(){
 
 function formClear(obj){
 	$("#"+obj).form("clear") ;
+}
+
+function refresh(){
+	$("#function_list").treegrid('reload');
 }

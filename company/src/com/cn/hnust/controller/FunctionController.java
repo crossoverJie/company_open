@@ -15,6 +15,7 @@ import com.cn.hnust.pojo.Function;
 import com.cn.hnust.service.IFunctionService;
 import com.cn.hnust.util.Page;
 import com.cn.hnust.util.TreeGridUtil;
+import com.google.common.base.Functions;
 
 @Controller
 @RequestMapping("/function")
@@ -41,7 +42,8 @@ public class FunctionController {
 			tree.setFunction_url(f.getFunction_url());
 			tree.setName(f.getFunction_name());
 			tree.setRemark(f.getRemark()) ;
-			tree.setState("closed") ;
+			tree.setParent_id(f.getParent_id()) ;
+//			tree.setState("closed") ;
 			if(f.getParent_id() == -1){
 				int parent_id = f.getId() ;
 				Function parent = new Function() ;
@@ -54,6 +56,7 @@ public class FunctionController {
 					t_son.setFunction_url(f_son.getFunction_url()) ;
 					t_son.setName(f_son.getFunction_name()) ;
 					t_son.setRemark(f_son.getRemark());
+					t_son.setParent_id(f_son.getParent_id()) ;
 					t2.add(t_son) ;
 				}
 				tree.setChildren(t2) ;
@@ -97,6 +100,36 @@ public class FunctionController {
 		String json = JSON.toJSONString(fs) ;
 		response.getWriter().print(json) ;
 		
+	}
+	
+	@RequestMapping("/delete")
+	public void delete(String ids,String parent_id,HttpServletResponse response) throws IOException{
+		String[] str_ids = ids.split(",") ;
+		for(String id : str_ids){
+			//当parent_id为-1时候 表示该节点为一级菜单 所以要删除下边所有的记录。
+			if(parent_id.equals("-1")){
+				//首先删除所有父节点为id的
+				functionService.deleteByPrentId(Integer.parseInt(id)) ;
+				
+				//然后删除该父节点
+				functionService.deleteByPrimaryKey(Integer.parseInt(id)) ;
+			}else{
+				functionService.deleteByPrimaryKey(Integer.parseInt(id)) ;
+			}
+			response.getWriter().print("true") ;
+		}
+	}
+	@RequestMapping("/edit")
+	public void edit(Function f,HttpServletResponse response) throws IOException{
+		try {
+			response.setContentType("html/text") ;
+			functionService.updateByPrimaryKeySelective(f) ;
+			response.getWriter().print("true") ;
+		} catch (Exception e) {
+			// TODO: handle exception
+			response.getWriter().print("false") ;
+			e.printStackTrace() ;
+		}
 	}
 	
 }

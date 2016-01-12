@@ -23,4 +23,6 @@ public interface IFunctionDao {
 
 	int findAllCount();
 	List<Function> findAll(Function f) ;
+	
+	int deleteByPrentId(Integer parent_id);
 }

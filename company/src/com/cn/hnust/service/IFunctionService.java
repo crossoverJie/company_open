@@ -22,4 +22,6 @@ public interface IFunctionService {
 
 	int findAllCount();
 	List<Function> findAll(Function f) ;
+	
+	int deleteByPrentId(Integer parent_id);
 }

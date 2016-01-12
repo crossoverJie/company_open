@@ -38,18 +38,18 @@
 				<br>
 				<tr>
 					<td class="thead">
-						<div align="center">用户名:</div>
+						<div align="center">功能名称:</div>
 					</td>
 					<td><input  class="easyui-validatebox"
-						id="username_query"  />
+						id="function_name_query"  />
 					</td>
 				</tr>
 				<tr>
 					<td class="thead">
-						<div align="center">真实姓名:</div>
+						<div align="center">功能地址:</div>
 					</td>
 					<td><input  class="easyui-validatebox"
-						id="realname_query" />
+						id="function_url_query" />
 					</td>
 				</tr>
 			</table>
@@ -107,12 +107,12 @@
 		<form id="modifyFunctionForm" method="post">
 			<table style="width: 450px; overflow: hidden;">
 				<tr>
-					<th>用户名</th>
-					<td ><input type="text" id="username_edit" style="width:200px;" /></td>
+					<th>功能名称</th>
+					<td ><input type="text" id="function_name_edit" style="width:200px;" /></td>
 				</tr>
 				<tr>
-					<th>真实姓名</th>
-					<td><input type="text" id="realname_edit" style="width:200px;" /></td>
+					<th>功能路径</th>
+					<td><input type="text" id="function_url_edit" style="width:200px;" /></td>
 				</tr>
 				<tr>
 					<th>备注</th>

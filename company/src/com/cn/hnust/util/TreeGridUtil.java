@@ -11,6 +11,9 @@ public class TreeGridUtil {
 	private List<TreeGridUtil> children ;
 
 	private String state ;//父节点的开启关闭状态
+	
+	private Integer parent_id ;//父节点ID
+	
 	public Integer getId() {
 		return id;
 	}
@@ -57,6 +60,14 @@ public class TreeGridUtil {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public Integer getParent_id() {
+		return parent_id;
+	}
+
+	public void setParent_id(Integer parent_id) {
+		this.parent_id = parent_id;
 	}
 
 }
