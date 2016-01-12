@@ -22,5 +22,5 @@ public interface IFunctionDao {
     List<Function> findByParams(Function u,RowBounds rowBound) ;
 
 	int findAllCount();
-	List<Function> findAll() ;
+	List<Function> findAll(Function f) ;
 }

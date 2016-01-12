@@ -21,5 +21,5 @@ public interface IFunctionService {
     Page<Function> findByParams(Function u,int pageNo,int limit) ;
 
 	int findAllCount();
-	List<Function> findAll() ;
+	List<Function> findAll(Function f) ;
 }

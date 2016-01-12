@@ -5,9 +5,11 @@ public class Function {
 	private Integer id ;
 	private Integer parent_id ;
 	private String function_name ;
-	private String funtion_url ;
+	private String function_url ;
 	private String remark ;
 	
+	/**用于标识是一级菜单还是二级菜单   1：一级       2：二级 **/
+	private String function_type;
 	
 	public Integer getId() {
 		return id;
@@ -21,12 +23,6 @@ public class Function {
 	public void setParent_id(Integer parent_id) {
 		this.parent_id = parent_id;
 	}
-	public String getFuntion_url() {
-		return funtion_url;
-	}
-	public void setFuntion_url(String funtion_url) {
-		this.funtion_url = funtion_url;
-	}
 	public String getRemark() {
 		return remark;
 	}
@@ -38,5 +34,17 @@ public class Function {
 	}
 	public void setFunction_name(String function_name) {
 		this.function_name = function_name;
+	}
+	public String getFunction_url() {
+		return function_url;
+	}
+	public void setFunction_url(String function_url) {
+		this.function_url = function_url;
+	}
+	public String getFunction_type() {
+		return function_type;
+	}
+	public void setFunction_type(String function_type) {
+		this.function_type = function_type;
 	}
 }

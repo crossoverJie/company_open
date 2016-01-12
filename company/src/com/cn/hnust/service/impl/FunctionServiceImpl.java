@@ -79,9 +79,9 @@ public class FunctionServiceImpl implements IFunctionService {
 	}
 
 	@Override
-	public List<Function> findAll() {
+	public List<Function> findAll(Function f) {
 		// TODO Auto-generated method stub
-		return dao.findAll();
+		return dao.findAll(f);
 	}
 
 }

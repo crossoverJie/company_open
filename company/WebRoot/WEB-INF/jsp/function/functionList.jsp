@@ -32,8 +32,8 @@
 <body>
 	<table id="function_list"></table>
 	
-	<div id="queryRoleWin" class="easyui-window" align="left" title="查询" style="width:460px; height: 200px">
-		<form id="queryRoleForm" method="post">
+	<div id="queryFunctionWin" class="easyui-window" align="left" title="查询" style="width:460px; height: 200px">
+		<form id="queryFunctionForm" method="post">
 			<table style="width: 450px; overflow: hidden;">
 				<br>
 				<tr>
@@ -56,7 +56,7 @@
 			<div style="text-align: center; padding: 8px;margin-right: 130px">
 				<a href="javascript:void(0)" onclick="submitQuery()"
 					class="easyui-linkbutton" iconCls="icon-ok">查 询</a> <a
-					href="javascript:void(0)" onclick="formClear('queryRoleForm')"
+					href="javascript:void(0)" onclick="formClear('queryFunctionForm')"
 					class="easyui-linkbutton" iconCls="icon-cancel">重 置</a>
 			</div>
 		</form>
@@ -102,9 +102,9 @@
 		</form>
 	</div>
 	
-	<div id="modifyRoleWin" class="easyui-window" title="编辑数据"
+	<div id="modifyFunctionWin" class="easyui-window" title="编辑数据"
 		data-options="iconCls:'icon-edit'">
-		<form id="modifyRoleForm" method="post">
+		<form id="modifyFunctionForm" method="post">
 			<table style="width: 450px; overflow: hidden;">
 				<tr>
 					<th>用户名</th>
@@ -125,7 +125,7 @@
 				<a href="javascript:void(0)" id="edit_btn" class="easyui-linkbutton"
 					onclick="saveEdit()"
 					iconCls="icon-ok">修 改</a> <a href="javascript:void(0)"
-					id="edit_cancel_btn" class="easyui-linkbutton" onclick="closeWin('modifyRoleWin')"
+					id="edit_cancel_btn" class="easyui-linkbutton" onclick="closeWin('modifyFunctionWin')"
 					iconCls="icon-cancel">取消</a>
 			</div>
 		</form>

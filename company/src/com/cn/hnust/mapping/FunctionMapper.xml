@@ -15,18 +15,19 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from t_role
+    from t_function
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_role
+    delete from t_function
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
   
   <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
-    insert into t_role
+    insert into t_function
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
       <if test="parent_id != null" >
@@ -59,7 +60,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
-    update t_role
+    update t_function
     <set >
       <if test="parent_id != null" >
         #{parent_id,jdbcType=VARCHAR},
@@ -79,14 +80,14 @@
   
   
   <select id="findAllCount" resultType="int">
-  	select count(*) from t_role
+  	select count(*) from t_function
   </select>
   
   <!-- 查询 -->
   <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
     select
      <include refid="Base_Column_List" />
-    from t_role TB
+    from t_function TB
     where 1=1 
     <if test="id != null" >
       and ID = #{id,jdbcType=DECIMAL}
@@ -103,8 +104,22 @@
     order by id desc
   </select>
   
-  <select id="findAll" resultMap="BaseResultMap">
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
   	select <include refid="Base_Column_List" />
-  	from t_role
+  	from t_function
+  	where 1=1
+  	<if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="parent_id != null" >
+      and parent_id = #{parent_id,jdbcType=DECIMAL}
+    </if>
+    <if test="function_name != null" >
+      and function_name like '%${function_name}%' 
+    </if>
+    <if test="function_url != null" >
+      and function_url like '%${function_url}%' 
+    </if>
+    order by id desc
   </select>
 </mapper>

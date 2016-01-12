@@ -1,7 +1,7 @@
-var datagridD;
-// 初始化datagrid
+var treegridD;
+// 初始化treegrid
 
-datagridD = [{
+treegridD = [{
 	field : 'id',
 	title : '编号',
 	//hidden : true,
@@ -19,12 +19,12 @@ datagridD = [{
 },{
 	field : 'function_url',
 	title : '功能地址',
-	width : 100,
+	width : 180,
 	align : 'center'
 },{
 	field : 'remark',
 	title : '备注',
-	width : 100,
+	width : 150,
 	align : 'center'
 }
 
@@ -66,9 +66,17 @@ function queryFunction(){
 function add(){
 	$("#addFunctionWin").window("open") ;
 	var type = $("#function_type_add").combobox("getValue") ;
-	if(type == "1"){
-		$("#function_name_add").attr("disabled","disabled") ;
+	if(type=="1"){
+		$("#funtion_type_one_add").combobox({
+			disabled:true
+		})
 	}
+	
+	$("#funtion_type_one_add").combobox({
+		url:"function/getAllone",
+		valueField:'id', 
+		textField:'function_name'   
+	});
 }
 
 function submitQuery(){
@@ -84,15 +92,15 @@ function submitQuery(){
 		"username":username,
 		"realname":realname
 	};
-	$("#function_list").datagrid('options').url = 'user/getFunctionList';
-	$("#function_list").datagrid('options').queryParams = json;
-	$("#function_list").datagrid('load');
+	$("#function_list").treegrid('options').url = 'user/getFunctionList';
+	$("#function_list").treegrid('options').queryParams = json;
+	$("#function_list").treegrid('load');
 	$('#queryFunctionWin').window("close");
 	
 }
 
 function modifyFunction(){
-	var target = $('#function_list').datagrid('getSelections');
+	var target = $('#function_list').treegrid('getSelections');
 	if (target.length < 1) {
 		$.messager.show( {
 			msg : '请选择一条数据进行修改!',
@@ -118,7 +126,7 @@ function closeWin(obj){
  * 保存修改
  */
 function saveEdit(){
-	var target = $('#function_list').datagrid('getSelections');
+	var target = $('#function_list').treegrid('getSelections');
 	var username = $("#username_edit").val() ;
 	var realname = $("#realname_edit").val() ;
 	var remark = $("#remark_edit").val() ;
@@ -147,7 +155,7 @@ function saveEdit(){
         	  	  $("#showMsg_edit").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#function_list").datagrid('reload');	
+        		  	$("#function_list").treegrid('reload');	
         		  	$("#modifyFunctionWin").window("close") ;
         			$.messager.show( {
         				msg : '新增成功',
@@ -164,9 +172,25 @@ function turnToAdd(){
 	var function_type = $("#function_type_add").combobox("getValue") ;
 	var function_name = $("#function_name_add").val() ;
 	var function_url = $("#function_url_add").val() ;
-	var remark= $("remark_add").val() ;
-	var remark = $("#remark_add").val() ;
-	if(function_name =="" || remark =="" ){
+	var remark= $("#function_remark_add").val() ;
+	var function_type_one_add = $("#funtion_type_one_add").combobox("getValue");
+	
+	//定义一个变量保存功能名称 因为有不同的情况 选择一级功能和二级功能。
+	var name="" ;
+	if(function_name != ""){
+		name= function_name;
+	}else if(function_type_one_add != ""){
+		name= function_type_one_add;
+	}
+	
+	var parent_id  ;
+	if(function_type_one_add != ""){
+		parent_id = function_type_one_add;
+	}else {
+		parent_id = -1;
+	}
+	
+	if(name =="" || remark =="" || function_type==""|| function_url=="" ){
 		$("#showMsg").html("请将数据填写完整");
 		return ;
 	}else{
@@ -175,6 +199,9 @@ function turnToAdd(){
 	
 	var json = {
 		"function_name": function_name,
+		"function_type":function_type,
+		"function_url":function_url,
+		"parent_id":parent_id,
 		"remark":remark
 	};
 
@@ -190,7 +217,7 @@ function turnToAdd(){
         	  	  $("#showMsg").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#function_list").datagrid('reload');	
+        		  	$("#function_list").treegrid('reload');	
         		  	$("#addFunctionWin").window("close") ;
         			$.messager.show( {
         				msg : '新增成功',
@@ -205,7 +232,8 @@ function turnToAdd(){
 function removeFunction() {
 
 	var list = new Array();
-	var rows = $('#function_list').datagrid('getSelections');
+	var rows = $('#function_list').treegrid('getSelections');
+	alert(rows.length) ;
 	if (rows.length != 0) {
 		$.messager.confirm('询问', '您确定要删除所选中的数据吗?', function(answer) {
 			if (answer) {
@@ -214,11 +242,11 @@ function removeFunction() {
 				}
 				$.ajax( {
 					type:"POST", 
-					url : 'user/delete?ids=' + list + '',
+					url : 'function/delete?ids=' + list + '',
 					cache : false,
 					success : function(r) {
-					$("#function_list").datagrid('clearSelections'); // 清空选择状态
-					$("#function_list").datagrid('reload');
+					$("#function_list").treegrid('clearSelections'); // 清空选择状态
+					$("#function_list").treegrid('reload');
 					$.messager.show( {
 						msg : "删除成功！",
 						title : '提示'
@@ -240,37 +268,40 @@ $(function(){
 	$("#addFunctionWin").window("close") ;
 	$("#modifyFunctionWin").window("close") ;
 	$("#queryFunctionWin").window("close") ;
-	$('#function_list').datagrid({
-		url : 'function/getFunctionList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
+	
+	$('#function_list').treegrid({    
+		url : 'function/getFunctionList', 
+	    idField:'id',    
+	    treeField:'name',   
 		frozenColumns : [ [ {
 			field : 'ck',
 			checkbox : true
 		} ] ],
-		columns : [ datagridD ],
 		rownumbers : true,
-		idField : 'id',
-		striped : true,
-		pageSize : 25,
-		pageList : [ 5,25, 35, 45, 55 ],
-		nowrap : true,
-		loadMsg : '数据加载中...请稍等',
-		pagination : true,
-		height : 'auto',
-		fit : true,
 		toolbar : tabrs,
-		border : false,
-		onDblClickRow : function(rowIndex, rowData) {
-
-		}
+		loadMsg : '数据加载中...请稍等',
+		height : 'auto',
+		animate:true,
+		fit : true,
+	    columns:[[
+	              {title:'功能名称',field:'name',width:180},  
+	              {title:'功能地址',field:'function_url',width:180},    
+	              {title:'备注',field:'remark',width:180},    
+	          ]]
 	});
+	
 	
 	$("#function_type_add").combobox({
 		onSelect:function(obj){
 			var type = obj.value;
 			if(type=='2'){
-				$("#function_name_add").removeAttr("disabled") ;
+				$("#funtion_type_one_add").combobox({
+					disabled:false
+				})
 			}else if(type='1'){
-				$("#function_name_add").attr("disabled","disabled") ;
+				$("#funtion_type_one_add").combobox({
+					disabled:true
+				})
 			}
 		}
 	});
