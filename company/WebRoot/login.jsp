@@ -15,7 +15,7 @@
 <link href="<%=path%>/include/easyui/themes/icon.css" type="text/css" rel="stylesheet" />
 <script src="<%=path%>/include/js/jquery/jquery-1.7.1.min.js" type="text/javascript"></script>
 <script src="<%=path%>/include/js/jquery.easyui.min.js" type="text/javascript"></script>
-<title>欢迎登录</title>
+<title>欢迎进入登录</title>
 </head>
 
 <body>
