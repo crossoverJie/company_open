@@ -32,6 +32,9 @@
 <body>
 	<table id="role_list"></table>
 	
+	<div id="accreditRoleWin" class="easyui-window" align="left" title="授权" style="width:460px; height: 200px">
+	</div>
+	
 	<div id="queryRoleWin" class="easyui-window" align="left" title="查询" style="width:460px; height: 200px">
 		<form id="queryRoleForm" method="post">
 			<table style="width: 450px; overflow: hidden;">

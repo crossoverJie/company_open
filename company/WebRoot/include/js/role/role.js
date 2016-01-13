@@ -47,8 +47,22 @@ tabrs = [ {
 	handler : function() {
 		modifyRole();
 	}
+}, '-', {
+	text : '授权',
+	iconCls : 'icon-set',
+	handler : function() {
+		accredit();
+	}
 } 
+
 ];
+
+/**
+ * 打开授权窗口
+ */
+function accredit(){
+	$("#accreditRoleWin").window("open") ;
+}
 
 function queryRole(){
 	$("#queryRoleWin").window("open") ;
@@ -216,6 +230,7 @@ $(function(){
 	$("#addRoleWin").window("close") ;
 	$("#modifyRoleWin").window("close") ;
 	$("#queryRoleWin").window("close") ;
+	$("#accreditRoleWin").window("close") ;
 	$('#role_list').datagrid({
 		url : 'role/getRoleList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
 		frozenColumns : [ [ {
