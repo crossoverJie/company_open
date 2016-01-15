@@ -1,15 +1,26 @@
 package com.cn.hnust.intercept;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cn.hnust.pojo.Function;
 import com.cn.hnust.pojo.User;
+import com.cn.hnust.service.IFunctionService;
+import com.cn.hnust.service.IRoleService;
 
 public class Intercept implements HandlerInterceptor {
 
+	@Resource
+	private IFunctionService functionService ;
+	
+	@Resource
+	private IRoleService roleService ;
 	/**
 	 * 第一次执行
 	 */
@@ -18,9 +29,31 @@ public class Intercept implements HandlerInterceptor {
 			Object handler) throws Exception {
 		User user = (User) request.getSession().getAttribute("user") ;
 		String url = request.getRequestURI() ;
+		url = url.substring(9) ;
 		System.out.println("当前URL------>  "+url);
 		if(user != null){
-			System.out.println("当前状态------>  通过 ");
+			String role_id = user.getRole_id() ;
+			if(role_id != null){
+				//说拥有的所有权限ID
+				String function_id = roleService.selectByPrimaryKey(Integer.parseInt(role_id)).getFunction_id() ;
+				Function function = new Function() ;
+				function.setFunction_url(url) ;
+				List<Function> list = functionService.findAll(function) ;
+				if(list.size() <=0){
+					return true ;
+				}else{
+					Function f = functionService.findAll(function).get(0) ;
+					String currenId = f.getId()+"" ;
+					if(function_id.indexOf(currenId) == -1){
+						response.sendRedirect("/company/notfound.jsp") ;
+						return false ;
+					}else {
+						return true ;
+					}
+					
+				}
+			}
+			
 			return true;
 		}else {
 			System.out.println("当前状态------>  拦截 ");

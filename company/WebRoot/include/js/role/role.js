@@ -12,6 +12,11 @@ datagridD = [{
 	width : 200,
 	align : 'center'
 },{
+	field : 'all_function_name',
+	title : '所有权限',
+	width : 200,
+	align : 'center'
+},{
 	field : 'remark',
 	title : '备注',
 	width : 100,
@@ -61,7 +66,77 @@ tabrs = [ {
  * 打开授权窗口
  */
 function accredit(){
-	$("#accreditRoleWin").window("open") ;
+	
+	var target = $('#role_list').datagrid('getSelections');
+	if (target.length < 1) {
+		$.messager.show( {
+			msg : '请选择一条数据进行修改!',
+			title : '提示'
+		});
+	}else if(target.length >1){
+		$.messager.show( {
+			msg : '只能选择一条数据进行修改!',
+			title : '提示'
+		});
+	}else {
+		var role_id = target[0].id ;
+		$("#accreditNewsWin").window("open") ;
+		$("#sq").tree({    
+			url:"role/getFunctionByRole?role_id="+role_id ,
+			animate : true,
+			checkbox : true,
+			cascadeCheck:false,
+			lines: true,
+			 onCheck: function (node, checked) {
+                 if (checked) {
+                     var parentNode = $("#sq").tree("getParent", node.target);
+                     if (parentNode != null) {
+                         $("#sq").tree("check", parentNode.target);
+                     }
+                 } else {
+                     var childNode = $("#sq").tree("getChildren", node.target);
+                     if (childNode.length > 0) {
+                         for (var i = 0; i < childNode.length; i++) {
+                             $("#sq").tree("uncheck", childNode[i].target);
+                         }
+                     }
+                 }
+             }
+		}); 
+	}
+	
+}
+/**
+ * 确认授权 更新信息
+ */
+function subSq(){
+	var target = $('#role_list').datagrid('getSelections');
+	var nodes = $("#sq").tree("getChecked") ;
+	var json= {
+		"id":target[0].id,
+		"function_id" : nodes
+	};
+	
+	var list = new Array();
+	list.splice(0);
+	for(var i=0;i<nodes.length;i++){
+		list.push(nodes[i].id);
+	}
+	
+	$.ajax({
+		   type: "POST",
+		   url: "role/editSq?id="+target[0].id+"&function_id="+list,
+		   success: function(msg){
+				$("#role_list").datagrid('reload');	
+	   		  	$("#accreditNewsWin").window("close") ;
+	   			$.messager.show({
+	   				msg : '修改成功',
+	   				title : '提示'
+	   			});
+			   }
+		});
+    
+    
 }
 
 function queryRole(){
@@ -230,7 +305,7 @@ $(function(){
 	$("#addRoleWin").window("close") ;
 	$("#modifyRoleWin").window("close") ;
 	$("#queryRoleWin").window("close") ;
-	$("#accreditRoleWin").window("close") ;
+	$("#accreditNewsWin").window("close") ;
 	$('#role_list').datagrid({
 		url : 'role/getRoleList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
 		frozenColumns : [ [ {
@@ -243,7 +318,7 @@ $(function(){
 		striped : true,
 		pageSize : 25,
 		pageList : [ 5,25, 35, 45, 55 ],
-		nowrap : true,
+		nowrap : false,
 		loadMsg : '数据加载中...请稍等',
 		pagination : true,
 		height : 'auto',

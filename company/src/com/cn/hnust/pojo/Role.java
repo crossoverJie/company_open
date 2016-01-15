@@ -11,6 +11,10 @@ public class Role {
 	private Integer id ;
 	private String role_name ;
 	private String remark ;
+	private String function_id ;
+	
+	private String all_function_name;//角色的所有功能名称
+	
 	public String getRemark() {
 		return remark;
 	}
@@ -28,5 +32,17 @@ public class Role {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getFunction_id() {
+		return function_id;
+	}
+	public void setFunction_id(String function_id) {
+		this.function_id = function_id;
+	}
+	public String getAll_function_name() {
+		return all_function_name;
+	}
+	public void setAll_function_name(String all_function_name) {
+		this.all_function_name = all_function_name;
 	}
 }

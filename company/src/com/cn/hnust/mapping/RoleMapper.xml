@@ -5,9 +5,10 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="role_name" property="role_name" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="function_id" property="function_id" jdbcType="VARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List">
-    ID, role_name, REMARK
+    ID, role_name, REMARK,function_id
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -33,6 +34,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="function_id != null" >
+        function_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       SEQ_T_Role.Nextval,
@@ -41,6 +45,9 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="function_id != null" >
+        #{function_id,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -52,6 +59,9 @@
       </if>
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="function_id != null" >
+        function_id = #{function_id,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

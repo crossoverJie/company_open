@@ -136,7 +136,7 @@ function saveEdit(){
 	var function_name = $("#function_name_edit").val() ;
 	var function_url = $("#function_url_edit").val() ;
 	var remark = $("#remark_edit").val() ;
-	if(function_name =="" || function_url == "" || remark ==""){
+	if(function_name =="" ){
 		$("#showMsg_edit").html("请将数据填写完整");
 		return ;
 	}else{
@@ -196,7 +196,7 @@ function turnToAdd(){
 		parent_id = -1;
 	}
 	
-	if(name =="" || remark =="" || function_type==""|| function_url=="" ){
+	if(name =="" ||  function_type==""){
 		$("#showMsg").html("请将数据填写完整");
 		return ;
 	}else{

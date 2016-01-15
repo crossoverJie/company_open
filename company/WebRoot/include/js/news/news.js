@@ -57,12 +57,7 @@ tabrs = [ {
 
 ];
 
-/**
- * 打开授权窗口
- */
-function accredit(){
-	$("#accreditNewsWin").window("open") ;
-}
+
 
 function queryNews(){
 	$("#queryNewsWin").window("open") ;
@@ -231,7 +226,7 @@ $(function(){
 	$("#addNewsWin").window("close") ;
 	$("#modifyNewsWin").window("close") ;
 	$("#queryNewsWin").window("close") ;
-	$("#accreditNewsWin").window("close") ;
+
 	$('#news_list').datagrid({
 		url : 'news/getNewsList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
 		frozenColumns : [ [ {

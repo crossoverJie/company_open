@@ -14,6 +14,9 @@ public class TreeGridUtil {
 	
 	private Integer parent_id ;//父节点ID
 	
+	private String text ;//用于授权的弹出的tree显示用的text
+	private boolean checked = false ;//用于授权的弹出的tree显示用的 是否被选中的状态 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -27,6 +30,7 @@ public class TreeGridUtil {
 	}
 
 	public void setName(String name) {
+		this.text = name;
 		this.name = name;
 	}
 
@@ -69,5 +73,22 @@ public class TreeGridUtil {
 	public void setParent_id(Integer parent_id) {
 		this.parent_id = parent_id;
 	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 
 }

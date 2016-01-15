@@ -14,7 +14,6 @@ public class NewsController {
 	
 	@RequestMapping("/getNewsList")
 	public void getNewsList(int page,int rows){
-		System.out.println("======");
 	}
 	
 }

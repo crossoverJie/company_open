@@ -32,7 +32,16 @@
 <body>
 	<table id="role_list"></table>
 	
-	<div id="accreditRoleWin" class="easyui-window" align="left" title="授权" style="width:460px; height: 200px">
+	<div id="accreditNewsWin" class="easyui-window" align="left" title="授权" style="width:230px; height: 460px">
+		
+		<div class="easyui-layout" fit="true">
+			<div region="south" border="true" style="height:30px;padding:2px;overflow: hidden;">
+				<a class="easyui-linkbutton" iconCls="icon-ok" href="javascript:void(0)" onclick="subSq()" style="float: right;">确认授权</a>
+			</div>
+			<div region="center" border="true" >
+				<ul  id="sq" class="easyui-tree">  </ul>
+			</div>
+		</div>
 	</div>
 	
 	<div id="queryRoleWin" class="easyui-window" align="left" title="查询" style="width:460px; height: 200px">

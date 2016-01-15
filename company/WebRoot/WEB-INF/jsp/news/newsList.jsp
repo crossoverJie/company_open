@@ -30,11 +30,9 @@
 <title></title>
 </head>
 <body>
-	
 	<table id="news_list"></table>
 	
-	<div id="accreditNewsWin" class="easyui-window" align="left" title="授权" style="width:460px; height: 200px">
-	</div>
+
 	
 	<div id="queryNewsWin" class="easyui-window" align="left" title="查询" style="width:460px; height: 200px">
 		<form id="queryNewsForm" method="post">
