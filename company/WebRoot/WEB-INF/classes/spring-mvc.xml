@@ -54,6 +54,7 @@
     		<mvc:mapping path="/user/**"/>
     		<mvc:mapping path="/role/**"/>
     		<mvc:mapping path="/function/**"/>
+    		<mvc:mapping path="/news/**"/>
     		<bean class="com.cn.hnust.intercept.Intercept"></bean>
     	</mvc:interceptor>
     </mvc:interceptors>

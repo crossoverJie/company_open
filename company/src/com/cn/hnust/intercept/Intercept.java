@@ -46,6 +46,7 @@ public class Intercept implements HandlerInterceptor {
 					String currenId = f.getId()+"" ;
 					if(function_id.indexOf(currenId) == -1){
 						response.sendRedirect("/company/notfound.jsp") ;
+						response.getWriter().print("false") ;
 						return false ;
 					}else {
 						return true ;

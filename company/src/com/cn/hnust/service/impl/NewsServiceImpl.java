@@ -5,13 +5,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Service;
 
 import com.cn.hnust.dao.INewsDao;
 import com.cn.hnust.pojo.Function;
 import com.cn.hnust.pojo.News;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.util.Page;
-
+@Service("newsService")
 public class NewsServiceImpl implements INewsService {
 
 	@Resource

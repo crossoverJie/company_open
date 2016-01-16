@@ -7,13 +7,18 @@ datagridD = [{
 	//hidden : true,
 	width : 50
 }, {
-	field : 'news_name',
+	field : 'title',
 	title : '角色名',
 	width : 200,
 	align : 'center'
 },{
-	field : 'remark',
-	title : '备注',
+	field : 'content',
+	title : '内容',
+	width : 500,
+	align : 'center'
+},{
+	field : 'parseDate',
+	title : '创建日期',
 	width : 100,
 	align : 'center'
 }
@@ -58,7 +63,7 @@ function queryNews(){
 }
 function add(){
 	$("#addNewsWin").window("open") ;
-	
+	CKEDITOR.instances.content_add.setData("请输入内容"); 
 }
 
 function submitQuery(){
@@ -90,8 +95,8 @@ function modifyNews(){
 		});
 	}else{
 		$("#modifyNewsWin").window("open") ;
-		$("#news_name_edit").val(target[0].news_name);
-		$("#remark_edit").val(target[0].remark) ;
+		$("#news_name_edit").val(target[0].title);
+		CKEDITOR.instances.content_edit.setData(target[0].content); 
 	}
 }
 
@@ -103,10 +108,9 @@ function closeWin(obj){
  */
 function saveEdit(){
 	var target = $('#news_list').datagrid('getSelections');
-	var news_name = $("#news_name_edit").val() ;
-	var realname = $("#realname_edit").val() ;
-	var remark = $("#remark_edit").val() ;
-	if(news_name ==""|| remark ==""){
+	var title = $("#news_name_edit").val() ;
+	var content = CKEDITOR.instances.content_edit.getData() ;
+	if(title ==""|| content ==""){
 		$("#showMsg_edit").html("请将数据填写完整");
 		return ;
 	}else{
@@ -114,8 +118,8 @@ function saveEdit(){
 	}
 	var json ={
 		"id":target[0].id,
-		"news_name":news_name,
-		"remark":remark
+		"title":title,
+		"content":content
 	}
 	
     $.ajax({            
@@ -127,7 +131,10 @@ function saveEdit(){
         },
         success:function(data) {
         	  if(data=="false"){
-        	  	  $("#showMsg_edit").html("系统错误");
+        		  $.messager.show( {
+      				msg : '权限不足',
+      				title : '提示'
+      			});
         	  	  return ;
         	  }else{
         		  	$("#news_list").datagrid('reload');	
@@ -144,9 +151,9 @@ function saveEdit(){
  * 新增用户之前的验证
  */
 function turnToAdd(){
-	var news_name = $("#news_name_add").val() ;
-	var remark = $("#remark_add").val() ;
-	if(news_name =="" || remark =="" ){
+	var content = CKEDITOR.instances.content_add.getData();
+	var title = $("#news_name_add").val() ;
+	if(title =="" || content =="" ){
 		$("#showMsg").html("请将数据填写完整");
 		return ;
 	}else{
@@ -154,8 +161,8 @@ function turnToAdd(){
 	}
 	
 	var json = {
-		"news_name": news_name,
-		"remark":remark
+		"title": title,
+		"content":content
 	};
 
     $.ajax({            
@@ -233,7 +240,7 @@ $(function(){
 		striped : true,
 		pageSize : 25,
 		pageList : [ 5,25, 35, 45, 55 ],
-		nowrap : true,
+		nowrap : false,//可以换行显示
 		loadMsg : '数据加载中...请稍等',
 		pagination : true,
 		height : 'auto',
@@ -248,4 +255,5 @@ $(function(){
 
 function formClear(obj){
 	$("#"+obj).form("clear") ;
+	CKEDITOR.instances.content_add.setData(""); 
 }

@@ -14,18 +14,18 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from t_news
+    from news
     where id = #{id,jdbcType=INTEGER}
   </select>
 
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_news
+    delete from news
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
   <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
-    insert into t_news
+    insert into news
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
       <if test="title != null" >
@@ -52,7 +52,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
-    update t_news
+    update news
     <set >
       <if test="title != null" >
        title= #{title,jdbcType=VARCHAR},
@@ -69,14 +69,14 @@
   
   
   <select id="findAllCount" resultType="int">
-  	select count(*) from t_news
+  	select count(*) from news
   </select>
   
   <!-- 查询 -->
   <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
     select
      <include refid="Base_Column_List" />
-    from t_news TB
+    from news TB
     where 1=1 
     <if test="id != null" >
       and ID = #{id,jdbcType=DECIMAL}
@@ -92,7 +92,7 @@
   
   <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
   	select <include refid="Base_Column_List" />
-  	from t_news
+  	from news
   	where 1=1
   	<if test="id != null" >
       and ID = #{id,jdbcType=DECIMAL}

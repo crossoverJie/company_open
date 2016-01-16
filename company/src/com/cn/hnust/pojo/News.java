@@ -6,8 +6,9 @@ public class News {
 	private Integer id ;
 	private String title ;
 	private String content ;
-	private Date date ;
+	private Date create_date ;
 	
+	private String parseDate ;//用于格式化日期
 	public Integer getId() {
 		return id;
 	}
@@ -26,10 +27,16 @@ public class News {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Date getDate() {
-		return date;
+	public Date getCreate_date() {
+		return create_date;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
+	}
+	public String getParseDate() {
+		return parseDate;
+	}
+	public void setParseDate(String parseDate) {
+		this.parseDate = parseDate;
 	}
 }

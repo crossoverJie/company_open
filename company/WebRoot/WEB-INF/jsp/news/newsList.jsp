@@ -61,7 +61,7 @@
 		data-options="iconCls:'icon-save'" maximized="true"
 		style="padding: 10px;">
 		
-		<form id="addUserForm" method="post">
+		<form id="addNewsForm" method="post">
 			<table style="overflow: hidden;width: 100%">
 				<tr>
 					<th>标题</th>
@@ -70,8 +70,9 @@
 				<tr>
 					<th>内容</th>
 					<td>
-					<textarea name="remark_add" id="remark_add"  rows="" cols=""></textarea>
-					<script type="text/javascript">CKEDITOR.replace('remark_add');</script>
+					<textarea name="content_add" id="content_add"  rows="" cols=""></textarea>
+					<script type="text/javascript">CKEDITOR.replace('content_add');</script>
+					</td>
 				</tr>
 			</table>
 			<div style="padding:5px 0;text-align: center;color: red;"
@@ -85,17 +86,20 @@
 		</form>
 	</div>
 	
-	<div id="modifyNewsWin" class="easyui-window" title="编辑数据"
+	<div id="modifyNewsWin" class="easyui-window" title="编辑数据" maximized="true"
 		data-options="iconCls:'icon-edit'">
 		<form id="modifyNewsForm" method="post">
-			<table style="width: 450px; overflow: hidden;">
+			<table style="width: 100%; overflow: hidden;">
 				<tr>
 					<th>角色名</th>
 					<td ><input type="text" id="news_name_edit" style="width:200px;" /></td>
 				</tr>
 				<tr>
 					<th>备注</th>
-					<td><input type="text" id="remark_edit" style="width:200px;" /></td>
+					<td>
+						<textarea name="content_edit" id="content_edit"  rows="" cols=""></textarea>
+						<script type="text/javascript">CKEDITOR.replace('content_edit');</script>
+					</td>
 				</tr>
 			</table>
 			<div style="padding:5px 0;text-align: center;color: red;"
