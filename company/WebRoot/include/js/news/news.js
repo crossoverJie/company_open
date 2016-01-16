@@ -47,13 +47,7 @@ tabrs = [ {
 	handler : function() {
 		modifyNews();
 	}
-}, '-', {
-	text : '授权',
-	iconCls : 'icon-set',
-	handler : function() {
-		accredit();
-	}
-} 
+}
 
 ];
 
