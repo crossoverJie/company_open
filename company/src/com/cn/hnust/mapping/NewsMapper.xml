@@ -82,7 +82,7 @@
       and ID = #{id,jdbcType=DECIMAL}
     </if>
     <if test="title != null" >
-      and title = #{title,jdbcType=DECIMAL}
+      and title like '%${title}%'
     </if>
     <if test="content != null" >
       and content like '%${content}%' 

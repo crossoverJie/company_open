@@ -8,7 +8,7 @@ datagridD = [{
 	width : 50
 }, {
 	field : 'title',
-	title : '角色名',
+	title : '标题',
 	width : 200,
 	align : 'center'
 },{
@@ -67,12 +67,17 @@ function add(){
 }
 
 function submitQuery(){
-	var news_name = $("#news_name_query").val() ;
-	if(news_name==""){
-		news_name=undefined;
+	var title = $("#news_name_query").val() ;
+	var content = $("#news_content_query").val() ;
+	if(title==""){
+		title=undefined;
+	}
+	if(content ==""){
+		content = undefined;
 	}
 	var json ={
-		"news_name":news_name
+		"title":title,
+		"content":content
 	};
 	$("#news_list").datagrid('options').url = 'news/getNewsList';
 	$("#news_list").datagrid('options').queryParams = json;

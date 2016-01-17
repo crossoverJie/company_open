@@ -40,10 +40,18 @@
 				<br>
 				<tr>
 					<td class="thead">
-						<div align="center">角色名:</div>
+						<div align="center">标题:</div>
 					</td>
 					<td><input  class="easyui-validatebox"
 						id="news_name_query"  />
+					</td>
+				</tr>
+				<tr>
+					<td class="thead">
+						<div align="center">内容:</div>
+					</td>
+					<td><input  class="easyui-validatebox"
+						id="news_content_query"  />
 					</td>
 				</tr>
 			</table>
