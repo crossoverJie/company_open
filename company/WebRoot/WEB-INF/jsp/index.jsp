@@ -62,6 +62,9 @@
 				<p>
 					<a href="javascript:void(0)" onClick="getMain(this,'news/turnToNewsList')">新闻管理</a>
 				</p>
+				<p>
+					<a href="javascript:void(0)" onClick="getMain(this,'img/turnToImgList')">图片管理</a>
+				</p>
 			</div>
 				
 			<div title="Title3" data-options="iconCls:'icon-sys' ">content3</div>

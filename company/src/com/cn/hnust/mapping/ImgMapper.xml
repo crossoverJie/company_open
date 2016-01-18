@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cn.hnust.dao.INewsDao" >
-  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.News" >
+<mapper namespace="com.cn.hnust.dao.IImgDao" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Img" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="img_size" property="img_size" jdbcType="VARCHAR" />
     <result column="create_date" property="create_date" jdbcType="DATE" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, title, content,create_date
+    ID, NAME, path,img_size,create_date
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from news
+    from t_img
     where id = #{id,jdbcType=INTEGER}
   </select>
 
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from news
+    delete from t_img
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
   <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
-    insert into news
+    insert into t_img
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
-      <if test="title != null" >
-        title,
+      <if test="name != null" >
+        name,
       </if>
-      <if test="content != null" >
-        content,
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="img_size != null" >
+        img_size,
       </if>
       <if test="create_date != null" >
         create_date,
@@ -40,11 +44,14 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       SEQ_T_Function.Nextval,
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="img_size != null" >
+        #{img_size,jdbcType=VARCHAR},
       </if>
       <if test="create_date != null" >
         #{create_date,jdbcType=DATE},
@@ -52,13 +59,13 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
-    update news
+    update t_img
     <set >
-      <if test="title != null" >
-       title= #{title,jdbcType=VARCHAR},
+      <if test="name != null" >
+       name= #{name,jdbcType=VARCHAR},
       </if>
-      <if test="content != null" >
-       content= #{content,jdbcType=VARCHAR},
+      <if test="path != null" >
+       path= #{path,jdbcType=VARCHAR},
       </if>
       <if test="create_date != null" >
        create_date= #{create_date,jdbcType=VARCHAR},
@@ -69,39 +76,45 @@
   
   
   <select id="findAllCount" resultType="int">
-  	select count(*) from news
+  	select count(*) from t_img
   </select>
   
   <!-- 查询 -->
   <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
     select
      <include refid="Base_Column_List" />
-    from news TB
+    from t_img TB
     where 1=1 
     <if test="id != null" >
       and ID = #{id,jdbcType=DECIMAL}
     </if>
-    <if test="title != null" >
-      and title like '%${title}%'
+    <if test="name != null" >
+      and name like '%${name}%'
     </if>
-    <if test="content != null" >
-      and content like '%${content}%' 
+    <if test="path != null" >
+      and path like '%${path}%' 
+    </if>
+    <if test="img_size != null" >
+      and img_size like '%${img_size}%' 
     </if>
     order by id desc
   </select>
   
   <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
   	select <include refid="Base_Column_List" />
-  	from news
+  	from t_img
   	where 1=1
   	<if test="id != null" >
       and ID = #{id,jdbcType=DECIMAL}
     </if>
-    <if test="title != null" >
-      and title = #{title,jdbcType=DECIMAL}
+    <if test="name != null" >
+      and name = #{name,jdbcType=DECIMAL}
     </if>
-    <if test="content != null" >
-      and content like '%${content}%' 
+    <if test="path != null" >
+      and path like '%${path}%' 
+    </if>
+    <if test="img_size != null" >
+      and img_size like '%${img_size}%' 
     </if>
     order by id desc
   </select>
