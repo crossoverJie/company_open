@@ -7,5 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/img")
 public class ImgController {
 	
+	@RequestMapping("/turnToImgList")
+	public String turoToImgList(){
+		return "imgManger/imgList" ;
+	}
+	
 	
 }
