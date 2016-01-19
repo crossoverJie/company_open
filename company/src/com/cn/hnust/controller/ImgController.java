@@ -60,6 +60,6 @@ public class ImgController {
 		img.setImg_size(strsize+"MB") ;
 		img.setCreate_date(new Date()) ;
 		imgService.insertSelective(img) ;
-		return "imgManger/imgList" ;
+		return "imgManger/imgList" ; 
 	}
 }
