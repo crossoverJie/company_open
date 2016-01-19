@@ -1,5 +1,4 @@
 var datagridD;
-// 初始化treegrid
 
 datagridD = [{
 	field : 'id',
@@ -75,18 +74,6 @@ function queryImg(){
 }
 function add(){
 	$("#addImgWin").window("open") ;
-	var type = $("#function_type_add").combobox("getValue") ;
-	if(type=="1"){
-		$("#funtion_type_one_add").combobox({
-			disabled:true
-		})
-	}
-	
-	$("#funtion_type_one_add").combobox({
-		url:"function/getAllone",
-		valueField:'id', 
-		textField:'function_name'   
-	});
 }
 
 function submitQuery(){
@@ -102,15 +89,15 @@ function submitQuery(){
 		"function_name":function_name,
 		"function_url":function_url
 	};
-	$("#img_list").treegrid('options').url = 'function/getImgList';
-	$("#img_list").treegrid('options').queryParams = json;
-	$("#img_list").treegrid('load');
+	$("#img_list").datagrid('options').url = 'function/getImgList';
+	$("#img_list").datagrid('options').queryParams = json;
+	$("#img_list").datagrid('load');
 	$('#queryImgWin').window("close");
 	
 }
 
 function modifyImg(){
-	var target = $('#img_list').treegrid('getSelections');
+	var target = $('#img_list').datagrid('getSelections');
 	if (target.length < 1) {
 		$.messager.show( {
 			msg : '请选择一条数据进行修改!',
@@ -136,7 +123,7 @@ function closeWin(obj){
  * 保存修改
  */
 function saveEdit(){
-	var target = $('#img_list').treegrid('getSelections');
+	var target = $('#img_list').datagrid('getSelections');
 	var function_name = $("#function_name_edit").val() ;
 	var function_url = $("#function_url_edit").val() ;
 	var remark = $("#remark_edit").val() ;
@@ -165,7 +152,7 @@ function saveEdit(){
         	  	  $("#showMsg_edit").html("系统错误");
         	  	  return ;
         	  }else{
-        		  	$("#img_list").treegrid('reload');	
+        		  	$("#img_list").datagrid('reload');	
         		  	$("#modifyImgWin").window("close") ;
         			$.messager.show( {
         				msg : '修改成功',
@@ -186,7 +173,7 @@ function turnToAdd(){
 	}
 	$('#addImgForm').form('submit', {    
 	    success:function(data){    
-	    	$("#img_list").treegrid('reload');	
+	    	$("#img_list").datagrid('reload');	
 		  	$("#addImgWin").window("close") ;
 			$.messager.show( {
 				msg : '新增成功',
@@ -201,22 +188,22 @@ function turnToAdd(){
 function removeImg() {
 
 	var list = new Array();
-	var parent_id= "";
-	var rows = $('#img_list').treegrid('getSelections');
+	var names = new Array() ;
+	var rows = $('#img_list').datagrid('getSelections');
 	if (rows.length != 0) {
 		$.messager.confirm('询问', '您确定要删除所选中的数据吗?', function(answer) {
 			if (answer) {
 				for ( var i = 0; i < rows.length; i++) {
 					list.push(rows[i].id);
-					parent_id = rows[0].parent_id;
+					names.push(rows[i].path) ;
 				}
 				$.ajax( {
 					type:"POST", 
-					url : 'function/delete?ids=' + list + '&parent_id='+parent_id,
+					url : 'img/delete?ids=' + list+"&names="+names,
 					cache : false,
 					success : function(r) {
-					$("#img_list").treegrid('clearSelections'); // 清空选择状态
-					$("#img_list").treegrid('reload');
+					$("#img_list").datagrid('clearSelections'); // 清空选择状态
+					$("#img_list").datagrid('reload');
 					$.messager.show( {
 						msg : "删除成功！",
 						title : '提示'
@@ -239,7 +226,7 @@ $(function(){
 	$("#modifyImgWin").window("close") ;
 	$("#queryImgWin").window("close") ;
 	
-	$('#img_list').treegrid({
+	$('#img_list').datagrid({
 		url : 'img/getImgList', // 这里可以是个json文件，也可以是个动态页面，还可以是个返回json串的function
 		frozenColumns : [ [ {
 			field : 'ck',
@@ -251,7 +238,7 @@ $(function(){
 		striped : true,
 		pageSize : 25,
 		pageList : [ 5,25, 35, 45, 55 ],
-		nowrap : false,//可以换行显示
+		nowrap : true,
 		loadMsg : '数据加载中...请稍等',
 		pagination : true,
 		height : 'auto',
@@ -263,21 +250,6 @@ $(function(){
 		}
 	});
 	
-	
-	$("#function_type_add").combobox({
-		onSelect:function(obj){
-			var type = obj.value;
-			if(type=='2'){
-				$("#funtion_type_one_add").combobox({
-					disabled:false
-				})
-			}else if(type='1'){
-				$("#funtion_type_one_add").combobox({
-					disabled:true
-				})
-			}
-		}
-	});
 	
 }) ;
 

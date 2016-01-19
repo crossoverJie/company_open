@@ -37,4 +37,10 @@ public class LoginController {
 			}
 		}
 	}
+	
+	@RequestMapping("/loginOut")
+	public String loginOut(HttpServletRequest request){
+		request.getSession().removeAttribute("user") ;
+		return "../../login" ;
+	}
 }

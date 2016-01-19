@@ -62,4 +62,21 @@ public class ImgController {
 		imgService.insertSelective(img) ;
 		return "imgManger/imgList" ; 
 	}
+	
+	@RequestMapping("/delete")
+	public void delete(String ids,String names ,HttpServletResponse response,HttpServletRequest request) throws IOException{
+		String path = request.getSession().getServletContext().getRealPath("/"); 
+		String[] str_ids = ids.split(",") ;
+		String[] str_names = names.split(",") ;
+		for(String name : str_names){
+			File file = new File(path+"/"+name) ;
+			if(file.exists()){
+				file.delete() ;
+			}
+		}
+		for(String id : str_ids){
+			imgService.deleteByPrimaryKey(Integer.parseInt(id)) ;
+			response.getWriter().print("ture");
+		}
+	}
 }

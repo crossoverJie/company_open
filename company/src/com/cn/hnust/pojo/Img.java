@@ -65,7 +65,8 @@ public class Img {
 		this.parseDate = parseDate;
 	}
 	public String getUrl() {
-		String url = "<img scr='"+this.path+"' width='30px' height='30px' alt=''/>" ;
+//		String url = "<img scr='"+this.path+"' width='30px' height='30px' alt=''/>" ;
+		url = "<img alt='' src='"+this.path+"' style='height:100px; width:100px' />" ;
 		return url;
 	}
 	public void setUrl(String url) {
