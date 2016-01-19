@@ -7,9 +7,10 @@
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="img_size" property="img_size" jdbcType="VARCHAR" />
     <result column="create_date" property="create_date" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, NAME, path,img_size,create_date
+    ID, NAME, path,img_size,create_date,remark
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -41,6 +42,9 @@
       <if test="create_date != null" >
         create_date,
       </if>
+      <if test="remark != null" >
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       SEQ_T_Function.Nextval,
@@ -56,6 +60,9 @@
       <if test="create_date != null" >
         #{create_date,jdbcType=DATE},
       </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=DATE},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
@@ -69,6 +76,9 @@
       </if>
       <if test="create_date != null" >
        create_date= #{create_date,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+       remark= #{remark,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -97,6 +107,9 @@
     <if test="img_size != null" >
       and img_size like '%${img_size}%' 
     </if>
+    <if test="remark != null" >
+      and remark like '%${remark}%' 
+    </if>
     order by id desc
   </select>
   
@@ -115,6 +128,9 @@
     </if>
     <if test="img_size != null" >
       and img_size like '%${img_size}%' 
+    </if>
+    <if test="remark != null" >
+      and remark like '%${remark}%' 
     </if>
     order by id desc
   </select>
