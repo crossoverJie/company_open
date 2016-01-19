@@ -1,0 +1,39 @@
+-- Create table
+create table NEWS
+(
+  id          NUMBER not null,
+  title       VARCHAR2(500),
+  content     VARCHAR2(1000),
+  create_date DATE
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column NEWS.title
+  is '标题';
+comment on column NEWS.content
+  is '内容';
+comment on column NEWS.create_date
+  is '创建时间';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table NEWS
+  add constraint PK_T_NEWS primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );

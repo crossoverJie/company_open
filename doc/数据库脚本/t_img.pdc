@@ -1,0 +1,45 @@
+-- Create table
+create table T_IMG
+(
+  id          NUMBER not null,
+  name        VARCHAR2(1000),
+  path        VARCHAR2(500),
+  img_size    VARCHAR2(100),
+  create_date DATE,
+  remark      VARCHAR2(1000)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Add comments to the columns 
+comment on column T_IMG.name
+  is '名称';
+comment on column T_IMG.path
+  is '访问地址';
+comment on column T_IMG.img_size
+  is '大小';
+comment on column T_IMG.create_date
+  is '创建日期';
+comment on column T_IMG.remark
+  is '备注';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_IMG
+  add constraint PK_T_IMG primary key (ID)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
