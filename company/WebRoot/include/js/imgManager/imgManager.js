@@ -60,13 +60,7 @@ tabrs = [ {
 	handler : function() {
 		removeImg();
 	}
-}, '-', {
-	text : '编辑',
-	iconCls : 'icon-edit',
-	handler : function() {
-		modifyImg();
-	}
-} 
+}
 ];
 
 function queryImg(){
@@ -77,19 +71,14 @@ function add(){
 }
 
 function submitQuery(){
-	var function_name = $("#function_name_query").val() ;
-	var function_url = $("#function_url_query").val() ;
-	if(function_name==""){
-		function_name=undefined;
-	}
-	if(function_url ==""){
-		function_url=undefined;
+	var name = $("#img_name_query").val() ;
+	if(name==""){
+		name=undefined;
 	}
 	var json ={
-		"function_name":function_name,
-		"function_url":function_url
+		"name":name
 	};
-	$("#img_list").datagrid('options').url = 'function/getImgList';
+	$("#img_list").datagrid('options').url = 'img/getImgList';
 	$("#img_list").datagrid('options').queryParams = json;
 	$("#img_list").datagrid('load');
 	$('#queryImgWin').window("close");
@@ -169,12 +158,15 @@ function turnToAdd(){
 	var file = $("#file").val() ;
 	var index = file.lastIndexOf(".");
 	file = file.substring(index + 1);
+	alert(file == "jpg" || file == "gif" || file == "png") 
 	$("#addImgForm").submit(function(){
 		if( file == "jpg" || file == "gif" || file == "png" ){
+			alert("进入了图片");
 			return true;
 		}else{
-			alert("只能上传图片") ;
-//			$('#error').modal('show');
+//			alert("只能上传图片") ;
+			alert("没有进入了图片");
+			$('#error').modal('show');
 			return false ;
 		}
 	});

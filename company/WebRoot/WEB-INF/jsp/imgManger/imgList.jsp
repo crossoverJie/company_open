@@ -57,7 +57,7 @@
 				<br>
 				<tr>
 					<td class="thead">
-						<div align="center">角色名:</div></td>
+						<div align="center">名称:</div></td>
 					<td><input class="easyui-validatebox" id="img_name_query" />
 					</td>
 				</tr>
@@ -91,7 +91,7 @@
 				<input type="file" required  id="file" name="file">
 				<p class="help-block">请选择高度不超过512px的图片</p>
 			</div>
-			<button type="submit" onclick="turnToAdd();" class="btn btn-default">提交</button>
+			<button type="submit"  class="btn btn-default">提交</button>
 			<button type="reset" class="btn btn-danger">重置</button>
 		</form>
 		
@@ -115,35 +115,6 @@
 		
 	</div>
 
-	<div id="modifyImgWin" class="easyui-window" title="编辑数据"
-		data-options="iconCls:'icon-edit'">
-		<form id="modifyImgForm" method="post">
-			<table style="width: 450px; overflow: hidden;">
-				<tr>
-					<th>角色名</th>
-					<td><input type="text" id="img_name_edit"
-						style="width:200px;" />
-					</td>
-				</tr>
-				<tr>
-					<th>备注</th>
-					<td><input type="text" id="remark_edit" style="width:200px;" />
-					</td>
-				</tr>
-			</table>
-			<div style="padding:5px 0;text-align: center;color: red;"
-				id="showMsg_edit"></div>
-			<div style="text-align: center; padding: 8px;">
-				<a href="javascript:void(0)" id="edit_btn" class="easyui-linkbutton"
-					onclick="saveEdit()" iconCls="icon-ok">修 改</a> <a
-					href="javascript:void(0)" id="edit_cancel_btn"
-					class="easyui-linkbutton" onclick="closeWin('modifyImgWin')"
-					iconCls="icon-cancel">取消</a>
-			</div>
-		</form>
-	</div>
-	
-	
 
 </body>
 </html>
