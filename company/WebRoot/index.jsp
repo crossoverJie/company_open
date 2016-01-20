@@ -83,9 +83,10 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="demo-navbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">综述 <span class="sr-only">(current)</span>
+					<li class="active"><a href="#">science <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
+					<span class="sr-only">(current)</span>
 					</a></li>
-					<li><a href="#">简述</a></li>
+					<li><a href="#">basketball <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> </a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">特点 <span class="caret"></span> </a>
