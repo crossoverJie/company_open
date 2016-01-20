@@ -29,8 +29,9 @@
 	rel="stylesheet" />
 <link href="<%=path%>/include/css/frontskin.css" type="text/css"
 	rel="stylesheet" />
-<script src="<%=path%>/include/js/jquery/jquery-1.7.1.min.js"
-	type="text/javascript"></script>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="<%=path%>/include/js/jquery.easyui.min.js"
 	type="text/javascript"></script>
 <script src="<%=path%>/include/js/imgManager/imgManager.js"
@@ -43,6 +44,9 @@
 </head>
 
 <body>
+
+
+
 	<table id="img_list"></table>
 
 
@@ -84,13 +88,31 @@
 			</div>
 			<div class="form-group">
 				<label for="exampleInputFile">文件</label> 
-				<input type="file" required  id="exampleInputFile" name="file">
+				<input type="file" required  id="file" name="file">
 				<p class="help-block">请选择高度不超过512px的图片</p>
 			</div>
-			<button type="submit" class="btn btn-default">提交</button>
+			<button type="submit" onclick="turnToAdd();" class="btn btn-default">提交</button>
 			<button type="reset" class="btn btn-danger">重置</button>
 		</form>
-
+		
+		
+<div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">提示</h4>
+      </div>
+      <div class="modal-body">
+      	只能上传图片
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+		
 	</div>
 
 	<div id="modifyImgWin" class="easyui-window" title="编辑数据"
@@ -120,8 +142,8 @@
 			</div>
 		</form>
 	</div>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script
-		src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	
+
 </body>
 </html>

@@ -11,6 +11,7 @@ public class TreeGridUtil {
 	private List<TreeGridUtil> children ;
 
 	private String state ;//父节点的开启关闭状态
+	private boolean selected=false; //是否展开
 	
 	private Integer parent_id ;//父节点ID
 	
@@ -88,6 +89,14 @@ public class TreeGridUtil {
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 
 

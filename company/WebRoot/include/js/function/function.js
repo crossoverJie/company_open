@@ -58,6 +58,34 @@ tabrs = [ {
 		modifyFunction();
 	}
 }, '-', {
+	text : '展开',
+	iconCls : 'icon-redo',
+	handler : function() {
+		var node = $("#function_list").treegrid('getSelected');
+		if (node) {
+			$("#function_list").treegrid('expandAll', node.id);
+		} else {
+			$("#function_list").treegrid('expandAll');
+		}
+	}
+}, '-', {
+	text : '折叠',
+	iconCls : 'icon-undo',
+	handler : function() {
+		var node = $("#function_list").treegrid('getSelected');
+		if (node) {
+			$("#function_list").treegrid('collapseAll', node.id);
+		} else {
+			$("#function_list").treegrid('collapseAll');
+		}
+	}
+}, '-', {
+	text : '取消选中',
+	iconCls : 'icon-undo',
+	handler : function() {
+		$("#function_list").treegrid('unselectAll');
+	}
+}, '-', {
 	text : '刷新',
 	iconCls : 'icon-reload',
 	handler : function() {
@@ -280,10 +308,6 @@ $(function(){
 		url : 'function/getFunctionList', 
 	    idField:'id',    
 	    treeField:'name',   
-		frozenColumns : [ [ {
-			field : 'ck',
-			checkbox : true
-		} ] ],
 		rownumbers : true,
 		toolbar : tabrs,
 		loadMsg : '数据加载中...请稍等',

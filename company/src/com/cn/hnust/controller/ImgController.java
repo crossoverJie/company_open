@@ -71,7 +71,12 @@ public class ImgController {
 		for(String name : str_names){
 			File file = new File(path+"/"+name) ;
 			if(file.exists()){
-				file.delete() ;
+				try {
+					file.delete() ;
+					
+				} catch (Exception e) {
+					e.printStackTrace() ;
+				}
 			}
 		}
 		for(String id : str_ids){

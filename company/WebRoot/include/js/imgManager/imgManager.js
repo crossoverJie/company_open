@@ -166,21 +166,18 @@ function saveEdit(){
  * 新增用户之前的验证
  */
 function turnToAdd(){
-	var name =$("#name_add").val() ;
-	var remark = $("remark_add").val() ;
-	if(name =="" || remark == ""){
-		return ;
-	}
-	$('#addImgForm').form('submit', {    
-	    success:function(data){    
-	    	$("#img_list").datagrid('reload');	
-		  	$("#addImgWin").window("close") ;
-			$.messager.show( {
-				msg : '新增成功',
-				title : '提示'
-			});
-	    }    
-	});  
+	var file = $("#file").val() ;
+	var index = file.lastIndexOf(".");
+	file = file.substring(index + 1);
+	$("#addImgForm").submit(function(){
+		if( file == "jpg" || file == "gif" || file == "png" ){
+			return true;
+		}else{
+			alert("只能上传图片") ;
+//			$('#error').modal('show');
+			return false ;
+		}
+	});
 	
 }
 
