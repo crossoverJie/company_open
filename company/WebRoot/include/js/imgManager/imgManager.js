@@ -211,6 +211,21 @@ function removeImg() {
 }
 
 $(function(){
+	
+	$("#addImgForm").submit(function(){
+		var file = $("#file").val() ;
+		var index = file.lastIndexOf(".");
+		file = file.substring(index + 1);
+		if( file == "jpg" || file == "gif" || file == "png" ){
+			return true;
+		}else{
+//			alert("只能上传图片") ;
+			$('#error').modal('show');
+			return false ;
+		}
+	});
+	
+	
 	$("#addImgWin").window("close") ;
 	$("#modifyImgWin").window("close") ;
 	$("#queryImgWin").window("close") ;
