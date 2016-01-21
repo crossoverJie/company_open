@@ -73,7 +73,7 @@
 			<table style="overflow: hidden;width: 100%">
 				<tr>
 					<th>标题</th>
-					<td ><input type="text" id="news_name_add" /></td>
+					<td ><input type="text" id="news_name_add" style="width: 400px" /></td>
 				</tr>
 				<tr>
 					<th>内容</th>

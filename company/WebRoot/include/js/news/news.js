@@ -63,7 +63,7 @@ function queryNews(){
 }
 function add(){
 	$("#addNewsWin").window("open") ;
-	CKEDITOR.instances.content_add.setData("请输入内容"); 
+//	CKEDITOR.instances.content_add.setData("请输入内容"); 
 }
 
 function submitQuery(){

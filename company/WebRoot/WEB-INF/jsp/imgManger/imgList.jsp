@@ -34,6 +34,7 @@
 <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src="<%=path%>/include/js/jquery.easyui.min.js"
 	type="text/javascript"></script>
+<script src="<%=path%>/ckeditor/ckeditor.js" type="text/javascript"></script>
 <script src="<%=path%>/include/js/imgManager/imgManager.js"
 	type="text/javascript"></script>
 <script src="<%=path%>/include/js/easyui-lang-zh_CN.js"
@@ -90,6 +91,7 @@
 			<div class="form-group">
 				<label for="exampleInputPassword1">备注</label> 
 				<textarea class="form-control" name="remark" placeholder="备注" required></textarea>
+				<script type="text/javascript">CKEDITOR.replace('remark');</script>
 			</div>
 			<div class="form-group">
 				<label for="exampleInputFile">文件</label> 

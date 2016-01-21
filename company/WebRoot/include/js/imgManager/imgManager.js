@@ -13,7 +13,7 @@ datagridD = [{
 },{
 	field : 'path',
 	title : '图片地址',
-	width : 100,
+	width : 250,
 	align : 'center'
 },{
 	field : 'url',
