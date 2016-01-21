@@ -8,9 +8,10 @@
     <result column="img_size" property="img_size" jdbcType="VARCHAR" />
     <result column="create_date" property="create_date" jdbcType="DATE" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_index" property="is_index" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, NAME, path,img_size,create_date,remark
+    ID, NAME, path,img_size,create_date,remark,is_index
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -80,6 +81,9 @@
       <if test="remark != null" >
        remark= #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="is_index != null" >
+       is_index= #{is_index,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,6 +91,25 @@
   
   <select id="findAllCount" resultType="int">
   	select count(*) from t_img
+  	where 1=1
+  	<if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="name != null" >
+      and name like '%${name}%'
+    </if>
+    <if test="path != null" >
+      and path like '%${path}%' 
+    </if>
+    <if test="img_size != null" >
+      and img_size like '%${img_size}%' 
+    </if>
+    <if test="remark != null" >
+      and remark like '%${remark}%' 
+    </if>
+    <if test="is_index != null" >
+      and is_index =#{is_index,jdbcType=VARCHAR}
+    </if>
   </select>
   
   <!-- 查询 -->
@@ -110,6 +133,9 @@
     <if test="remark != null" >
       and remark like '%${remark}%' 
     </if>
+    <if test="is_index != null" >
+      and is_index =#{is_index,jdbcType=VARCHAR}
+    </if>
     order by id desc
   </select>
   
@@ -132,6 +158,45 @@
     <if test="remark != null" >
       and remark like '%${remark}%' 
     </if>
+    <if test="is_index != null" >
+      and is_index =#{is_index,jdbcType=VARCHAR}
+    </if>
     order by id desc
   </select>
+  
+  <!-- 用于首页的展示图片 -->
+  <select id="findByIndex" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
+	select *
+ 	 from (select my_table.*, rownum my_rownum
+          from (  	
+ 
+  	select <include refid="Base_Column_List" />
+  	from t_img
+  	where 1=1
+  	<if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="name != null" >
+      and name = #{name,jdbcType=DECIMAL}
+    </if>
+    <if test="path != null" >
+      and path like '%${path}%' 
+    </if>
+    <if test="img_size != null" >
+      and img_size like '%${img_size}%' 
+    </if>
+    <if test="remark != null" >
+      and remark like '%${remark}%' 
+    </if>
+    <if test="is_index != null" >
+      and is_index =#{is_index,jdbcType=VARCHAR}
+    </if>
+    order by id desc)
+    <![CDATA[ 
+    my_table
+         where rownum <= 6)
+ where my_rownum > 0
+ 	]]>
+  </select>
+  
 </mapper>

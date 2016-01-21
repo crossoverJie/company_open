@@ -60,8 +60,130 @@ tabrs = [ {
 	handler : function() {
 		removeImg();
 	}
+}, '-', {
+	text : '上首页',
+	iconCls : 'icon-thumb',
+	handler : function() {
+		upToIndex();
+	}
+}, '-', {
+	text : '取消首页',
+	iconCls : 'icon-down',
+	handler : function() {
+		downToIndex();
+	}
 }
 ];
+/**
+ *将图片选为首页展示 
+ */
+function upToIndex(){
+	var all = $('#img_list').datagrid("getData") ;
+	var is_index = 0 ;//表示所有数据中已经是首页的图片的数量
+	for ( var i = 0; i < all.total; i++) {
+		if(all.rows[i].is_index == "1"){
+			is_index = is_index+1 ;
+		}
+	}
+	if(is_index >=6){
+		$.messager.show({
+			msg : "已经有六张图片置顶了！",
+			title : '提示'
+		});
+		return ;
+	}
+	
+	
+	var list = new Array();
+	var rows = $('#img_list').datagrid('getSelections');
+	var selectNum = rows.length;
+	if((is_index + selectNum)>6 ){
+		var can = 6-is_index ;
+		$.messager.show({
+			msg : "最多只能置顶六张，您还可以选择"+can+"张",
+			title : '提示'
+		});
+		return ;
+	}
+	
+	if (rows.length != 0) {
+		$.messager.confirm('询问', '您确定要置顶所选中的数据吗?', function(answer) {
+			if (answer) {
+				for ( var i = 0; i < rows.length; i++) {
+					list.push(rows[i].id);
+					if(rows[i].is_index=="1"){
+						$.messager.show({
+							msg : "有已经是首页的图片，请重新选择！",
+							title : '提示'
+						});
+						return ;
+					};
+				}
+				$.ajax( {
+					type:"POST", 
+					url : 'img/upToIndex?ids=' + list,
+					cache : false,
+					success : function(r) {
+					$("#img_list").datagrid('clearSelections'); // 清空选择状态
+					$("#img_list").datagrid('reload');
+					$.messager.show( {
+						msg : "置顶成功！",
+						title : '提示'
+					});
+				}
+				});
+			}
+		});
+	} else {
+		$.messager.show( {
+			msg : '请至少选中一行!',
+			title : '提示'
+		});
+	}
+}
+
+/**
+ *将图片取消首页展示 
+ */
+function downToIndex(){
+
+	var list = new Array();
+	var rows = $('#img_list').datagrid('getSelections');
+	if (rows.length != 0) {
+		$.messager.confirm('询问', '您确定要置顶所选中的数据吗?', function(answer) {
+			if (answer) {
+				for ( var i = 0; i < rows.length; i++) {
+					list.push(rows[i].id);
+					if(rows[i].is_index !="1"){
+						$.messager.show({
+							msg : "有已经不是首页的图片，请重新选择！",
+							title : '提示'
+						});
+						return ;
+					};
+				}
+				$.ajax( {
+					type:"POST", 
+					url : 'img/downToIndex?ids=' + list,
+					cache : false,
+					success : function(r) {
+					$("#img_list").datagrid('clearSelections'); // 清空选择状态
+					$("#img_list").datagrid('reload');
+					$.messager.show( {
+						msg : "置顶成功！",
+						title : '提示'
+					});
+				}
+				});
+			}
+		});
+	} else {
+		$.messager.show( {
+			msg : '请至少选中一行!',
+			title : '提示'
+		});
+	}
+}
 
 function queryImg(){
 	$("#queryImgWin").window("open") ;
@@ -72,11 +194,16 @@ function add(){
 
 function submitQuery(){
 	var name = $("#img_name_query").val() ;
+	var is_index =$("#is_index_query").combobox("getValue") ;
 	if(name==""){
 		name=undefined;
 	}
+	if(is_index==""){
+		is_index=undefined;
+	}
 	var json ={
-		"name":name
+		"name":name,
+		"is_index":is_index
 	};
 	$("#img_list").datagrid('options').url = 'img/getImgList';
 	$("#img_list").datagrid('options').queryParams = json;
@@ -249,6 +376,11 @@ $(function(){
 		fit : true,
 		toolbar : tabrs,
 		border : false,
+		rowStyler: function(index,row){
+			if (row.is_index=='1'){
+				return 'background-color:#6293BB;color:#fff;';
+			}
+		},
 		onDblClickRow : function(rowIndex, rowData) {
 
 		}

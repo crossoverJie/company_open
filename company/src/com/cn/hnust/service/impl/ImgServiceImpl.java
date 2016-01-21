@@ -48,15 +48,15 @@ public class ImgServiceImpl implements IImgService {
 	}
 
 	@Override
-	public Page<Img> findByParams(Img u, int pageNo, int limit) {
+	public Page<Img> findByParams(Img i, int pageNo, int limit) {
 		Page<Img> page = new Page<Img>() ;
 		page.setPageNo(pageNo) ;
 		page.setLimit(limit) ;
 		int offset = page.getOffsets();
 		RowBounds rowBound = new RowBounds(offset, limit);
-		List<Img> news = dao.findByParams(u,rowBound);
+		List<Img> news = dao.findByParams(i,rowBound);
 		page.setRows(news);
-		int total = dao.findAllCount() ;
+		int total = dao.findAllCount(i) ;
 		page.setTotal(total) ;
 		if(offset >= page.getTotal()){
 			page.setPageNo(page.getTotalPages());
@@ -65,13 +65,17 @@ public class ImgServiceImpl implements IImgService {
 	}
 
 	@Override
-	public int findAllCount() {
-		return dao.findAllCount();
+	public int findAllCount(Img i) {
+		return dao.findAllCount(i);
 	}
 
 	@Override
 	public List<Img> findAll(Img n) {
 		return dao.findAll(n);
 	}
-
+	
+	@Override
+	public List<Img> findByIndex(Img i){
+		return dao.findByIndex(i) ;
+	}
 }

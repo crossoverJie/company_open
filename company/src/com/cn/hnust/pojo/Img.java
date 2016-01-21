@@ -13,6 +13,8 @@ public class Img {
 	private Date create_date ;
 	private String remark ;
 	
+	private String is_index ;//是否上首页滚动 1：上首页
+	
 	private String parseDate ;
 	
 	public Integer getId() {
@@ -71,5 +73,11 @@ public class Img {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getIs_index() {
+		return is_index;
+	}
+	public void setIs_index(String is_index) {
+		this.is_index = is_index;
 	}
 }

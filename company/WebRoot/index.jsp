@@ -127,37 +127,37 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div class="item active">
-				<img src="include/img/Chrome.jpg" alt="谷歌">
+				<img src="<%=path%>/${img0}" alt="谷歌">
 				<div class="carousel-caption">
 					<p>谷歌chrome浏览器被称为“GoogleChrome”，是一款开源软件。与当前Web浏览器有很大不同，GoogleChrome强化了地址栏和其他功能，访问网页更加方便，速度也更快。</p>
 				</div>
 			</div>
 			<div class="item">
-				<img src="include/img/Firefox.jpg" alt="火狐">
+				<img src="<%=path%>/${img1}" alt="火狐">
 				<div class="carousel-caption">
 					<p>Mozilla Firefox，中文名通常称为“火狐”，是一个开源网页浏览器，使用Gecko引擎（即非ie内核），可以在多种操作系统如Windows，Mac和linux上运行。Firefox由Mozilla基金会与数百个志愿者所开发，原名“Phoenix”（凤凰），之后改名“Mozilla Firebird”（火鸟），再改为现在的名字。2012年8月，在世界范围内，Firefox占据着23%的使用份额。</p>
 				</div>
 			</div>
 			<div class="item">
-				<img src="include/img/IE.jpg" alt="IE">
+				<img src="<%=path%>/${img2}" alt="IE">
 				<div class="carousel-caption">
 					<p>Internet Explorer，是美国微软公司推出的一款网页浏览器。原称Microsoft Internet Explorer(6版本以前)和Windows Internet Explorer(7、8、9、10、11版本)，简称IE。在IE7以前，中文直译为“网络探路者”，但在IE7以后官方便直接俗称"IE浏览器"。</p>
 				</div>
 			</div>
 			<div class="item">
-				<img src="include/img/Opera.jpg" alt="欧朋">
+				<img src="<%=path%>/${img3}" alt="欧朋">
 				<div class="carousel-caption">
 					<p>Opera浏览器，是一款挪威Opera Software ASA公司制作的支持多页面标签式浏览的网络浏览器，是跨平台浏览器可以在Windows、Mac和Linux三个操作系统平台上运行。Opera浏览器创始于1995年4月，到2015年8月6日，官方发布的个人电脑用的最新版本为Opera31。</p>
 				</div>
 			</div>
 			<div class="item">
-				<img src="include/img/Safari.jpg" alt="Safari">
+				<img src="<%=path%>/${img4}" alt="Safari">
 				<div class="carousel-caption">
 					<p>Safari，是苹果计算机的最新操作系统Mac OS X中的浏览器，使用了KDE的KHTML作为浏览器的运算核心。</p>
 				</div>
 			</div>
 			<div class="item">
-				<img src="include/img/Mactoxps.jpg" alt="Safari">
+				<img src="<%=path%>/${img5}" alt="Safari">
 				<div class="carousel-caption">
 					<p></p>
 				</div>
@@ -306,17 +306,15 @@
   </div>
 </div>
 
+<input type="hidden" id="msg" value="${msg}"/>
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="<%=path%>/js/index.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$(function(){
-			$("#demo-navbar .dropdown-menu a").click(function(){
-				var href = $(this).attr("href") ;
-				$("#tab-list a[href='"+href+"']").tab("show") ;
-			});
-		}) ;
+		
 	</script>
 </body>
 </html>

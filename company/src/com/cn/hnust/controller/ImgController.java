@@ -59,6 +59,7 @@ public class ImgController {
 		String strsize = df.format(dbsize) ;
 		img.setImg_size(strsize+"MB") ;
 		img.setCreate_date(new Date()) ;
+		img.setIs_index("0") ;//默认为 不是首页置顶
 		imgService.insertSelective(img) ;
 		return "imgManger/imgList" ; 
 	}
@@ -84,4 +85,40 @@ public class ImgController {
 			response.getWriter().print("ture");
 		}
 	}
+	
+	@RequestMapping("/upToIndex")
+	public void upToIndex(String ids,HttpServletResponse response){
+		String str_id[] = ids.split(",");
+		for (String str : str_id) {
+			Img img = new Img() ;
+			img.setId(Integer.parseInt(str)) ;
+			img.setIs_index("1") ;
+			imgService.updateByPrimaryKeySelective(img) ;
+		}
+		try {
+			response.getWriter().print("true") ;
+		} catch (Exception e) {
+			e.printStackTrace() ;
+		}
+	}
+	
+	@RequestMapping("/downToIndex")
+	public void downToIndex(String ids,HttpServletResponse response){
+		String str_id[] = ids.split(",");
+		for (String str : str_id) {
+			Img img = new Img() ;
+			img.setId(Integer.parseInt(str)) ;
+			img.setIs_index("0") ;
+			imgService.updateByPrimaryKeySelective(img) ;
+		}
+		try {
+			response.getWriter().print("true") ;
+		} catch (Exception e) {
+			e.printStackTrace() ;
+		}
+	}
+	
+	
+	
+	
 }

@@ -45,10 +45,7 @@
 
 <body>
 
-
-
 	<table id="img_list"></table>
-
 
 	<div id="queryImgWin" class="easyui-window" align="left" title="查询"
 		style="width:460px; height: 200px">
@@ -58,7 +55,15 @@
 				<tr>
 					<td class="thead">
 						<div align="center">名称:</div></td>
-					<td><input class="easyui-validatebox" id="img_name_query" />
+					<td><input class="easyui-validatebox" id="img_name_query" style="width: 100px"  />
+					</td>
+					<td class="thead">
+						<div align="center">是否首页:</div></td>
+					<td>
+						<select id="is_index_query" class="easyui-combobox" style="width: 100px">   
+						    <option value="0">否</option>   
+						    <option value="1">是</option>
+						</select> 
 					</td>
 				</tr>
 			</table>

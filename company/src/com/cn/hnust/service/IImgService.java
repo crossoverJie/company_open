@@ -19,7 +19,7 @@ public interface IImgService {
     
     Page<Img> findByParams(Img u,int pageNo,int limit) ;
 
-	int findAllCount();
+	int findAllCount(Img i);
 	List<Img> findAll(Img f) ;
-	
+	List<Img> findByIndex(Img i) ;
 }

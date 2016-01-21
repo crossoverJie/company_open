@@ -19,6 +19,10 @@
 	background:url('icons/password.png') no-repeat;
 }
 
+.icon-down{
+	background: url('icons/icon-down.jpg') no-repeat center center;
+}
+
 .icon-thumb{
 	
 	background:url('icons/thumb_up.png') no-repeat;

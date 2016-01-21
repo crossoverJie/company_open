@@ -20,7 +20,8 @@ public interface IImgDao {
     
     List<Img> findByParams(Img u,RowBounds rowBound) ;
 
-	int findAllCount();
+	int findAllCount(Img i);
 	List<Img> findAll(Img f) ;
 	
+	List<Img> findByIndex(Img i) ;
 }
