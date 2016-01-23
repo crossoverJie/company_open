@@ -169,7 +169,6 @@
 	select *
  	 from (select my_table.*, rownum my_rownum
           from (  	
- 
   	select <include refid="Base_Column_List" />
   	from t_img
   	where 1=1

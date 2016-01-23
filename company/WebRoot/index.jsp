@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -48,11 +49,11 @@
     		line-height: 1.8;
 	    		
     	}
-    	#summary-container .col-md-4{
-    		text-align: center;
-    	}
     	hr .divider{
     		margin: 40px 0;
+    	}
+    	.hr-right{
+    		margin: 80px 0 40px 80px;
     	}
     	.logo{
     		height: 500px;
@@ -61,6 +62,25 @@
     	
     	.logo-msg{
     		padding: 40px 0;
+    	}
+    	/**改变脚注的高度**/
+    	.panel-footer{
+    		height: 35px;
+    	}
+    	.panel-body p{
+	   		 overflow:hidden;
+	   		 text-overflow:ellipsis;
+	   		 -o-text-overflow:ellipsis;
+	   		 white-space:nowrap;
+	   		 width:100%;
+    	}
+    	/* 选择thumbnail类内部的所有img元素 */
+    	.thumbnail img{
+    		
+    	}
+    	/* 为热门主题面板加上470px的高度 */
+    	.panel-primary , .panel-danger{
+    		height: 470px;
     	}
     </style>
 </head>
@@ -83,7 +103,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="demo-navbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">science <span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 
+					<li class="active"><a href="#">science <span class="glyphicon glyphicon-phone" aria-hidden="true"></span> 
 					<span class="sr-only">(current)</span>
 					</a></li>
 					<li><a href="#">basketball <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> </a></li>
@@ -114,54 +134,33 @@
 		data-ride="carousel">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
-			<li data-target="#carousel-example-generic" data-slide-to="0"
-				class="active"></li>
-				
-			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-			<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-			<li data-target="#carousel-example-generic" data-slide-to="3"></li>
-			<li data-target="#carousel-example-generic" data-slide-to="4"></li>
-			<li data-target="#carousel-example-generic" data-slide-to="5"></li>
+			<c:forEach var="img" items="${imgs }" varStatus="status" >
+				<li data-target="#carousel-example-generic" data-slide-to="${status.index }"
+				class="
+					<c:if test="${status.index == 0}">
+					active
+					</c:if>
+				"
+				></li>
+			</c:forEach>
 		</ol>
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
-			<div class="item active">
-				<img src="<%=path%>/${img0}" alt="谷歌">
-				<div class="carousel-caption">
-					<p>${msg0 }</p>
+			<c:forEach var="img" items="${imgs }" varStatus="status" >
+				<div class="item
+					<c:if test="${status.index == 0}">
+					active
+					</c:if> 
+				">
+					<img src="<%=path%>/${img.path}" alt="Safari">
+					<div class="carousel-caption">
+						<p>${img.remark}</p>
+					</div>
 				</div>
-			</div>
-			<div class="item">
-				<img src="<%=path%>/${img1}" alt="火狐">
-				<div class="carousel-caption">
-					<p>${msg1 }</p>
-				</div>
-			</div>
-			<div class="item">
-				<img src="<%=path%>/${img2}" alt="IE">
-				<div class="carousel-caption">
-					<p>${msg2 }</p>
-				</div>
-			</div>
-			<div class="item">
-				<img src="<%=path%>/${img3}" alt="欧朋">
-				<div class="carousel-caption">
-					<p>${msg3 }</p>
-				</div>
-			</div>
-			<div class="item">
-				<img src="<%=path%>/${img4}" alt="Safari">
-				<div class="carousel-caption">
-					<p>${msg4 }</p>
-				</div>
-			</div>
-			<div class="item">
-				<img src="<%=path%>/${img5}" alt="Safari">
-				<div class="carousel-caption">
-					<p>${msg5}</p>
-				</div>
-			</div>
+				
+			</c:forEach>
+			
 		</div>
 		<!-- Controls -->
 		<a class="left carousel-control" href="#carousel-example-generic"
@@ -177,43 +176,149 @@
 <!-- 栅格系统 平均分三列 -->
 <div class="container" id="summary-container">
 
-	<!-- 分割线 -->
-	<hr class="divider"/>
+	<!-- 分割线暂时注释掉
+	<hr class="divider"/> -->
 	<div class="row">
-		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">${news_title0 }</div>
-					<div class="panel-body">
-					   ${news_content0 }
-					</div>
-				<div class="panel-footer">
-					<p class="text-right">
-						<button type="button" class="btn btn-default btn-xs" disabled="disabled">
-							<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-							2
-						</button>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-						12
-						
-					</p>
+		<div class="col-md-8">
+			<div class="panel panel-info">
+				<c:forEach var="ns" items="${news }" varStatus="status" >
 					
-				</div>
+					<div class="panel-heading ">
+					
+						<!-- 利用一个栅格系统向右偏移完成布局 -->
+						<div class="row">
+							<div class="col-md-6">
+								<b>${ns.title }</b>
+							</div>
+							<div class="col-md-4 col-md-offset-2">
+								<!-- text-muted：字体颜色的样式 -->
+								<p class="text-muted text-right">${ns.dateStr }
+								</p>
+							</div>
+						</div>
+						
+						
+					</div>
+						<div class="panel-body">
+							<a href="#" class="thumbnail">
+      							<img src="<%=path%>/upload/Stephen curry.jpg" alt="">
+    						</a>
+						   ${ns.content }...
+						</div>
+					<div class="panel-footer">
+						<p class="text-right">
+							<button type="button" class="btn btn-default btn-xs" >
+								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+								2
+							</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+							12
+							
+						</p>
+					</div>
+				<hr class="divider"/>
+					
+				</c:forEach>
+				
+				
 			</div>
 			
+			
+		</div>
+		<div class="col-md-4">
+			
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					热门帖子
+				</div>
+			  	<div class="panel-body">
+			    Basic panel example
+			  	</div>
+			</div>
+			
+			<hr class="hr-right"/>
+			
+			<div class="panel panel-danger">
+				<div class="panel-heading">
+					活跃用户
+				</div>
+			  	<div class="panel-body">
+			    Basic panel example
+			  	</div>
+			</div>
+			
+			<hr class="hr-right"/>
+			
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					活跃用户
+				</div>
+			  	<div class="panel-body">
+			    Basic panel example
+			  	</div>
+			</div>
 			
 		</div>
 	</div>
 
 
+<!-- 分页 -->
+<nav class="text-right">
+  <ul class="pagination pagination-lg">
+    <li class="
+    	<c:if test="${currentpage == 1}">
+			disabled
+		</c:if>
+    ">
+      <a  href="<%=path%>/index/turnToIndex/${currentpage -1}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="
+    	<c:if test="${currentpage == 1}">
+			active
+		</c:if>
+    "><a href="<%=path%>/index/turnToIndex/1">1</a></li>
+    
+    <li class="
+    	<c:if test="${currentpage == 2}">
+			active
+		</c:if>
+    "><a href="<%=path%>/index/turnToIndex/2">2</a></li>
+    
+    <li class="
+    	<c:if test="${currentpage == 3}">
+			active
+		</c:if>
+    "><a href="<%=path%>/index/turnToIndex/3">3</a></li>
+    
+    <li class="
+    	<c:if test="${currentpage == 4}">
+			active
+		</c:if>
+    "><a href="<%=path%>/index/turnToIndex/4">4</a></li>
+    
+    <li class="
+    	<c:if test="${currentpage == 5}">
+			active
+		</c:if>
+    "><a href="<%=path%>/index/turnToIndex/5">5</a></li>
+    
+    <li><a href="#">.....</a></li>
+    
+    <li>
+      <a href="<%=path%>/index/turnToIndex/${currentpage +1}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
 
 	<!-- 分割线 -->
 	<hr class="divider"/>
-	<footer>
-		<p class="pull-right" ><a href="#top">回到顶部</a></p>
-		<p>© 2016 crossoverJie</p>
-	</footer>
+	
 	
 
 </div>
@@ -242,6 +347,16 @@
   </div>
 </div>
 
+<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
+  <div class="container">
+  	<footer>
+		<p class="pull-right" ><a href="#top" class="btn btn-default">
+			<span class="glyphicon glyphicon-circle-arrow-up"></span>
+		</a></p>
+		<p>© 2016 crossoverJie</p>
+	</footer>
+  </div>
+</nav>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

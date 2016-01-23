@@ -11,6 +11,10 @@
     ID, title, content,create_date
   </sql>
   
+  <sql id="Base_Column_List_substr">
+    ID, title, substr(content,'0','200') as content,create_date   
+  </sql>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -70,6 +74,16 @@
   
   <select id="findAllCount" resultType="int">
   	select count(*) from news
+  	where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="title != null" >
+      and title like '%${title}%'
+    </if>
+    <if test="content != null" >
+      and content like '%${content}%' 
+    </if>
   </select>
   
   <!-- 查询 -->
@@ -91,7 +105,11 @@
   </select>
   
   <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
-  	select <include refid="Base_Column_List" />
+	   <if test="startIndex != null">
+			select * from (select
+			my_table.*, rownum my_rownum from (
+	   </if>
+  	select <include refid="Base_Column_List_substr" />
   	from news
   	where 1=1
   	<if test="id != null" >
@@ -104,5 +122,11 @@
       and content like '%${content}%' 
     </if>
     order by id desc
+   
+   <if test="startIndex != null">
+	    <![CDATA[  
+	   ) my_table where rownum <= #{endIndex} ) where my_rownum > #{startIndex}
+	   ]]>
+   </if>
   </select>
 </mapper>

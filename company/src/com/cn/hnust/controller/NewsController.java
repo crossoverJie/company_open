@@ -13,11 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSON;
 import com.cn.hnust.pojo.News;
 import com.cn.hnust.service.INewsService;
+import com.cn.hnust.util.AbstractController;
 import com.cn.hnust.util.Page;
 
 @Controller
 @RequestMapping("/news")
-public class NewsController {
+public class NewsController extends AbstractController {
 
 	@Resource
 	private INewsService newsService ;
