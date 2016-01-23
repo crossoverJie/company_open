@@ -35,4 +35,7 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+	//以下两句代码是为了实现ckeditor的图片上传功能。
+	config.image_previewText=' '; //预览区域显示内容
+	config.filebrowserImageUploadUrl= "img/uploadImgByCkeditor"; //待会要上传的action或servlet
 };
