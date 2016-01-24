@@ -126,6 +126,41 @@
 					</div>
 					<button type="submit" class="btn btn-default">查询</button>
 				</form>
+				
+				<ul class="nav navbar-right">
+					<c:choose>
+						<c:when test="${empty user}">
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Login In/Register<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a class="btn btn-default" data-toggle="modal" data-target="#login">登录
+									<span class="glyphicon glyphicon-home"></span></a></li>
+									<li role="separator" class="divider"></li>
+									<li>
+									<a class="btn btn-warning" data-toggle="modal" data-target="#register">注册
+									<span class="glyphicon glyphicon-user"></span></a></li>
+								</ul>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="dropdown">
+							<a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">${user.username } <span class="caret"></span> </a>
+								<ul class="dropdown-menu">
+									<li>
+									<a href="">设置<span class="glyphicon glyphicon-cog"></span></a>
+									<a href="<%=path %>/login/loginOut?type=1" >退出<span class="glyphicon glyphicon-off"></span></a>
+									</li>
+								</ul>
+							</li>
+						</c:otherwise>
+					</c:choose>
+					
+				</ul>
+				
 			</div>
 		</div>
 	</nav>
@@ -172,7 +207,7 @@
 			<span class="sr-only">下一页</span> </a>
 	</div>
 	
-	
+	<hr/>
 <!-- 栅格系统 平均分三列 -->
 <div class="container" id="summary-container">
 
@@ -324,7 +359,7 @@
 </div>
 
 
-<!-- 弹出框 模态框 -->
+<!-- 弹出框 模态框关于 -->
 <div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -342,6 +377,75 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 弹出框 模态框登录 -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_login">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel_login">登录</h4>
+      </div>
+      <div class="modal-body">
+			<form method="post">
+			  <div class="form-group">
+			    <label for="exampleInputEmail1">邮箱</label>
+			    <input type="email" required="required" class="form-control" id="exampleInputEmail1" placeholder="邮箱">
+			  </div>
+			  <div class="form-group">
+			    <label for="exampleInputPassword1">密码</label>
+			    <input type="password" required="required" class="form-control" id="exampleInputPassword1" placeholder="密码">
+			  </div>
+			  <div class="modal-footer">
+				  <button type="submit" class="btn btn-primary">登录</button>
+			      <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+		      </div>
+			</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 弹出框 模态框注册 -->
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_register">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel_register">注册</h4>
+      </div>
+      <div class="modal-body">
+			<form method="post" id="registerUserForm" action="">
+				<div class="form-group">
+			    <label for="exampleInputEmail1">邮箱</label>
+			    <input type="email" required="required" class="form-control" id="register-email" placeholder="邮箱">
+			  </div>
+			  <div class="form-group">
+				<label for="registerUserName">用户名</label>
+				<input type="text" class="form-control" id="registerUserName" required="required"
+				min="1" maxlength="20" placeholder="用户名(1-20位中英文、数字。下划线)"/>
+			  </div>
+			  
+			  <div class="form-group " id="div-password1">
+			    <label for="exampleInputPassword1">密码</label>
+			    <input type="password" required="required" class="form-control" id="password1" 
+			    min="6" maxlength="20" placeholder="密码(6-20位数字、英文)">
+			    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+			  </div>
+			  <div class="form-group" id="div-password2">
+			    <label for="exampleInputPassword2">确认密码</label>
+			    <input type="password" required="required" class="form-control" id="password2" placeholder="确认密码">\
+				<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>			    
+			  </div>
+			  <div class="modal-footer">
+				  <button type="submit" class="btn btn-primary">注册</button>
+			      <button type="reset" class="btn btn-danger" >重置</button>
+		      </div>
+			</form>
       </div>
     </div>
   </div>

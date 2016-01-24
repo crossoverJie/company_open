@@ -23,5 +23,5 @@ public interface IUserDao {
     
     List<User> findByParams(User u,RowBounds rowBound) ;
 
-	int findAllCount();
+	int findAllCount(User u);
 }

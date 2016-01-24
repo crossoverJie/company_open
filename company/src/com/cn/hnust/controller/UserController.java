@@ -140,4 +140,6 @@ public class UserController {
 		session.removeAttribute("user") ;
 		return "redirect:../login.jsp" ;
 	}
+	
+
 }

@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
 		
 		List<User> users = userDao.findByParams(u,rowBound);
 		page.setRows(users);
-		int total = userDao.findAllCount() ;
+		int total = userDao.findAllCount(u) ;
 		page.setTotal(total) ;
 		if(offset >= page.getTotal()){
 			page.setPageNo(page.getTotalPages());
@@ -62,6 +62,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public int updateByPrimaryKeySelective(User record) {
 		return userDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int findAllCount(User u) {
+		// TODO Auto-generated method stub
+		return userDao.findAllCount(u) ;
 	}
 	
 }

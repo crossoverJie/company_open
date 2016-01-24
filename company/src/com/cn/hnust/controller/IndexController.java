@@ -1,9 +1,13 @@
 package com.cn.hnust.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cn.hnust.pojo.Img;
 import com.cn.hnust.pojo.News;
+import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
+import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.AbstractController;
 
 @Controller
@@ -25,6 +31,9 @@ public class IndexController extends AbstractController {
 	
 	@Resource
 	private INewsService newService ;
+	
+	@Resource
+	private IUserService userService;
 	
 	@RequestMapping("/turnToIndex/{pageNum}")
 	public String trunToIndex(@PathVariable int pageNum,Model model){
@@ -45,5 +54,17 @@ public class IndexController extends AbstractController {
 		model.addAttribute("currentpage", pageNum) ;
 		
 		return "../../index" ;
+	}
+	
+	@RequestMapping("/checkEmail")
+	public void checkEmail(User u,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8") ;
+		response.setContentType("html/text") ;
+		int count = userService.findAllCount(u) ;
+		if(count ==0){
+			response.getWriter().print("true") ;
+		}else {
+			response.getWriter().print("false") ;
+		}
 	}
 }

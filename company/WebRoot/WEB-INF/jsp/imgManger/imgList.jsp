@@ -111,7 +111,7 @@
         <h4 class="modal-title" id="myModalLabel">提示</h4>
       </div>
       <div class="modal-body">
-      	只能上传图片
+      	只能上传jpg、png、gif类型的图片
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

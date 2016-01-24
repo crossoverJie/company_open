@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class User {
     private Integer id;
+    private String email ;
     private String username;
     private String password;
     private String realname ;
@@ -88,6 +89,14 @@ public class User {
 
 	public void setRolename(String rolename) {
 		this.rolename = rolename;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

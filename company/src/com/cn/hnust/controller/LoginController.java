@@ -39,8 +39,15 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/loginOut")
-	public String loginOut(HttpServletRequest request){
+	public String loginOut(HttpServletRequest request,String type,Model model){
 		request.getSession().removeAttribute("user") ;
-		return "../../login" ;
+//		0代表后台管理注销 1代表普通用户注销
+		if(type.equals("0")){
+			return "../../login" ;
+		}else{
+			return "redirect:../index/turnToIndex/1" ;
+		}
 	}
+	
+
 }

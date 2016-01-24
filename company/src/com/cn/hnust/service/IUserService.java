@@ -11,4 +11,5 @@ public interface IUserService {
 	public Page<User> findByParams(User u,int pageNo,int limit) ;
 	int deleteByPrimaryKey(Integer id);
 	int updateByPrimaryKeySelective(User record);
+	int findAllCount(User u) ;
 }

@@ -9,9 +9,10 @@
     <result column="role_id" property="role_id" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="last_date" property="last_date" jdbcType="DATE" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK
+    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -26,18 +27,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.cn.hnust.pojo.User" >
-    insert into t_user (ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK)
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{age,jdbcType=INTEGER})
-  </insert>
   
   <insert id="insertSelective" parameterType="com.cn.hnust.pojo.User" >
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      
        id,
-     
       <if test="username != null" >
         username,
       </if>
@@ -55,6 +49,9 @@
       </if>
       <if test="last_date != null" >
         last_date,
+      </if>
+      <if test="email != null" >
+        email,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -76,6 +73,9 @@
       </if>
       <if test="last_date != null" >
         #{last_date,jdbcType=DATE},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -100,6 +100,9 @@
       <if test="last_date != null" >
         last_date = #{last_date,jdbcType=DATE},
       </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -119,11 +122,28 @@
     <if test="password != null" >
       and password = #{password,jdbcType=DECIMAL}
     </if>
+    <if test="email != null" >
+      and email = #{email,jdbcType=VARCHAR} 
+    </if>
     order by id desc
   </select>
   
-  <select id="findAllCount" resultType="int">
-  	select count(*) from t_user
+  <select id="findAllCount" resultType="int" parameterType="map">
+  	select count(*) from t_user 
+  	where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="username != null" >
+      and username like '%${username}%' 
+    </if>
+    <if test="realname != null" >
+      and realname like '%${realname}%' 
+    </if>
+    <if test="email != null" >
+      and email = #{email,jdbcType=VARCHAR} 
+    </if>
+    order by id desc
   </select>
   
   <!-- 查询 -->
@@ -141,14 +161,10 @@
     <if test="realname != null" >
       and realname like '%${realname}%' 
     </if>
+    <if test="email != null" >
+      and email = #{email,jdbcType=VARCHAR} 
+    </if>
     order by id desc
   </select>
   
-  <update id="updateByPrimaryKey" parameterType="com.cn.hnust.pojo.User" >
-    update t_user
-    set user_name = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 </mapper>

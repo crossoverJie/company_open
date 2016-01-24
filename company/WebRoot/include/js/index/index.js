@@ -35,5 +35,5 @@ function getMain(obj,url){
 }
 
 function loginOut(){
-	window.location="login/loginOut" ;
+	window.location="login/loginOut?type=0" ;
 }
