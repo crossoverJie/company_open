@@ -2,6 +2,7 @@ package com.cn.hnust.controller;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,6 +22,7 @@ import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.AbstractController;
+import com.sun.org.apache.regexp.internal.recompile;
 
 @Controller
 @RequestMapping("/index")
@@ -56,8 +58,19 @@ public class IndexController extends AbstractController {
 		return "../../index" ;
 	}
 	
-	@RequestMapping("/checkEmail")
-	public void checkEmail(User u,HttpServletResponse response) throws IOException{
+	/**
+	 * 
+	 * @Description: 检查用户名或者是邮箱是否重复
+	 * @param @param u
+	 * @param @param response
+	 * @param @throws IOException   
+	 * @return void  
+	 * @throws
+	 * @author chj
+	 * @date 2016-1-24  下午1:08:17
+	 */
+	@RequestMapping("/checkIsRepeat")
+	public void checkIsRepeat(User u,HttpServletResponse response) throws IOException{
 		response.setCharacterEncoding("utf-8") ;
 		response.setContentType("html/text") ;
 		int count = userService.findAllCount(u) ;
@@ -67,4 +80,28 @@ public class IndexController extends AbstractController {
 			response.getWriter().print("false") ;
 		}
 	}
+	
+	@RequestMapping("/register")
+	public String register(User u,HttpServletRequest request) throws IOException{
+		userService.createUser(u) ;
+//		注册完之后直接登录
+		request.getSession().setAttribute("user", u) ;
+//		重定向到首页
+		return "redirect:../index/turnToIndex/1" ;
+	}
+	
+	@RequestMapping("/login")
+	public void login(User u,HttpServletRequest request,HttpServletResponse response) throws IOException{
+		User user = userService.findByLogin(u) ;
+		response.setContentType("text/html");
+	    response.setCharacterEncoding("utf-8");
+		if(user != null){
+			request.getSession().setAttribute("user", user) ;
+			response.getWriter().print("true") ;
+//			return "redirect:../index/turnToIndex/1" ;
+		}else {
+		    response.getWriter().print("false") ;
+		}
+	}
+	
 }

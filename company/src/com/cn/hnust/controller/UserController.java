@@ -23,6 +23,7 @@ import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.IRoleService;
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.Page;
+import com.sun.org.apache.regexp.internal.recompile;
 
 @Controller
 @RequestMapping("/user")
@@ -32,6 +33,13 @@ public class UserController {
 	
 	@Resource
 	private IRoleService roleService ;
+	
+	@RequestMapping("/frontUserSet/{id}")
+	public String frontUserSet(@PathVariable int id,Model model){
+		User user = userService.getUserById(id) ;
+		model.addAttribute("currentUser", user) ;
+		return "front/user/userSet" ;
+	}
 	
 	@RequestMapping("/showUser")
 	public String toIndex(HttpServletRequest request,Model model){
@@ -140,6 +148,8 @@ public class UserController {
 		session.removeAttribute("user") ;
 		return "redirect:../login.jsp" ;
 	}
+	
+	
 	
 
 }

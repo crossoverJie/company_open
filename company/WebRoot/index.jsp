@@ -107,7 +107,8 @@
 					<span class="sr-only">(current)</span>
 					</a></li>
 					<li><a href="#">basketball <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> </a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
+					<li class="dropdown">
+					<a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">特点 <span class="caret"></span> </a>
 						<ul class="dropdown-menu">
@@ -127,22 +128,13 @@
 					<button type="submit" class="btn btn-default">查询</button>
 				</form>
 				
-				<ul class="nav navbar-right">
+				<ul class="nav navbar-nav navbar-right">
 					<c:choose>
 						<c:when test="${empty user}">
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Login In/Register<span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a class="btn btn-default" data-toggle="modal" data-target="#login">登录
+						<li><a href="javascriot:void(0)" data-toggle="modal" data-target="#login">登录
 									<span class="glyphicon glyphicon-home"></span></a></li>
-									<li role="separator" class="divider"></li>
-									<li>
-									<a class="btn btn-warning" data-toggle="modal" data-target="#register">注册
+						<li><a href="javascriot:void(0)" data-toggle="modal" data-target="#register">注册
 									<span class="glyphicon glyphicon-user"></span></a></li>
-								</ul>
-							</li>
 						</c:when>
 						<c:otherwise>
 							<li class="dropdown">
@@ -151,7 +143,7 @@
 								aria-expanded="false">${user.username } <span class="caret"></span> </a>
 								<ul class="dropdown-menu">
 									<li>
-									<a href="">设置<span class="glyphicon glyphicon-cog"></span></a>
+									<a href="<%=path%>/user/frontUserSet/${user.id}">设置<span class="glyphicon glyphicon-cog"></span></a>
 									<a href="<%=path %>/login/loginOut?type=1" >退出<span class="glyphicon glyphicon-off"></span></a>
 									</li>
 								</ul>
@@ -391,18 +383,18 @@
         <h4 class="modal-title" id="myModalLabel_login">登录</h4>
       </div>
       <div class="modal-body">
-			<form method="post">
+			<form id="loginForm" method="post" >
 			  <div class="form-group">
-			    <label for="exampleInputEmail1">邮箱</label>
-			    <input type="email" required="required" class="form-control" id="exampleInputEmail1" placeholder="邮箱">
+			    <label for="exampleInputEmail1">用户名</label>
+			    <input type="email" name="email" required="required" class="form-control" id="login-name" placeholder="用户名">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">密码</label>
-			    <input type="password" required="required" class="form-control" id="exampleInputPassword1" placeholder="密码">
+			    <input type="password" name="password" required="required" class="form-control" id="login-password" placeholder="密码">
 			  </div>
 			  <div class="modal-footer">
-				  <button type="submit" class="btn btn-primary">登录</button>
-			      <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+				  <button type="button" onclick="login();" class="btn btn-primary">登录</button>
+			      <button type="reset" class="btn btn-danger">重置</button>
 		      </div>
 			</form>
       </div>
@@ -419,27 +411,27 @@
         <h4 class="modal-title" id="myModalLabel_register">注册</h4>
       </div>
       <div class="modal-body">
-			<form method="post" id="registerUserForm" action="">
-				<div class="form-group">
-			    <label for="exampleInputEmail1">邮箱</label>
-			    <input type="email" required="required" class="form-control" id="register-email" placeholder="邮箱">
-			  </div>
-			  <div class="form-group">
-				<label for="registerUserName">用户名</label>
-				<input type="text" class="form-control" id="registerUserName" required="required"
+			<form method="post" id="registerUserForm" action="<%=path%>/index/register">
+			  
+			  <div class="form-group" id="div-username">
+				<label for="register-username">用户名</label>
+				<input type="text" name="username" class="form-control" id="register-username" required="required"
 				min="1" maxlength="20" placeholder="用户名(1-20位中英文、数字。下划线)"/>
+			  </div>
+			  <div class="form-group" id="div-email">
+			    <label for="register-email">邮箱</label>
+			    <input type="email" name="email" required="required" class="form-control" id="register-email" placeholder="邮箱">
 			  </div>
 			  
 			  <div class="form-group " id="div-password1">
 			    <label for="exampleInputPassword1">密码</label>
-			    <input type="password" required="required" class="form-control" id="password1" 
+			    <input type="password" required="required" class="form-control" id="password1" name="password"
 			    min="6" maxlength="20" placeholder="密码(6-20位数字、英文)">
-			    <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
 			  </div>
 			  <div class="form-group" id="div-password2">
 			    <label for="exampleInputPassword2">确认密码</label>
 			    <input type="password" required="required" class="form-control" id="password2" placeholder="确认密码">\
-				<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>			    
+							    
 			  </div>
 			  <div class="modal-footer">
 				  <button type="submit" class="btn btn-primary">注册</button>
