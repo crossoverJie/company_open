@@ -11,6 +11,11 @@ datagridD = [{
 	title : '用户名',
 	width : 200,
 	align : 'center'
+}, {
+	field : 'email',
+	title : '邮箱',
+	width : 200,
+	align : 'center'
 },{
 	field : 'realname',
 	title : '真实姓名',

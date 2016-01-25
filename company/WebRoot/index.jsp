@@ -97,7 +97,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">咨询网 </a>
+				<a class="navbar-brand" href="<%=path %>/index/turnToIndex/1">咨询网 </a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -143,8 +143,8 @@
 								aria-expanded="false">${user.username } <span class="caret"></span> </a>
 								<ul class="dropdown-menu">
 									<li>
-									<a href="<%=path%>/user/frontUserSet/${user.id}">设置<span class="glyphicon glyphicon-cog"></span></a>
-									<a href="<%=path %>/login/loginOut?type=1" >退出<span class="glyphicon glyphicon-off"></span></a>
+									<a href="<%=path%>/user/frontUserSet/${user.id}">个人设置<span class="glyphicon glyphicon-cog"></span></a>
+									<a href="<%=path %>/login/loginOut?type=1" >退出登录<span class="glyphicon glyphicon-off"></span></a>
 									</li>
 								</ul>
 							</li>
@@ -156,6 +156,18 @@
 			</div>
 		</div>
 	</nav>
+	
+	<!-- 底部导航栏 -->
+<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
+  <div class="container">
+  	<footer>
+		<p class="pull-right" ><a href="#top" class="btn btn-default">
+			<span class="glyphicon glyphicon-circle-arrow-up"></span>
+		</a></p>
+		<p>© 2016 crossoverJie</p>
+	</footer>
+  </div>
+</nav>
 
 	<div id="carousel-example-generic" class="carousel slide"
 		data-ride="carousel">
@@ -443,16 +455,7 @@
   </div>
 </div>
 
-<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
-  <div class="container">
-  	<footer>
-		<p class="pull-right" ><a href="#top" class="btn btn-default">
-			<span class="glyphicon glyphicon-circle-arrow-up"></span>
-		</a></p>
-		<p>© 2016 crossoverJie</p>
-	</footer>
-  </div>
-</nav>
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

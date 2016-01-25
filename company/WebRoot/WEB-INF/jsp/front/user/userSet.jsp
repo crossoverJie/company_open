@@ -18,6 +18,7 @@
 <!-- Bootstrap -->
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="<%=path %>/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -79,8 +80,11 @@
     		
     	}
     	/* 为热门主题面板加上470px的高度 */
-    	.panel-primary , .panel-danger{
+    	.panel-primary , .panel-danger ,.panel-info{
     		height: 470px;
+    	}
+    	#baseSetTable tr .td-head{
+    		width: 100px;
     	}
     </style>
 </head>
@@ -97,7 +101,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">咨询网 </a>
+				<a class="navbar-brand" href="<%=path %>/index/turnToIndex/1">咨询网 </a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -143,8 +147,8 @@
 								aria-expanded="false">${user.username } <span class="caret"></span> </a>
 								<ul class="dropdown-menu">
 									<li>
-									<a href="">设置<span class="glyphicon glyphicon-cog"></span></a>
-									<a href="<%=path %>/login/loginOut?type=1" >退出<span class="glyphicon glyphicon-off"></span></a>
+									<a href="<%=path%>/user/frontUserSet/${user.id}">个人设置<span class="glyphicon glyphicon-cog"></span></a>
+									<a href="<%=path %>/login/loginOut?type=1" >退出登录<span class="glyphicon glyphicon-off"></span></a>
 									</li>
 								</ul>
 							</li>
@@ -158,14 +162,98 @@
 	</nav>
 	
 	<hr/>
-<!-- 栅格系统 平均两列 -->
-
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<img src="<%=path %>/include/img/person.gif" class="img-responsive center-block img-circle" alt="Responsive image">
+			</div>
+		</div>
+	</div>
+	<hr/>
+<!-- 栅格系统 -->
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-4">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					设置
+				</div>
+				<div class="panel-body">
+					<ul>
+						<li>
+						<a class="btn" role="button">
+						<h3>基本设置</h3>
+						</a>
+						</li>
+						<li>
+						<a class="btn" role="button">
+						<h4>修改密码</h4>
+						</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 		
 		<div class="col-md-8">
+			  <ul class="nav nav-tabs" role="tablist" id="tab-list">
+			    <li role="presentation" class="active"><a href="#baseSet" aria-controls="home" role="tab" data-toggle="tab">基本设置</a></li>
+			    <li role="presentation"><a href="#updatePassword" aria-controls="profile" role="tab" data-toggle="tab">修改密码</a></li>
+			  </ul>
+			  
+			  <div class="tab-content">
+		    	<div role="tabpanel" class="tab-pane active" id="baseSet">
+		    		<div class="panel panel-info">
+				<table class="table" id="baseSetTable">
+					<tr>
+						<td class="td-head"><h4>性别</h4></td>
+						<td>
+							<h4><input type="radio" name="sex">男&nbsp;&nbsp;&nbsp;
+								<input type="radio" name="sex">女
+							</h4>
+						</td>
+					</tr>
+					<tr>
+						<td class="td-head"><h4>简介</h4></td>
+						<td>
+							<h4><input type="text" class="form-control " /></h4>
+						</td>
+					</tr>
+					<tr>
+						<td class="td-head"><h4>居住地</h4></td>
+						<td>
+							<select class="form-control input-sm" style="width: 200px">
+								
+							</select>
+							<select class="form-control input-sm" style="width: 200px">
+								
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="td-head"><h4>生日</h4></td>
+						<td>
+							<input type="text" class="form-control" style="width: 200px" readonly="readonly" id="birthday"/>
+						</td>
+					</tr>
+				</table>
+			</div>
+		        </div>
+			    <div role="tabpanel" class="tab-pane" id="updatePassword">
+			    	<div class="container">
+			    		<div class="row">
+			    			<div class="col-md-7">
+			    				<img src="include/img/Firefox.jpg" class="img-circle logo" alt="谷歌">
+			    			</div>
+			    			<div class="col-md-5">
+			    				<p class="logo-msg">Mozilla Firefox，中文俗称“火狐”（正式缩写为Fx或fx，非正式缩写为FF），是一个自由及开放源代码网页浏览器，使用Gecko排版引擎，支持多种操作系统，如Windows、Mac OS X及GNU/Linux等。该浏览器提供了两种版本，普通版和ESR（Extended Support Release，延长支持）版，ESR版本是 Mozilla 专门为那些无法或不愿每隔六周就升级一次的企业打造。Firefox ESR 版的升级周期为 42 周，而普通 Firefox 的升级周期为 6 周。</p>			
+			    			</div>
+			    		</div>
+			    	</div>
+			    </div>
+  			</div>
+  
+  
 		</div>
 	</div>
 </div>
@@ -210,6 +298,7 @@
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="<%=path%>/js/index.js" type="text/javascript"></script>
+	<script src="<%=path%>/js/userSet.js" type="text/javascript"></script>
+	<script type="text/javascript" src="<%=path %>/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 </body>
 </html>

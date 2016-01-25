@@ -67,21 +67,21 @@ $(function(){
 			$("#password2").after("<span class='glyphicon glyphicon-remove form-control-feedback' aria-hidden='true'></span>") ;
 			return false ;
 		}
+//		判断目前是否重复的用户名或者是邮箱 有的话就不让提交
+		var email_class = $("#div-email span").attr("class") ;
+		var username_class =$("#div-username span").attr("class") ;
+		if(email_class.indexOf("glyphicon-remove") >0 || username_class.indexOf("glyphicon-remove") >0  ){
+			return false ;
+		}
+		
 	});
 	
-	$("#loginForm").submit(function(){
-        $.ajax({
-			type:"POST", 
-			url : '../../index/login',
-			data : $(this).serialize(),
-			success : function(r) {
-				alert("00000");
-			}
-		});
-	});
 	
 });
 
+/**
+ * 登录的方法
+ */
 function login(){
 	var username = $("#login-name").val() ;
 	var password = $("#login-password").val() ;
@@ -106,4 +106,11 @@ function login(){
 			}
 		}
 	});
+}
+
+document.onkeydown = function(e) {
+	var ev = document.all ? window.event : e;
+	if (ev.keyCode == 13) {
+		login();
+	}
 }
