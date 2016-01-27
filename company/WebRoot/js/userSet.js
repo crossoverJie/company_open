@@ -42,11 +42,14 @@ $(function(){
 		}
 	});
 	
-	
+	/**
+	 * 上传或者是修改头像
+	 */
 	$("#addImgForm").submit(function(){
 		var file = $("#file").val() ;
 		var index = file.lastIndexOf(".");
 		file = file.substring(index + 1);
+		file = file.toLowerCase() ;
 		if( file == "jpg" || file == "gif" || file == "png" ){
 			return true;
 		}else{
