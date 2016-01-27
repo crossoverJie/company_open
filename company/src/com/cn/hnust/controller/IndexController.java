@@ -104,4 +104,46 @@ public class IndexController extends AbstractController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @Description: 修改密码
+	 * @param @param user
+	 * @param @param session
+	 * @param @return   
+	 * @return String  
+	 * @throws
+	 * @author chj
+	 * @date 2016-1-26  下午7:41:56
+	 */
+	@RequestMapping("/updatePwd")
+	public String updatePwd(User user,HttpSession session){
+		userService.updateByPrimaryKeySelective(user) ;
+		session.removeAttribute("user") ;
+		return "redirect:../index/turnToIndex/1" ;
+	}
+	
+	/**
+	 * 
+	 * @Description: 验证当前密码是否错误
+	 * @param @param user
+	 * @param @param response
+	 * @param @throws IOException   
+	 * @return void  
+	 * @throws
+	 * @author chj
+	 * @date 2016-1-26  下午7:47:52
+	 */
+	@RequestMapping("/checkCurrentPwd")
+	public void checkCurrentPwd(User user,HttpServletResponse response) throws IOException{
+		response.setContentType("text/html");
+	    response.setCharacterEncoding("utf-8");
+	    int count = userService.findAllCount(user) ;
+	    if(count ==0){
+	    	response.getWriter().print("false") ;
+	    }else {
+	    	response.getWriter().print("true") ;
+	    }
+	}
+	
+	
 }

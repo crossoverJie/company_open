@@ -18,6 +18,9 @@
 <!-- Bootstrap -->
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href="<%=path%>/include/icon.css" type="text/css" rel="stylesheet" />
+<link href="<%=path%>/include/easyui/themes/icon.css" type="text/css"
+	rel="stylesheet" />
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -210,9 +213,8 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="td-head"><h4>生日</h4></td>
 							<td>
-								<input type="text" class="form-control" style="width: 200px" readonly="readonly" id="birthday"/>
+								<button class="btn btn-success">保存</button>
 							</td>
 						</tr>
 					</table>
@@ -227,20 +229,33 @@
 							<td class="td-head"><h4>当前密码</h4></td>
 							<td>
 								<h4>
-									<input type="password" class="form-control " />
+								<div class="form-group" id="div-currentpPwd">
+									<input type="password" class="form-control"  id="currentPwd"/>
+								</div>
 								</h4>
 							</td>
 						</tr>
 						<tr>
 							<td class="td-head"><h4>新密码</h4></td>
 							<td>
-								<h4><input type="password" class="form-control " /></h4>
+								<h4><input type="password" class="form-control " id="newPwd" /></h4>
 							</td>
 						</tr>
 						<tr>
 							<td class="td-head"><h4>确认密码</h4></td>
 							<td>
-								<h4><input type="password" class="form-control " /></h4>
+								<h4><input type="password" class="form-control" id="newPwd2" /></h4>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="hidden" id="hiddenId" value="${user.id }">
+								<button class="btn btn-success" onclick="savePassWord();">保存</button>
+							</td>
+							<td>
+								<blockquote>
+									<p class="text-danger">密码修改成功后需要重新登录！</p>
+								</blockquote>
 							</td>
 						</tr>
 					</table>
@@ -296,5 +311,9 @@
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="<%=path%>/js/userSet.js" type="text/javascript"></script>
+	<script src="<%=path%>/include/js/jquery.easyui.min.js"
+	type="text/javascript"></script>
+	<script src="<%=path%>/include/js/easyui-lang-zh_CN.js"
+	type="text/javascript"></script>
 </body>
 </html>

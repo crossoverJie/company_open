@@ -137,6 +137,9 @@
     <if test="username != null" >
       and username =#{username,jdbcType=VARCHAR}
     </if>
+    <if test="password != null" >
+      and password =#{password,jdbcType=VARCHAR}
+    </if>
     <if test="realname != null" >
       and realname like '%${realname}%' 
     </if>
