@@ -10,9 +10,11 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="last_date" property="last_date" jdbcType="DATE" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="img_id" property="img_id" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email
+    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email,sex,img_id
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -29,6 +31,11 @@
   
   
   <insert id="insertSelective" parameterType="com.cn.hnust.pojo.User" >
+  
+  	<selectKey resultType="INTEGER"  order="BEFORE" keyProperty="id">
+    select SEQ_T_USER.Nextval as ID from  DUAL
+  	</selectKey>
+  	
     insert into t_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
@@ -53,9 +60,12 @@
       <if test="email != null" >
         email,
       </if>
+      <if test="sex != null" >
+        sex,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      SEQ_T_USER.Nextval,
+      #{id},
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
@@ -76,6 +86,9 @@
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -103,6 +116,12 @@
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
       </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="img_id != null" >
+        img_id = #{img_id,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -125,6 +144,9 @@
     <if test="email != null" >
       and email = #{email,jdbcType=VARCHAR} 
     </if>
+    <if test="sex != null" >
+      and sex = #{sex,jdbcType=VARCHAR} 
+    </if>
     order by id desc
   </select>
   
@@ -146,6 +168,9 @@
     <if test="email != null" >
       and email = #{email,jdbcType=VARCHAR} 
     </if>
+    <if test="sex != null" >
+      and sex = #{sex,jdbcType=VARCHAR} 
+    </if>
     order by id desc
   </select>
   
@@ -166,6 +191,9 @@
     </if>
     <if test="email != null" >
       and email = #{email,jdbcType=VARCHAR} 
+    </if>
+    <if test="sex != null" >
+      and sex = #{sex,jdbcType=VARCHAR} 
     </if>
     order by id desc
   </select>

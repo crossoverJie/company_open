@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
+import com.cn.hnust.pojo.Img;
 import com.cn.hnust.pojo.Role;
 import com.cn.hnust.pojo.User;
+import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.IRoleService;
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.Page;
@@ -32,12 +34,20 @@ public class UserController {
 	private IUserService userService;
 	
 	@Resource
+	private IImgService imgService ;
+	
+	@Resource
 	private IRoleService roleService ;
 	
 	@RequestMapping("/frontUserSet/{id}")
 	public String frontUserSet(@PathVariable int id,Model model){
 		User user = userService.getUserById(id) ;
 		model.addAttribute("currentUser", user) ;
+		String img_id = user.getImg_id() ;
+		if(img_id != null){
+			String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
+			model.addAttribute("headimg", path) ;
+		}
 		return "front/user/userSet" ;
 	}
 	

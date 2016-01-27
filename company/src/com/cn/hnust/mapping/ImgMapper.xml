@@ -27,7 +27,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Img" >
+
+	<selectKey resultType="INTEGER"  order="BEFORE" keyProperty="id">
+    select SEQ_T_IMG.nextval as ID from  DUAL
+  	</selectKey>
+  	
     insert into t_img
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
@@ -48,7 +53,7 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      SEQ_T_Function.Nextval,
+      #{id},
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
@@ -66,7 +71,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Img" >
     update t_img
     <set >
       <if test="name != null" >
@@ -139,7 +144,7 @@
     order by id desc
   </select>
   
-  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Img">
   	select <include refid="Base_Column_List" />
   	from t_img
   	where 1=1
@@ -165,7 +170,7 @@
   </select>
   
   <!-- 用于首页的展示图片 -->
-  <select id="findByIndex" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
+  <select id="findByIndex" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Img">
 	select *
  	 from (select my_table.*, rownum my_rownum
           from (  	

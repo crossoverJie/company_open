@@ -28,66 +28,15 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+<link href="<%=path%>/css/index.css" type="text/css"
+	rel="stylesheet" />
     <style type="text/css">
-       
-    	body{
-    		padding-top: 50px;
-    		padding-bottom: 50px;
-    	}
-    	.carousel{
-    		height: 460px;
-    		background-color: #000;
-    	}
-    	.carousel .item{
-    		height: 460px;
-    		background-color: #000;
-    	}
-		.carousel img{
-    		width: 100%;
-    		height: 100%;
-    	}
-    	.carousel-caption p{
-    		margin-bottom: 20px;
-    		font-size: 20px;
-    		/* 行间距 */
-    		line-height: 1.8;
-	    		
-    	}
-    	hr .divider{
-    		margin: 40px 0;
-    	}
-    	.hr-right{
-    		margin: 80px 0 40px 80px;
-    	}
-    	.logo{
-    		height: 500px;
-    		width: 500px
-    	}
-    	
-    	.logo-msg{
-    		padding: 40px 0;
-    	}
-    	/**改变脚注的高度**/
-    	.panel-footer{
-    		height: 35px;
-    	}
-    	.panel-body p{
-	   		 overflow:hidden;
-	   		 text-overflow:ellipsis;
-	   		 -o-text-overflow:ellipsis;
-	   		 white-space:nowrap;
-	   		 width:100%;
-    	}
-    	/* 选择thumbnail类内部的所有img元素 */
-    	.thumbnail img{
-    		
-    	}
-    	/* 为热门主题面板加上470px的高度 */
-    	.panel-primary , .panel-danger ,.panel-info{
-    		height: 470px;
-    	}
     	#baseSetTable tr .td-head{
     		width: 100px;
+    	}
+    	.col-md-12 img{
+    	    height: 150px;
+    		width: 150px;
     	}
     </style>
 </head>
@@ -147,7 +96,18 @@
 							<li class="dropdown">
 							<a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">${user.username } <span class="caret"></span> </a>
+								aria-expanded="false">
+								<img id="sm-name" src="
+									<c:choose>
+										<c:when test="${empty headimg}">
+											<%=path %>/include/img/person.gif
+										</c:when>
+										<c:otherwise>
+											<%=path %>/${headimg}
+										</c:otherwise>
+									</c:choose>
+									" class="img-responsive center-block img-circle" alt="Responsive image">
+								 </a>
 								<ul class="dropdown-menu">
 									<li>
 									<a href="<%=path%>/user/frontUserSet/${user.id}">个人设置<span class="glyphicon glyphicon-cog"></span></a>
@@ -168,7 +128,16 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<img src="<%=path %>/include/img/person.gif" class="img-responsive center-block img-circle" alt="Responsive image">
+				<img src="
+				<c:choose>
+					<c:when test="${empty headimg}">
+						<%=path %>/include/img/person.gif
+					</c:when>
+					<c:otherwise>
+						<%=path %>/${headimg}
+					</c:otherwise>
+				</c:choose>
+				" class="img-responsive center-block img-circle" alt="Responsive image">
 			</div>
 		</div>
 	</div>
@@ -181,24 +150,28 @@
 			  <ul class="nav nav-tabs" role="tablist" id="tab-list">
 			    <li role="presentation" class="active"><a href="#baseSet" aria-controls="home" role="tab" data-toggle="tab">基本设置</a></li>
 			    <li role="presentation"><a href="#updatePassword" aria-controls="profile" role="tab" data-toggle="tab">修改密码</a></li>
+			    <li role="presentation"><a href="#updateHeadImg" aria-controls="profile" role="tab" data-toggle="tab">修改头像</a></li>
 			  </ul>
 			  
 			  <div class="tab-content">
 		    	<div role="tabpanel" class="tab-pane active" id="baseSet">
 		    		<div class="panel panel-info">
+		    		<form method="post" action="<%=path%>/index/updateBaseUserInfo">
 					<table class="table" id="baseSetTable">
 						<tr>
 							<td class="td-head"><h4>性别</h4></td>
 							<td>
-								<h4><input type="radio" name="sex">男&nbsp;&nbsp;&nbsp;
-									<input type="radio" name="sex">女
+								<h4><input type="radio" id="man" value="1" name="sex">男&nbsp;&nbsp;&nbsp;
+									<input type="radio" id="woman" value="0" name="sex">女
+									<input type="hidden" id="hiddenSex" value="${currentUser.sex }"/>
+									<input type="hidden" name="id" value="${user.id }">
 								</h4>
 							</td>
 						</tr>
 						<tr>
 							<td class="td-head"><h4>简介</h4></td>
-							<td>
-								<h4><input type="text" class="form-control " /></h4>
+						 	<td>
+								<h4><input type="text" class="form-control" name="remark" id="remark" value="${currentUser.remark }" /></h4>
 							</td>
 						</tr>
 						<tr>
@@ -214,10 +187,11 @@
 						</tr>
 						<tr>
 							<td>
-								<button class="btn btn-success">保存</button>
+								<input type="submit" class="btn btn-success" value="保存"/>
 							</td>
 						</tr>
 					</table>
+					</form>
 				</div>
 		    </div>
 		    
@@ -259,6 +233,21 @@
 							</td>
 						</tr>
 					</table>
+				</div>
+			</div>
+			
+			<div role="tabpanel" class="tab-pane" id="updateHeadImg">
+				<div class="panle panel-info">
+					<form id="addImgForm" action="<%=path%>/index/updateHeadImg" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="exampleInputFile">头像</label> 
+							<input type="file" required  id="file" name="file">
+							<input type="hidden" name="id" value="${user.id }">
+							<p class="help-block">请选择高度不超过512px的图片</p>
+						</div>
+						<button type="submit"  class="btn btn-default">保存</button>
+						<button type="reset" class="btn btn-danger">重置</button>
+					</form>
 				</div>
 			</div>
 			

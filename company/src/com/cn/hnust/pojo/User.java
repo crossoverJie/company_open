@@ -11,6 +11,8 @@ public class User {
     private String role_id ;
     private String remark ;
     private Date last_date ;
+    private String sex ; //0:女        1：男
+    private String img_id ;//对应的图片ID 用户的头像
     /**用于显示格式化的日期**/
     private String parsedate ;
     
@@ -97,6 +99,22 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getImg_id() {
+		return img_id;
+	}
+
+	public void setImg_id(String img_id) {
+		this.img_id = img_id;
 	}
 
 }

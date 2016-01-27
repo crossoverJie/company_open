@@ -1,4 +1,14 @@
 $(function(){
+	
+	var sex = $("#hiddenSex").val() ;
+	if(sex != "" && sex != undefined){
+		if(sex=="1"){
+			$("#man").attr("checked","checked");
+		}else{
+			$("#woman").attr("checked","checked");
+		}
+	}
+	
 	$("#currentPwd").blur(function(){
 		var currenPwd=$("#currentPwd").val() ;
 		var id = $("#hiddenId").val() ;//当前用户的ID
@@ -31,8 +41,52 @@ $(function(){
 			
 		}
 	});
+	
+	
+	$("#addImgForm").submit(function(){
+		var file = $("#file").val() ;
+		var index = file.lastIndexOf(".");
+		file = file.substring(index + 1);
+		if( file == "jpg" || file == "gif" || file == "png" ){
+			return true;
+		}else{
+			alert("只能上传图片") ;
+			return false ;
+		}
+	});
+	
+	
 });
 
+/**
+ * 修改基本设置
+ */
+function saveBaseSet(){
+	var id = $("#hiddenId").val() ;//当前用户的ID
+	var sex =$('input:radio[name=sex]:checked').val();
+	if(sex==""){
+		sex=undefined ;
+	}
+	var remark = $("#remark").val() ;
+	var json={
+		"id":id,
+		"sex":sex,
+		"remark":remark
+	};
+	$.ajax( {
+		type:"POST", 
+		url : '../../index/updateBaseUserInfo',
+		cache : false,
+		data :json,
+		success : function(r) {
+			window.location.href="../../user/frontUserSet/"+id ;
+		}
+	});
+}
+
+/**
+ * 修改密码
+ */
 function savePassWord(){
 	var currenPwd=$("#currentPwd").val() ;
 	var pwd = $("#newPwd").val() ;
@@ -62,7 +116,7 @@ function savePassWord(){
 	};
 	$.ajax( {
 		type:"POST", 
-		url : '../../index/updatePwd',
+		url : '../../index/updateUserInfo?flag=0',
 		cache : false,
 		async:false,
 		data :json,
