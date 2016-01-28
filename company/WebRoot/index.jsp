@@ -284,7 +284,7 @@
 			<form id="loginForm" method="post" >
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">用户名</label>
-			    <input type="email" name="email" required="required" class="form-control" id="login-name" placeholder="用户名">
+			    <input type="email" name="text" required="required" class="form-control" id="login-name" placeholder="用户名">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">密码</label>

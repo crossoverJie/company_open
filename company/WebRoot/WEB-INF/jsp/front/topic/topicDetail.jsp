@@ -14,7 +14,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<title></title>
+<title>${topic.title }</title>
 <!-- Bootstrap -->
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -66,8 +66,16 @@
 <!-- 栅格系统 -->
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-md-8">
+			<div class="jumbotron">
+			  <h3>${topic.title }</h3>
+			</div>
 			
+			<div class="panel panel-default">
+			  <div class="panel-body topic-content">
+			  	${topic.content }
+			  </div>
+			</div>
 			
 			
 		</div>
@@ -126,7 +134,7 @@
 			<form id="loginForm" method="post" >
 			  <div class="form-group">
 			    <label for="exampleInputEmail1">用户名</label>
-			    <input type="email" name="email" required="required" class="form-control" id="login-name" placeholder="用户名">
+			    <input type="email" name="text" required="required" class="form-control" id="login-name" placeholder="用户名">
 			  </div>
 			  <div class="form-group">
 			    <label for="exampleInputPassword1">密码</label>
