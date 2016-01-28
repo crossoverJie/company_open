@@ -2,7 +2,11 @@ package com.cn.hnust.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.hnust.pojo.News;
+import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.util.AbstractController;
 import com.cn.hnust.util.Page;
@@ -22,6 +27,10 @@ public class NewsController extends AbstractController {
 
 	@Resource
 	private INewsService newsService ;
+	
+	@Resource
+	private IImgService imgService ;
+	
 	
 	@RequestMapping("/turnToNewsList")
 	public String turnToNewsList(){
@@ -48,6 +57,16 @@ public class NewsController extends AbstractController {
 	public void create(News n,HttpServletResponse response){
 		n.setCreate_date(new Date()) ;
 		try {
+			
+			String content = n.getContent() ;
+			Pattern p = Pattern.compile("(?:src=\"?)(.*?)\"?\\s");
+			Matcher m = p.matcher(content);
+			String paths = "" ;
+			while(m.find()) {
+				String path = m.group(1);
+				paths +=path+",";
+			}
+			n.setImg_path(paths) ;
 			newsService.insertSelective(n) ;
 			response.getWriter().print("true") ;
 		} catch (Exception e) {
@@ -67,6 +86,15 @@ public class NewsController extends AbstractController {
 	@RequestMapping("/edit")
 	public void edit(News n ,HttpServletResponse response){
 		try {
+			String content = n.getContent() ;
+			Pattern p = Pattern.compile("(?:src=\"?)(.*?)\"?\\s");
+			Matcher m = p.matcher(content);
+			String paths = "" ;
+			while(m.find()) {
+				String path = m.group(1);
+				paths +=path+",";
+			}
+			n.setImg_path(paths) ;
 			newsService.updateByPrimaryKeySelective(n) ;
 			response.getWriter().print("true") ;
 		} catch (Exception e) {

@@ -19,6 +19,7 @@ public class LoginController {
 	@Resource
 	private IUserService userService;
 
+	@SuppressWarnings("unused")
 	@RequestMapping("/check")
 	public void login(User user, Model model,HttpServletResponse response,HttpServletRequest request) throws IOException{
 		User u = userService.findByLogin(user) ;
@@ -28,6 +29,7 @@ public class LoginController {
 		}else{
 			Date date = new Date() ;
 			u.setLast_date(date) ;
+			u.setSex(null) ;
 			userService.updateByPrimaryKeySelective(u) ;
 			if(u != null){
 				request.getSession().setAttribute("user", u) ;

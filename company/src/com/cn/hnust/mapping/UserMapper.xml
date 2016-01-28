@@ -14,7 +14,9 @@
     <result column="img_id" property="img_id" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email,sex,img_id
+    ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email,
+    decode(sex,0,'女',1,'男') as sex,
+    img_id
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

@@ -2,7 +2,7 @@ $(function(){
 	
 	var sex = $("#hiddenSex").val() ;
 	if(sex != "" && sex != undefined){
-		if(sex=="1"){
+		if(sex=="男" || sex=="1"){
 			$("#man").attr("checked","checked");
 		}else{
 			$("#woman").attr("checked","checked");

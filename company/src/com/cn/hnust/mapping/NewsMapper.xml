@@ -6,13 +6,14 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="create_date" property="create_date" jdbcType="DATE" />
+    <result column="img_path" property="img_path" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, title, content,create_date
+    ID, title, content,create_date,img_path
   </sql>
   
   <sql id="Base_Column_List_substr">
-    ID, title, substr(content,'0','200') as content,create_date   
+    ID, title, substr(content,'0','200') as content,create_date,img_path   
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -38,6 +39,9 @@
       <if test="content != null" >
         content,
       </if>
+      <if test="img_path != null" >
+        img_path,
+      </if>
       <if test="create_date != null" >
         create_date,
       </if>
@@ -49,6 +53,9 @@
       </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img_path != null" >
+        #{img_path,jdbcType=VARCHAR},
       </if>
       <if test="create_date != null" >
         #{create_date,jdbcType=DATE},
@@ -63,6 +70,9 @@
       </if>
       <if test="content != null" >
        content= #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="img_path != null" >
+       img_path= #{img_path,jdbcType=VARCHAR},
       </if>
       <if test="create_date != null" >
        create_date= #{create_date,jdbcType=VARCHAR},

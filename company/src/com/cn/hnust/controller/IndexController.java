@@ -58,6 +58,14 @@ public class IndexController extends AbstractController {
 		ns.setStartIndex(super.getStartIndex()) ;
 		ns.setEndIndex(super.getEndIndex()) ;
 		List<News> news = newService.findAll(ns) ;
+		for (News news2 : news) {
+			String img_path = news2.getImg_path() ;
+			if(img_path != null){
+				String paths[] = img_path.split(",") ;
+				news2.setIndex_src(paths[0]) ;
+			}
+			
+		}
 		model.addAttribute("news", news) ;
 		model.addAttribute("currentpage", pageNum) ;
 		User user = (User) session.getAttribute("user") ;
@@ -113,6 +121,10 @@ public class IndexController extends AbstractController {
 		response.setContentType("text/html");
 	    response.setCharacterEncoding("utf-8");
 		if(user != null){
+			Date date = new Date() ;
+			user.setSex(null) ;
+			user.setLast_date(date) ;
+			userService.updateByPrimaryKeySelective(user) ;
 			request.getSession().setAttribute("user", user) ;
 			response.getWriter().print("true") ;
 //			return "redirect:../index/turnToIndex/1" ;

@@ -22,6 +22,11 @@ datagridD = [{
 	width : 100,
 	align : 'center'
 },{
+	field : 'sex',
+	title : '性别',
+	width : 100,
+	align : 'center'
+},{
 	field : 'remark',
 	title : '备注',
 	width : 100,

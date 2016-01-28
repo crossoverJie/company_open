@@ -48,6 +48,9 @@ public class AbstractController {
 		{
 			pageNum = sqlPage;
 		}
+		if(pageNum <1){
+			pageNum = 1;
+		}
 		startIndex = pageSize *(pageNum-1);
 		endIndex = pageSize * pageNum;
 	}

@@ -11,6 +11,8 @@ public class News extends AbstractPojo{
 	private String content ;
 	private Date create_date ;
 	private String dateStr ;
+	private String img_path ;//当条记录中图片的地址
+	private String index_src ;//用于首页展示时候用的图片 一般是第一张
 	
 	private String parseDate ;//用于格式化日期
 	public Integer getId() {
@@ -51,5 +53,17 @@ public class News extends AbstractPojo{
 	}
 	public void setDateStr(String dateStr) {
 		this.dateStr = dateStr;
+	}
+	public String getImg_path() {
+		return img_path;
+	}
+	public void setImg_path(String img_path) {
+		this.img_path = img_path;
+	}
+	public String getIndex_src() {
+		return index_src;
+	}
+	public void setIndex_src(String index_src) {
+		this.index_src = index_src;
 	}
 }

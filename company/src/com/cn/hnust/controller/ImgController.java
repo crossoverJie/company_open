@@ -155,6 +155,16 @@ public class ImgController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @Description: 将图片置顶到首页
+	 * @param @param ids
+	 * @param @param response   
+	 * @return void  
+	 * @throws
+	 * @author chj
+	 * @date 2016-1-28  下午2:38:59
+	 */
 	@RequestMapping("/upToIndex")
 	public void upToIndex(String ids,HttpServletResponse response){
 		String str_id[] = ids.split(",");
@@ -171,6 +181,16 @@ public class ImgController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @Description: 将图片取消置顶
+	 * @param @param ids
+	 * @param @param response   
+	 * @return void  
+	 * @throws
+	 * @author chj
+	 * @date 2016-1-28  下午2:39:15
+	 */
 	@RequestMapping("/downToIndex")
 	public void downToIndex(String ids,HttpServletResponse response){
 		String str_id[] = ids.split(",");
