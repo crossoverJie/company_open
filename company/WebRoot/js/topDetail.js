@@ -1,5 +1,8 @@
 $(function(){
 	
+	//将内容中所有的图片的尺寸统一设置。
+	
+	
 	/*检查邮箱是否被注册*/
 	$("#register-email").blur(function(){
 		var email = $("#register-email").val() ;

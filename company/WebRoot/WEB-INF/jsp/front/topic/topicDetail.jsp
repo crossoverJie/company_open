@@ -72,7 +72,7 @@
 			</div>
 			
 			<div class="panel panel-default">
-			  <div class="panel-body topic-content">
+			  <div class="panel-body " >
 			  	${topic.content }
 			  </div>
 			</div>

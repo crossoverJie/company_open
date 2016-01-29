@@ -15,7 +15,6 @@ import com.cn.hnust.pojo.Function;
 import com.cn.hnust.service.IFunctionService;
 import com.cn.hnust.util.Page;
 import com.cn.hnust.util.TreeGridUtil;
-import com.google.common.base.Functions;
 
 @Controller
 @RequestMapping("/function")
