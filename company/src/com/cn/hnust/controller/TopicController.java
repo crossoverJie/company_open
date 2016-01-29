@@ -1,6 +1,7 @@
 package com.cn.hnust.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,12 +58,19 @@ public class TopicController extends AbstractController {
 		//帖子作者的详情
 		User user = userService.getUserById(Integer.parseInt(user_id)) ;
 		if(user != null){
+			model.addAttribute("author", user) ;
 			String img_id = user.getImg_id() ;
 			if(img_id != null){
 				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
 				model.addAttribute("topicuser", path) ;
 			}
+			News news_author = new News() ;
+			news_author.setUser_id(user.getId()+"");
+			List<News> all_author = newsService.findAll(news_author) ;
+			model.addAttribute("allauthor", all_author) ;//将当前这条帖子的作者的所有帖子都列展示出来。
+			
 		}
+		//每个控制器都需要将当前用户的头像显示出来
 		User currenUser = (User) session.getAttribute("user") ;
 		if(currenUser != null){
 			String img_id = currenUser.getImg_id() ;
@@ -89,6 +97,7 @@ public class TopicController extends AbstractController {
 		n.setCreate_date(new Date()) ;
 		try {
 			String content = n.getContent() ;
+			//筛选出其中的图片地址。
 			Pattern p = Pattern.compile("(?:src=\"?)(.*?)\"?\\s");
 			Matcher m = p.matcher(content);
 			String paths = "" ;

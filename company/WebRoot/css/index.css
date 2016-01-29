@@ -45,7 +45,7 @@
 	   		 overflow:hidden;
 	   		 text-overflow:ellipsis;
 	   		 -o-text-overflow:ellipsis;
-	   		 white-space:nowrap;
+	   		 /* white-space:nowrap; 注释掉 不然P标签内的文本不会换行了。。 */
 	   		 width:100%;
     	}
     	/* 选择thumbnail类内部的所有img元素 */

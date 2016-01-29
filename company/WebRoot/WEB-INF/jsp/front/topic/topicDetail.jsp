@@ -64,6 +64,10 @@
 					</c:otherwise>
 				</c:choose>
 				" class="img-responsive center-block img-circle" alt="Responsive image">
+				<div class="center-block">
+					<p class="text-center text-info"><b>${author.username}</b></p>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -85,11 +89,18 @@
 			
 		</div>
 		
-		<div class="col-md-4">
+		<div class="col-md-3 col-md-offset-1">
 			<div class="panel panel-primary">
 			  <div class="panel-heading">最新动态</div>
 			  <div class="panel-body">
+			    <ul>
 			    
+			    	<c:forEach var="ns" items="${allauthor }" varStatus="status" >
+			    		<li>
+			    			<a href="<%=path%>/topic/${ns.id}">${ns.title }</a>
+			    		</li>
+			    	</c:forEach>
+			    </ul>
 			  </div>
 			</div>
 		</div>
