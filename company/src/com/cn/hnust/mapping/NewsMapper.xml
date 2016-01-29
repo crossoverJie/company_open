@@ -7,13 +7,14 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="create_date" property="create_date" jdbcType="DATE" />
     <result column="img_path" property="img_path" jdbcType="VARCHAR" />
+    <result column="user_id" property="user_id" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, title, content,create_date,img_path
+    ID, title, content,create_date,img_path,user_id
   </sql>
   
   <sql id="Base_Column_List_substr">
-    ID, title, substr(content,'0','200') as content,create_date,img_path   
+    ID, title, substr(content,'0','200') as content,create_date,img_path,user_id   
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -29,7 +30,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Function" >
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.News" >
     insert into news
     <trim prefix="(" suffix=")" suffixOverrides="," >
        id,
@@ -45,9 +46,12 @@
       <if test="create_date != null" >
         create_date,
       </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      SEQ_T_Function.Nextval,
+      SEQ_T_News.Nextval,
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
       </if>
@@ -60,9 +64,14 @@
       <if test="create_date != null" >
         #{create_date,jdbcType=DATE},
       </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Function" >
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.News" >
     update news
     <set >
       <if test="title != null" >
@@ -76,6 +85,9 @@
       </if>
       <if test="create_date != null" >
        create_date= #{create_date,jdbcType=VARCHAR},
+      </if>
+      <if test="user_id != null" >
+       user_id= #{user_id,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -94,6 +106,9 @@
     <if test="content != null" >
       and content like '%${content}%' 
     </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
   </select>
   
   <!-- 查询 -->
@@ -111,10 +126,13 @@
     <if test="content != null" >
       and content like '%${content}%' 
     </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
     order by id desc
   </select>
   
-  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Function">
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.News">
 	   <if test="startIndex != null">
 			select * from (select
 			my_table.*, rownum my_rownum from (
@@ -130,6 +148,9 @@
     </if>
     <if test="content != null" >
       and content like '%${content}%' 
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
     </if>
     order by id desc
    

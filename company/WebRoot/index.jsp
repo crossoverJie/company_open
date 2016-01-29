@@ -31,23 +31,18 @@
 	#index-src {
 		width: 715px;
 	}
+	/* 为标题栏上的选项卡设置底部距离 */ 
+	.tab-topic{
+		margin-bottom: 3px;
+	}
 </style>
 </head>
 <body>
 
 	<jsp:include page="public/nav-top.jsp"></jsp:include>
 	
-	<!-- 底部导航栏 -->
-<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
-  <div class="container">
-  	<footer>
-		<p class="pull-right" ><a href="#top" class="btn btn-default">
-			<span class="glyphicon glyphicon-circle-arrow-up"></span>
-		</a></p>
-		<p>© 2016 crossoverJie</p>
-	</footer>
-  </div>
-</nav>
+<!-- 底部导航栏 -->
+<jsp:include page="/public/nav-bottom.jsp"></jsp:include>
 
 	<div id="carousel-example-generic" class="carousel slide"
 		data-ride="carousel">
@@ -99,6 +94,25 @@
 	<hr class="divider"/> -->
 	<div class="row">
 		<div class="col-md-8">
+		
+			<div class="row">
+				<div class="col-md-6">
+					<p>
+					  	<a class="btn btn-primary" href="#">全部</a> 
+					  	<a class="btn btn-info" href="#">精华</a> 
+					  	<a class="btn btn-danger" href="#">热门</a>
+			  		</p>
+				</div>	
+				<div class="col-md-4 col-md-offset-2">
+					<p class="text-right">
+					  	<a class="btn btn-success" onclick="createTopic();" href="javascript:void(0)">发&nbsp;&nbsp;&nbsp;&nbsp;帖</a>
+					  	<input type="hidden" id="session_username" value="${user.username }"/> 
+			  		</p>
+				</div>			
+			</div>
+			
+			
+		
 			<div class="panel panel-info">
 				<c:forEach var="ns" items="${news }" varStatus="status" >
 					
@@ -107,7 +121,25 @@
 						<!-- 利用一个栅格系统向右偏移完成布局 -->
 						<div class="row">
 							<div class="col-md-6">
-								<b><a href="<%=path %>/topic/${ns.id}">${ns.title }</a></b>
+								<div class="row">
+									<div class="col-md-2">
+										<img id="sm-name" src="
+									<c:choose>
+										<c:when test="${empty ns.user_head_img}">
+											<%=path %>/include/img/person.gif
+										</c:when>
+										<c:otherwise>
+											<%=path %>/${ns.user_head_img}
+										</c:otherwise>
+									</c:choose>
+									" class="img-responsive center-block img-circle" alt="图片无效">
+									</div>
+									<div class="col-md-10">
+										<b>
+										<a href="<%=path %>/topic/${ns.id}">${ns.title }</a>
+										</b>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-4 col-md-offset-2">
 								<!-- text-muted：字体颜色的样式 -->

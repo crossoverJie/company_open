@@ -1,7 +1,7 @@
 $(function(){
 	
 	//将内容中所有的图片的尺寸统一设置。
-	
+	$("#topic-content img").removeAttr("style") ;
 	
 	/*检查邮箱是否被注册*/
 	$("#register-email").blur(function(){

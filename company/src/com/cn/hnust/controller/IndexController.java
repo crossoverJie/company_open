@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cn.hnust.pojo.Img;
 import com.cn.hnust.pojo.News;
 import com.cn.hnust.pojo.User;
+import com.cn.hnust.service.IFunctionService;
 import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.service.IUserService;
@@ -59,7 +60,23 @@ public class IndexController extends AbstractController {
 		ns.setEndIndex(super.getEndIndex()) ;
 		List<News> news = newService.findAll(ns) ;
 		for (News news2 : news) {
-			String img_path = news2.getImg_path() ;
+			String img_path = news2.getImg_path() ;//获得当前帖子内容中的图片
+			String user_id = news2.getUser_id() ;
+			User userById = userService.getUserById(Integer.parseInt(user_id));
+			if (userById != null) {
+				String img_id = userById.getImg_id() ;
+				if(img_id != null){
+					Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(img_id)) ;
+					if(img_user != null){
+						String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+						if(topic_user_path != null){
+							news2.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+						}
+						
+					}
+					
+				}
+			}
 			if(img_path != null){
 				String paths[] = img_path.split(",") ;
 				news2.setIndex_src(paths[0]) ;

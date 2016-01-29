@@ -13,6 +13,8 @@ public class User {
     private Date last_date ;
     private String sex ; //0:女        1：男
     private String img_id ;//对应的图片ID 用户的头像
+    
+    
     /**用于显示格式化的日期**/
     private String parsedate ;
     

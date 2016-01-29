@@ -15,7 +15,14 @@ import com.cn.hnust.pojo.Function;
 import com.cn.hnust.service.IFunctionService;
 import com.cn.hnust.util.Page;
 import com.cn.hnust.util.TreeGridUtil;
-
+/**
+ * 
+* <p>Title:FunctionController </p>
+* <p>Description: 功能控制器</p>
+* <p>Company: free</p> 
+* @author crossoverJie
+* @date 2016年1月29日 上午10:52:41
+ */
 @Controller
 @RequestMapping("/function")
 public class FunctionController {

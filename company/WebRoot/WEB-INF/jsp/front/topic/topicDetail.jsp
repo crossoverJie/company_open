@@ -38,6 +38,11 @@
     	    height: 150px;
     		width: 150px;
     	}
+    	
+    	/* 给初始化文章内容的时候为所有照片设置尺寸 */
+    	#topic-content img{
+    		width: 845px;
+    	}
     </style>
 </head>
 <body>
@@ -51,11 +56,11 @@
 			<div class="col-md-12">
 				<img src="
 				<c:choose>
-					<c:when test="${empty headimg}">
+					<c:when test="${empty topicuser}">
 						<%=path %>/include/img/person.gif
 					</c:when>
 					<c:otherwise>
-						<%=path %>/${headimg}
+						<%=path %>/${topicuser}
 					</c:otherwise>
 				</c:choose>
 				" class="img-responsive center-block img-circle" alt="Responsive image">
@@ -72,12 +77,21 @@
 			</div>
 			
 			<div class="panel panel-default">
-			  <div class="panel-body " >
+			  <div class="panel-body " id="topic-content" >
 			  	${topic.content }
 			  </div>
 			</div>
 			
 			
+		</div>
+		
+		<div class="col-md-4">
+			<div class="panel panel-primary">
+			  <div class="panel-heading">最新动态</div>
+			  <div class="panel-body">
+			    
+			  </div>
+			</div>
 		</div>
 		
   
@@ -111,16 +125,8 @@
   </div>
 </div>
 
-<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
-  <div class="container">
-  	<footer>
-		<p class="pull-right" ><a href="#top" class="btn btn-default">
-			<span class="glyphicon glyphicon-circle-arrow-up"></span>
-		</a></p>
-		<p>© 2016 crossoverJie</p>
-	</footer>
-  </div>
-</nav>
+<!-- 引入底部jsp -->
+<jsp:include page="../../../../public/nav-bottom.jsp"></jsp:include>
 
 <!-- 弹出框 模态框登录 -->
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_login">

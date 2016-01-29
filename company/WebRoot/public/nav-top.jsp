@@ -70,7 +70,7 @@
 											<%=path %>/${headimg}
 										</c:otherwise>
 									</c:choose>
-									" class="img-responsive center-block img-circle" alt="Responsive image">
+									" class="img-responsive center-block img-circle" alt="图片无效">
 								 </a>
 								<ul class="dropdown-menu">
 									<li>

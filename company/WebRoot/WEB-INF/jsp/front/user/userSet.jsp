@@ -204,17 +204,10 @@
     </div>
   </div>
 </div>
+<!-- 底部导航栏 -->
+<jsp:include page="../../../../public/nav-bottom.jsp"></jsp:include>
 
-<nav class="navbar navbar-default navbar-right navbar-fixed-bottom">
-  <div class="container">
-  	<footer>
-		<p class="pull-right" ><a href="#top" class="btn btn-default">
-			<span class="glyphicon glyphicon-circle-arrow-up"></span>
-		</a></p>
-		<p>© 2016 crossoverJie</p>
-	</footer>
-  </div>
-</nav>
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->

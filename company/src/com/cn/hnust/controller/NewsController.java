@@ -10,12 +10,14 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
 import com.cn.hnust.pojo.News;
+import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.util.AbstractController;
@@ -54,7 +56,7 @@ public class NewsController extends AbstractController {
 	}
 	
 	@RequestMapping("/create")
-	public void create(News n,HttpServletResponse response){
+	public void create(News n,HttpServletResponse response,HttpSession session){
 		n.setCreate_date(new Date()) ;
 		try {
 			
@@ -67,6 +69,8 @@ public class NewsController extends AbstractController {
 				paths +=path+",";
 			}
 			n.setImg_path(paths) ;
+			User  user = (User) session.getAttribute("user") ;
+			n.setUser_id(user.getId()+"");
 			newsService.insertSelective(n) ;
 			response.getWriter().print("true") ;
 		} catch (Exception e) {

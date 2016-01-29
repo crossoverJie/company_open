@@ -114,3 +114,14 @@ document.onkeydown = function(e) {
 		login();
 	}
 }
+
+
+function createTopic(){
+	var username = $("#session_username").val() ;
+	if(username == ""){
+		alert("请登录之后再发帖") ;
+		$('#login').modal('show') ;
+	}else{
+		window.location.href= "../../turnToCreateTopic" ;
+	}
+}
