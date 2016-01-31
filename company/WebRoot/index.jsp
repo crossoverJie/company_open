@@ -30,6 +30,7 @@
 <style type="text/css">
 	#index-src {
 		width: 715px;
+		/* height: 500px; */
 	}
 	/* 为标题栏上的选项卡设置底部距离 */ 
 	.tab-topic{
@@ -38,8 +39,8 @@
 </style>
 </head>
 <body>
-
-	<jsp:include page="public/nav-top.jsp"></jsp:include>
+<!-- 顶部导航栏 -->
+<jsp:include page="public/nav-top.jsp"></jsp:include>
 	
 <!-- 底部导航栏 -->
 <jsp:include page="/public/nav-bottom.jsp"></jsp:include>
@@ -48,7 +49,7 @@
 		data-ride="carousel">
 		<!-- Indicators -->
 		<ol class="carousel-indicators">
-			<c:forEach var="img" items="${imgs }" varStatus="status" >
+			<c:forEach var="img" items="${newsindex }" varStatus="status" >
 				<li data-target="#carousel-example-generic" data-slide-to="${status.index }"
 				class="
 					<c:if test="${status.index == 0}">
@@ -61,15 +62,17 @@
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
-			<c:forEach var="img" items="${imgs }" varStatus="status" >
+			<c:forEach var="news" items="${newsindex }" varStatus="status" >
 				<div class="item
 					<c:if test="${status.index == 0}">
 					active
 					</c:if> 
 				">
-					<img src="<%=path%>/${img.path}" alt="Safari">
+					<a href="<%=path %>/topic/${news.id }">
+						<img src="${news.img_path}" alt="无图片">
+					</a>
 					<div class="carousel-caption">
-						<p>${img.remark}</p>
+						<p class="text-success">${news.title}</p>
 					</div>
 				</div>
 				

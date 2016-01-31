@@ -27,6 +27,7 @@ import com.cn.hnust.service.IFunctionService;
 import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.service.IUserService;
+import com.cn.hnust.service.impl.NewsServiceImpl;
 import com.cn.hnust.util.AbstractController;
 import com.sun.org.apache.regexp.internal.recompile;
 import com.sun.org.apache.xml.internal.serializer.ElemDesc;
@@ -48,9 +49,28 @@ public class IndexController extends AbstractController {
 	public String trunToIndex(@PathVariable int pageNum,Model model,HttpSession session){
 		Img img = new Img() ;
 //		设置为1表示自查询上首页的图片
-		img.setIs_index("1");
-		List<Img> imgs = imgService.findByIndex(img) ;
-		model.addAttribute("imgs", imgs) ;
+//		img.setIs_index("1");
+//		List<Img> imgs = imgService.findByIndex(img) ;
+//		model.addAttribute("imgs", imgs) ;
+		
+		//用于顶部展示的滚动栏
+		News ns_index = new News() ;
+		ns_index.setIs_index("1");
+		super.setPageNum(1);
+		super.setRowCount(newService.findAllCount()) ;
+		super.getIndex();
+		ns_index.setStartIndex(super.getStartIndex());
+		ns_index.setEndIndex(super.getEndIndex()); 
+		List<News> newsList = newService.findAll(ns_index) ;
+		for (News news : newsList) {
+			String img_path = news.getImg_path() ;
+			String imgs[] = img_path.split(",") ;
+			if(imgs != null){
+				news.setImg_path(imgs[0]);//只显示文章中的第一张图片
+			}
+		}
+		model.addAttribute("newsindex", newsList) ;
+		
 		//查询最新的新闻信息。
 		News ns = new News() ;
 		super.setPageNum(pageNum) ;
@@ -149,6 +169,7 @@ public class IndexController extends AbstractController {
 		    response.getWriter().print("false") ;
 		}
 	}
+	
 	
 	/**
 	 * 

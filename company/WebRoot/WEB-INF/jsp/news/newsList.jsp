@@ -54,6 +54,18 @@
 						id="news_content_query"  />
 					</td>
 				</tr>
+				<tr>
+					<td char="thead">
+						<div align="center">是否首页:</div>
+					</td>
+					
+					<td>
+						<select id="is_index_query" class="easyui-combobox" style="width: 150px">   
+						    <option value="0">否</option>   
+						    <option value="1">是</option>
+						</select> 
+					</td>
+				</tr>
 			</table>
 			<div style="text-align: center; padding: 8px;margin-right: 130px">
 				<a href="javascript:void(0)" onclick="submitQuery()"

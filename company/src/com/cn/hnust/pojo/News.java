@@ -16,6 +16,10 @@ public class News extends AbstractPojo{
 	private String user_id ;//创建文章的用户ID
 	private String user_head_img ;//当前帖子的创建者的头像
 	
+	private String author ;//创建者的名称，用于datagrid的展示
+	
+	private String is_index ;//是否上首页滚动 1：上首页
+	
 	
 	private String parseDate ;//用于格式化日期
 	public Integer getId() {
@@ -80,5 +84,17 @@ public class News extends AbstractPojo{
 	}
 	public void setUser_head_img(String user_head_img) {
 		this.user_head_img = user_head_img;
+	}
+	public String getAuthor() {
+		return author;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getIs_index() {
+		return is_index;
+	}
+	public void setIs_index(String is_index) {
+		this.is_index = is_index;
 	}
 }

@@ -37,3 +37,10 @@ function getMain(obj,url){
 function loginOut(){
 	window.location="login/loginOut?type=0" ;
 }
+
+/**
+ * 回到首页
+ */
+function goToIndex(){
+	window.location.href="../index/turnToIndex/1";
+}

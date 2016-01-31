@@ -8,13 +8,14 @@
     <result column="create_date" property="create_date" jdbcType="DATE" />
     <result column="img_path" property="img_path" jdbcType="VARCHAR" />
     <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    <result column="is_index" property="is_index" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, title, content,create_date,img_path,user_id
+    ID, title, content,create_date,img_path,user_id ,is_index
   </sql>
   
   <sql id="Base_Column_List_substr">
-    ID, title, substr(content,'0','200') as content,create_date,img_path,user_id   
+    ID, title, substr(content,'0','200') as content,create_date,img_path,user_id,is_index
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -89,6 +90,9 @@
       <if test="user_id != null" >
        user_id= #{user_id,jdbcType=VARCHAR},
       </if>
+      <if test="is_index != null" >
+       is_index = #{is_index,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -109,6 +113,9 @@
     <if test="user_id != null" >
       and user_id = #{user_id,jdbcType=VARCHAR} 
     </if>
+    <if test="is_index != null" >
+      and is_index = #{is_index,jdbcType=VARCHAR} 
+    </if>
   </select>
   
   <!-- 查询 -->
@@ -128,6 +135,9 @@
     </if>
     <if test="user_id != null" >
       and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="is_index != null" >
+      and is_index = #{is_index,jdbcType=VARCHAR} 
     </if>
     order by id desc
   </select>
@@ -151,6 +161,9 @@
     </if>
     <if test="user_id != null" >
       and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="is_index != null" >
+      and is_index = #{is_index,jdbcType=VARCHAR} 
     </if>
     order by id desc
    

@@ -21,7 +21,7 @@
 <script src="<%=path%>/include/js/index/index.js" type="text/javascript"></script>
 <base href="<%=basePath%>">
 
-<title>欢迎进入XX企业后台管理</title>
+<title>欢迎进入后台</title>
 </head>
 
 <body class="easyui-layout" style="overflow-y: hidden" scroll="no">
@@ -36,6 +36,7 @@
 				style="margin-left: 1000px" class="easyui-linkbutton" plain="true">注销</a>
 			<a data-options="iconCls:'icon-edit'" href="javascript:void(0)"
 				class="easyui-linkbutton" plain="true" onclick="showInfo()">修改密码</a>
+			<a data-options="iconCls:'icon-back'" plain="true"  class="easyui-linkbutton" onclick="goToIndex();">返回首页</a>
 		</div>
 
 

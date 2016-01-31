@@ -112,7 +112,7 @@ public class TopicController extends AbstractController {
 			if(!paths.equals("")){
 				n.setImg_path(paths) ;
 			}
-			
+			n.setIs_index("0");//默认不是首页
 			newsService.insertSelective(n) ;
 		} catch (Exception e) {
 			e.printStackTrace() ;

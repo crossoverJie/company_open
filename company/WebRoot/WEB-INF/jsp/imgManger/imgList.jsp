@@ -52,7 +52,7 @@
 		style="width:460px; height: 200px">
 		<form id="queryImgForm" method="post">
 			<table style="width: 450px; overflow: hidden;">
-				<br>
+				<br/>
 				<tr>
 					<td class="thead">
 						<div align="center">名称:</div></td>

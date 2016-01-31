@@ -99,7 +99,11 @@ function login(){
 		data :json,
 		success : function(r) {
 			if(r=="true"){
-				window.location.href="../index/turnToIndex/1" ;
+				//alert(window.location.pathname) ;
+//				alert(window.location.href);
+				var url = window.location.href ;
+				
+				window.location.href= url ;
 			}else{
 				alert("用户名或密码错误！");
 			}
