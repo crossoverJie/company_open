@@ -116,6 +116,7 @@ public class TopicController extends AbstractController {
 			newsService.insertSelective(n) ;
 		} catch (Exception e) {
 			e.printStackTrace() ;
+			return null ;
 		}
 		
 		return "redirect:index/turnToIndex/1" ;

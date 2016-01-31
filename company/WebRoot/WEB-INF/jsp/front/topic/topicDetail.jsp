@@ -99,6 +99,7 @@
 			    		<li>
 			    			<a href="<%=path%>/topic/${ns.id}">${ns.title }</a>
 			    		</li>
+			    		<br/>
 			    	</c:forEach>
 			    </ul>
 			  </div>
