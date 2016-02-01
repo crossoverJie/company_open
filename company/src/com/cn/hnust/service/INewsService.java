@@ -20,7 +20,7 @@ public interface INewsService {
     
     Page<News> findByParams(News u,int pageNo,int limit) ;
 
-	int findAllCount();
+	int findAllCount(News ns);
 	List<News> findAll(News f) ;
 	
 }

@@ -41,11 +41,11 @@
 					</li>
 					<li><a href="#" data-toggle="modal" data-target="#about">关于</a></li>
 				</ul>
-				<form class="navbar-form navbar-left" action="<%=path %>/index/turnToIndex/1" method="post" role="search">
+				<form class="navbar-form navbar-left" action="<%=path %>/index/query" target="_blank" method="post" role="search">
 					<div class="form-group">
 						<input type="text" name="title" class="form-control" placeholder="Search">
 					</div>
-					<button type="submit" class="btn btn-default">查询</button>
+					<button type="submit"  class="btn btn-default">查询</button>
 				</form>
 				
 				<ul class="nav navbar-nav navbar-right">

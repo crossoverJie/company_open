@@ -60,7 +60,7 @@ public class NewsServiceImpl implements INewsService {
 		RowBounds rowBound = new RowBounds(offset, limit);
 		List<News> news = dao.findByParams(u,rowBound);
 		page.setRows(news);
-		int total = dao.findAllCount() ;
+		int total = dao.findAllCount(u) ;
 		page.setTotal(total) ;
 		if(offset >= page.getTotal()){
 			page.setPageNo(page.getTotalPages());
@@ -69,8 +69,8 @@ public class NewsServiceImpl implements INewsService {
 	}
 
 	@Override
-	public int findAllCount() {
-		return dao.findAllCount();
+	public int findAllCount(News ns) {
+		return dao.findAllCount(ns);
 	}
 
 	@Override

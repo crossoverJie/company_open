@@ -98,7 +98,7 @@
   </update>
   
   
-  <select id="findAllCount" resultType="int">
+  <select id="findAllCount" resultType="int" parameterType="map">
   	select count(*) from news
   	where 1=1 
     <if test="id != null" >
@@ -154,7 +154,7 @@
       and ID = #{id,jdbcType=DECIMAL}
     </if>
     <if test="title != null" >
-      and title = #{title,jdbcType=DECIMAL}
+      and title like '%${title}%'
     </if>
     <if test="content != null" >
       and content like '%${content}%' 

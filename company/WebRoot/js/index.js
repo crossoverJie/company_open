@@ -110,7 +110,8 @@ function login(){
 
 document.onkeydown = function(e) {
 	var ev = document.all ? window.event : e;
-	if (ev.keyCode == 13) {
+	//监听 Ctrl+enter事件
+	if (ev.ctrlKey && ev.keyCode == 13) {
 		login();
 	}
 }
@@ -125,3 +126,4 @@ function createTopic(){
 		window.location.href= "../../turnToCreateTopic" ;
 	}
 }
+

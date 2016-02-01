@@ -47,7 +47,7 @@ public class IndexController extends AbstractController {
 	
 	@RequestMapping("/turnToIndex/{pageNum}")
 	public String trunToIndex(@PathVariable int pageNum,Model model,HttpSession session){
-		Img img = new Img() ;
+//		Img img = new Img() ;
 //		设置为1表示自查询上首页的图片
 //		img.setIs_index("1");
 //		List<Img> imgs = imgService.findByIndex(img) ;
@@ -57,7 +57,7 @@ public class IndexController extends AbstractController {
 		News ns_index = new News() ;
 		ns_index.setIs_index("1");
 		super.setPageNum(1);
-		super.setRowCount(newService.findAllCount()) ;
+		super.setRowCount(newService.findAllCount(ns_index)) ;
 		super.getIndex();
 		ns_index.setStartIndex(super.getStartIndex());
 		ns_index.setEndIndex(super.getEndIndex()); 
@@ -74,7 +74,7 @@ public class IndexController extends AbstractController {
 		//查询最新的新闻信息。
 		News ns = new News() ;
 		super.setPageNum(pageNum) ;
-		super.setRowCount(newService.findAllCount()) ;
+		super.setRowCount(newService.findAllCount(ns)) ;
 		super.getIndex() ;
 		ns.setStartIndex(super.getStartIndex()) ;
 		ns.setEndIndex(super.getEndIndex()) ;
@@ -118,6 +118,55 @@ public class IndexController extends AbstractController {
 		}
 		
 		return "../../index" ;
+	}
+	
+	@RequestMapping("/query")
+	public String query(News ns,HttpSession session,Model model){
+		User user = (User) session.getAttribute("user") ;
+		if(user == null){
+		}else{
+			//每个控制器都需要将当前用户的头像显示出来
+			String img_id = user.getImg_id() ;
+			if(img_id != null){
+				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
+				model.addAttribute("headimg", path) ;
+			}
+		}
+		if(!ns.getTitle().trim().equals("")){
+			
+			int count = newService.findAllCount(ns) ;
+			List<News> news_query = newService.findAll(ns) ;
+			
+			for (News news2 : news_query) {
+				String img_path = news2.getImg_path() ;//获得当前帖子内容中的图片
+				String user_id = news2.getUser_id() ;
+				User userById = userService.getUserById(Integer.parseInt(user_id));
+				if (userById != null) {
+					String img_id = userById.getImg_id() ;
+					if(img_id != null){
+						Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(img_id)) ;
+						if(img_user != null){
+							String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+							if(topic_user_path != null){
+								news2.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+							}
+							
+						}
+						
+					}
+				}
+				if(img_path != null){
+					String paths[] = img_path.split(",") ;
+					news2.setIndex_src(paths[0]) ;
+				}
+				
+			}
+			
+			model.addAttribute("querylist", news_query) ;
+			model.addAttribute("querycount", count);
+			model.addAttribute("keyword", ns.getTitle()) ;
+		}
+		return "front/query/queryResult" ;
 	}
 	
 	/**

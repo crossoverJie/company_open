@@ -45,7 +45,7 @@
     	}
     </style>
 </head>
-<body>
+<body class="">
 <jsp:include page="../../../../public/nav-top.jsp"></jsp:include>
 
 	

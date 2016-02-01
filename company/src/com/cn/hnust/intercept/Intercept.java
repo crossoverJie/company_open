@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,8 +15,12 @@ import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.IFunctionService;
 import com.cn.hnust.service.IRoleService;
 
+import oracle.jdbc.util.Login;
+
 public class Intercept implements HandlerInterceptor {
 
+	private static Logger logger = Logger.getLogger(Intercept.class) ;
+	
 	@Resource
 	private IFunctionService functionService ;
 	
@@ -30,6 +35,7 @@ public class Intercept implements HandlerInterceptor {
 		User user = (User) request.getSession().getAttribute("user") ;
 		String url = request.getRequestURI() ;
 		url = url.substring(9) ;
+		logger.debug("当前URL------>  "+url);
 		System.out.println("当前URL------>  "+url);
 		if(user != null){
 			String role_id = user.getRole_id() ;
@@ -57,7 +63,7 @@ public class Intercept implements HandlerInterceptor {
 			
 			return true;
 		}else {
-			System.out.println("当前状态------>  拦截 ");
+			logger.debug("当前状态------>  拦截 ");
 			response.sendRedirect("/company/login.jsp") ;
 //			request.getRequestDispatcher("/login.jsp").forward(request, response);  
 			return false ;

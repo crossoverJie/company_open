@@ -21,7 +21,7 @@ public interface INewsDao {
     
     List<News> findByParams(News u,RowBounds rowBound) ;
 
-	int findAllCount();
+	int findAllCount(News ns);
 	List<News> findAll(News f) ;
 	
 }

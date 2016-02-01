@@ -41,6 +41,6 @@ function loginOut(){
 /**
  * 回到首页
  */
-function goToIndex(){
-	window.location.href="../index/turnToIndex/1";
+function goToIndex(url){
+	window.location.href=url+"/index/turnToIndex/1";
 }

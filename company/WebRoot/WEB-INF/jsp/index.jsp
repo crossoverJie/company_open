@@ -36,7 +36,7 @@
 				style="margin-left: 1000px" class="easyui-linkbutton" plain="true">注销</a>
 			<a data-options="iconCls:'icon-edit'" href="javascript:void(0)"
 				class="easyui-linkbutton" plain="true" onclick="showInfo()">修改密码</a>
-			<a data-options="iconCls:'icon-back'" plain="true"  class="easyui-linkbutton" onclick="goToIndex();">返回首页</a>
+			<a data-options="iconCls:'icon-back'" plain="true"  class="easyui-linkbutton" onclick="goToIndex('<%=path%>');">返回首页</a>
 		</div>
 
 
@@ -77,6 +77,7 @@
 	</div>
 	<div data-options="region:'south',border:false"
 		style="height:40px;background:#A9FACD;padding:20px;">
+		<div class="center-block"></div>
 		<center>技术支持：crossoverJie</center>
 	</div>
 

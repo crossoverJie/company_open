@@ -38,7 +38,7 @@
 	}
 </style>
 </head>
-<body>
+<body class="myElement">
 <!-- 顶部导航栏 -->
 <jsp:include page="public/nav-top.jsp"></jsp:include>
 	

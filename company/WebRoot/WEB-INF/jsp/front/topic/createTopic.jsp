@@ -30,7 +30,7 @@
     <![endif]-->
 <link href="<%=path%>/css/index.css" type="text/css"
 	rel="stylesheet" />
-<script src="<%=path%>/ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="<%=path%>/ckeditor_full/ckeditor.js" type="text/javascript"></script>
     <style type="text/css">
     </style>
 </head>

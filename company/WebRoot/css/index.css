@@ -1,8 +1,17 @@
 @charset "utf-8";
 /* CSS Document */
+		
+		.myElement { 
+			/* Generated with http://gradient.quasi.ink */
+			
+		}
+		
     	body{
     		padding-top: 50px;
     		padding-bottom: 50px;
+    		/**一下采用  http://gradient.quasi.ink/  生成的毛玻璃效果**/
+    		background-size: cover;
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAADCAYAAABfwxXFAAAAYklEQVQIWwFXAKj/AXhrVP+lxuAA9/n4AHxhPAA5KSAA7ezwAK/B1QABqZdt/6a92QDx+/0AfFg7ABkTFwD9BAAAna+9AAHIqoH/tcbTALTW6QBlQyoAMiojAPT18wC5xNQAGH4odF2ybI0AAAAASUVORK5CYII=);
     	}
     	.carousel{
     		height: 460px;

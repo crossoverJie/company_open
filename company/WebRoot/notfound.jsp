@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<div class="jumbotron">
 	  <h1>您所访问的界面不存在。。。</h1>
-	  <p><a class="btn btn-primary btn-lg" href="../index.jsp" role="button" target="_blank">返回首页</a></p>
+	  <p><a class="btn btn-primary btn-lg" href="<%=path %>/index/turnToIndex/1" role="button" target="_blank">返回首页</a></p>
 	</div>
 
 
