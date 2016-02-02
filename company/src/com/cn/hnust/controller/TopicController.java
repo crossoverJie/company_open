@@ -66,7 +66,12 @@ public class TopicController extends AbstractController {
 			}
 			News news_author = new News() ;
 			news_author.setUser_id(user.getId()+"");
-			List<News> all_author = newsService.findAll(news_author) ;
+			super.setPageNum(1);//只显示第一页的数据，也就是只显示六条数据。
+			super.setRowCount(newsService.findAllCount(news_author)) ;
+			super.getIndex();
+			news_author.setStartIndex(super.getStartIndex());
+			news_author.setEndIndex(super.getEndIndex()); 
+			List<News> all_author = newsService.findAll(news_author) ;//为了只显示最新的六条数据
 			model.addAttribute("allauthor", all_author) ;//将当前这条帖子的作者的所有帖子都列展示出来。
 			
 		}

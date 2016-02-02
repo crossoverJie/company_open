@@ -56,7 +56,7 @@ public class IndexController extends AbstractController {
 		//用于顶部展示的滚动栏
 		News ns_index = new News() ;
 		ns_index.setIs_index("1");
-		super.setPageNum(1);
+		super.setPageNum(1);//只显示第一页的数据，也就是只显示六条数据。
 		super.setRowCount(newService.findAllCount(ns_index)) ;
 		super.getIndex();
 		ns_index.setStartIndex(super.getStartIndex());

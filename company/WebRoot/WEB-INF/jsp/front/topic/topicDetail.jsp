@@ -30,6 +30,7 @@
     <![endif]-->
 <link href="<%=path%>/css/index.css" type="text/css"
 	rel="stylesheet" />
+<script src="<%=path%>/ckeditor_full/ckeditor.js" type="text/javascript"></script>
     <style type="text/css">
     	#baseSetTable tr .td-head{
     		width: 100px;
@@ -42,6 +43,16 @@
     	/* 给初始化文章内容的时候为所有照片设置尺寸 */
     	#topic-content img{
     		width: 845px;
+    	}
+    	.review-panel{
+    		height: 330px;
+    	}
+    	.hint-p{
+    		padding-top: 90px;
+    	}
+    	#head-topic{
+    		width: 75px;
+    		height: 75px;
     	}
     </style>
 </head>
@@ -86,6 +97,56 @@
 			  </div>
 			</div>
 			
+			<hr/>
+			<div class="panel panel-info review-panel">
+				
+				<c:choose>
+				<c:when test="${empty user}">
+					<p class="text-center text-danger hint-p">
+						您需要登录之后才能回复&nbsp;
+						<a href="javascriot:void(0)" data-toggle="modal" data-target="#login">登录
+									<span class="glyphicon glyphicon-home"></span></a>
+						&nbsp;&nbsp;
+						<a href="javascriot:void(0)" data-toggle="modal" data-target="#register">注册
+									<span class="glyphicon glyphicon-user"></span></a>
+					</p>
+						
+				</c:when>
+				
+				<c:otherwise>
+				<div class="row">
+					<div class="col-md-2">
+						<img id="head-topic" src="
+									<c:choose>
+										<c:when test="${empty headimg}">
+											<%=path %>/include/img/person.gif
+										</c:when>
+										<c:otherwise>
+											<%=path %>/${headimg}
+										</c:otherwise>
+									</c:choose>
+									" class="img-responsive center-block img-circle" alt="图片无效">
+					</div>
+					
+					
+					<div class="col-md-10">
+						<div class="form-group">
+						    <textarea required="required" class="form-control" id="content" name="content" >
+						    </textarea>
+						    <script type="text/javascript">CKEDITOR.replace('content');</script>
+						 </div>
+					</div>
+					
+				</div>
+				<p class="text-right">
+					<a class="btn btn-primary" href="javascript:void(0)" >提交</a>
+				</p>
+				</c:otherwise>
+				</c:choose>
+				
+			</div>
+			
+			
 			
 		</div>
 		
@@ -114,32 +175,12 @@
 
 
 
-<!-- 弹出框 模态框关于 -->
-<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">关于</h4>
-      </div>
-      <div class="modal-body">
-      	<p>
-      		自由开发者crossoverJie
-      	</p>
-   		<address>
-   			<a href="mailto:731756881@qq.com">731756881@qq.com</a>
-   		</address>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- 引入底部jsp -->
 <jsp:include page="../../../../public/nav-bottom.jsp"></jsp:include>
 
+<!-- 弹出框 模态框关于 -->
 <!-- 弹出框 模态框登录 -->
 <jsp:include page="../../../../public/login&register.jsp"></jsp:include>
 <!-- 弹出框 模态框注册 -->

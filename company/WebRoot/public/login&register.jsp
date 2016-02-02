@@ -6,6 +6,30 @@
 			+ request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
+
+<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">关于</h4>
+      </div>
+      <div class="modal-body">
+      	<p>
+      		自由开发者crossoverJie
+      	</p>
+   		<address>
+   			<a href="mailto:731756881@qq.com">731756881@qq.com</a>
+   		</address>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- 弹出框 模态框登录 -->
 <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_login">
   <div class="modal-dialog" role="document">
