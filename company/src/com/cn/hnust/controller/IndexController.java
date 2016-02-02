@@ -132,7 +132,8 @@ public class IndexController extends AbstractController {
 				model.addAttribute("headimg", path) ;
 			}
 		}
-		if(!ns.getTitle().trim().equals("")){
+		String title = ns.getTitle() ;
+		if(title != null && !title.equals("1")){
 			
 			int count = newService.findAllCount(ns) ;
 			List<News> news_query = newService.findAll(ns) ;
