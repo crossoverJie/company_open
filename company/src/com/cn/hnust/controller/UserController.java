@@ -128,6 +128,7 @@ public class UserController {
 	@RequestMapping("/create")
 	public void createUser(User user ,HttpServletRequest request,HttpServletResponse response) throws IOException{
 		try {
+			user.setImg_id("1001");//设置默认头像
 			userService.createUser(user) ;
 			response.getWriter().print("true") ;
 		} catch (Exception e) {

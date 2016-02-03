@@ -98,6 +98,50 @@
 			</div>
 			
 			<hr/>
+			<!-- 显示回复 -->
+			<h3>
+				<span class="label label-primary">
+					全部回复
+				</span>
+			</h3>
+			<div class="panel panel-sucess">
+			
+				<c:forEach var="com" items="${comments }" varStatus="status" >
+				
+				
+				<div class="panel-heading">
+					<div class="row">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-2">
+										<img id="sm-name" src="
+											<%=path %>/${com.user_head_img}
+									" class="img-responsive center-block img-circle" alt="图片无效">
+									<p class="text-center">
+									${com.username }
+									</p>
+									</div>
+									<div class="col-md-10">
+										<p>
+											${com.content }
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<!-- text-muted：字体颜色的样式 -->
+								<p class="text-muted text-right">${com.dateStr}
+								</p>
+							</div>
+						</div>
+					
+				</div>
+				</c:forEach>
+				
+				
+			</div>
+			
+			<hr/>
 			<div class="panel panel-info review-panel">
 				
 				<c:choose>
@@ -133,13 +177,14 @@
 						<div class="form-group">
 						    <textarea required="required" class="form-control" id="content" name="content" >
 						    </textarea>
+						    <input type="hidden" id="topic_id" value="${topic.id }"/>
 						    <script type="text/javascript">CKEDITOR.replace('content');</script>
 						 </div>
 					</div>
 					
 				</div>
 				<p class="text-right">
-					<a class="btn btn-primary" href="javascript:void(0)" >提交</a>
+					<a class="btn btn-primary" onclick="comment();" href="javascript:void(0)" >提交</a>
 				</p>
 				</c:otherwise>
 				</c:choose>

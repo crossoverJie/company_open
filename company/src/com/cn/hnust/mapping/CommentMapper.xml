@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.ICommentDao" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Comment" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="parent_id" property="parent_id" jdbcType="VARCHAR" />
+    <result column="news_id" property="news_id" jdbcType="VARCHAR" />
+    <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, parent_id,news_id, content,create_date,user_id 
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Comment" >
+    insert into t_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       id,
+      <if test="parent_id != null" >
+        parent_id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="news_id != null" >
+        news_id,
+      </if>
+      <if test="create_date != null" >
+        create_date,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      SEQ_T_COMMENT.Nextval,
+      <if test="parent_id != null" >
+        #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="news_id != null" >
+        #{news_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null" >
+        #{create_date,jdbcType=DATE},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.Comment" >
+    update t_comment
+    <set >
+      <if test="parent_id != null" >
+       parent_id= #{parent_id,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+       content= #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="news_id != null" >
+       news_id= #{news_id,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null" >
+       create_date= #{create_date,jdbcType=DATE},
+      </if>
+      <if test="user_id != null" >
+       user_id= #{user_id,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="findAllCount" resultType="int" parameterType="map">
+  	select count(*) from t_comment
+  	where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="content != null" >
+      and content like '%${content}%' 
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="parent_id != null" >
+      and parent_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
+  <!-- 查询 -->
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+     <include refid="Base_Column_List" />
+    from t_comment TB
+    where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="content != null" >
+      and content like '%${content}%' 
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="parent_id != null" >
+      and parent_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    order by id desc
+  </select>
+  
+  <!-- 具有分页功能 -->
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Comment">
+	   <if test="startIndex != null">
+			select * from (select
+			my_table.*, rownum my_rownum from (
+	   </if>
+  	select <include refid="Base_Column_List" />
+  	from t_comment
+  	where 1=1
+  	<if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="content != null" >
+      and content like '%${content}%' 
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="parent_id != null" >
+      and parent_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    order by id desc
+   
+   <if test="startIndex != null">
+	    <![CDATA[  
+	   ) my_table where rownum <= #{endIndex} ) where my_rownum > #{startIndex}
+	   ]]>
+   </if>
+  </select>
+</mapper>

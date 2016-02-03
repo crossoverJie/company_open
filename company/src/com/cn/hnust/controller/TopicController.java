@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cn.hnust.pojo.Comment;
+import com.cn.hnust.pojo.Img;
 import com.cn.hnust.pojo.News;
 import com.cn.hnust.pojo.User;
+import com.cn.hnust.service.ICommentService;
 import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
 import com.cn.hnust.service.IUserService;
@@ -33,6 +36,9 @@ public class TopicController extends AbstractController {
 	
 	@Resource
 	private IImgService imgService ;
+	
+	@Autowired
+	private ICommentService commentService ;
 	
 	@Autowired
 	private HttpSession session ;
@@ -84,6 +90,29 @@ public class TopicController extends AbstractController {
 				model.addAttribute("headimg", path) ;
 			}
 		}
+		
+		//以下是为了显示评论的
+		Comment comment = new Comment() ;
+		comment.setNews_id(id+"");
+		super.setPageNum(2);//只显示两页的数据，也就是只显示12条数据。
+		super.setRowCount(commentService.findAllCount(comment)) ;
+		super.getIndex();
+		comment.setStartIndex(super.getStartIndex());
+		comment.setEndIndex(super.getEndIndex()); 
+		List<Comment> comments = commentService.findAll(comment) ;
+		for (Comment com : comments) {
+			String com_user_id = com.getUser_id() ;
+			User userById = userService.getUserById(Integer.parseInt(com_user_id));
+			com.setUsername(userById.getUsername());
+			Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
+			String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+			if(topic_user_path != null){
+				com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+			}
+			
+		}
+		model.addAttribute("comments", comments) ;
+		
 		return "front/topic/topicDetail" ;
 	}
 	

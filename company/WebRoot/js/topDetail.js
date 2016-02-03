@@ -79,6 +79,32 @@ $(function(){
 });
 
 /**
+ * 提交评论
+ */
+function comment(){
+	var content = CKEDITOR.instances.content.getData();
+	var news_id = $("#topic_id").val() ;
+	if(content == "" || content == undefined){
+		alert("请填写评论");
+		return ;
+	}
+	var json ={
+		"content":content,
+		"news_id":news_id
+	}
+	
+	$.ajax( {
+		type:"POST", 
+		url : "../comment/create",
+		data : json,
+		success : function(r) {
+			var url = window.location.href ;
+			window.location.href= url ;//然后再刷新当前界面
+		}
+	});
+}
+
+/**
  * 登录的方法
  */
 function login(){
@@ -103,7 +129,7 @@ function login(){
 //				alert(window.location.href);
 				var url = window.location.href ;
 				
-				window.location.href= url ;
+				window.location.href= url ;//然后再刷新当前界面
 			}else{
 				alert("用户名或密码错误！");
 			}
