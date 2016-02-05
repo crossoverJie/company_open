@@ -56,7 +56,7 @@ public class TopicController extends AbstractController {
 	 * @date 2016年1月29日  上午11:53:01
 	 */
 	@RequestMapping("/topic/{id}")
-	public String showDetail(@PathVariable int id,HttpSession session,Model model){
+	public String showDetail(@PathVariable int id,String pageNum,HttpSession session,Model model){
 		News news = newsService.selectByPrimaryKey(id) ;
 		model.addAttribute("topic", news) ;
 		String user_id = news.getUser_id() ;
@@ -72,7 +72,7 @@ public class TopicController extends AbstractController {
 			}
 			News news_author = new News() ;
 			news_author.setUser_id(user.getId()+"");
-			super.setPageNum(1);//只显示第一页的数据，也就是只显示六条数据。
+			super.setPageNum(1);//只显示当前用户的其他帖子      第一页的数据，也就是只显示六条数据。
 			super.setRowCount(newsService.findAllCount(news_author)) ;
 			super.getIndex();
 			news_author.setStartIndex(super.getStartIndex());
@@ -94,8 +94,15 @@ public class TopicController extends AbstractController {
 		//以下是为了显示评论的
 		Comment comment = new Comment() ;
 		comment.setNews_id(id+"");
-		super.setPageNum(2);//只显示两页的数据，也就是只显示12条数据。
 		super.setRowCount(commentService.findAllCount(comment)) ;
+		if(pageNum == null){
+			super.setPageNum(1);//只显示两页的数据，也就是只显示12条数据。
+			model.addAttribute("currentpage", 1) ;
+		}else{
+			super.setPageNum(Integer.parseInt(pageNum));
+			model.addAttribute("currentpage", pageNum) ;
+		}
+		
 		super.getIndex();
 		comment.setStartIndex(super.getStartIndex());
 		comment.setEndIndex(super.getEndIndex()); 
@@ -110,6 +117,11 @@ public class TopicController extends AbstractController {
 				com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
 			}
 			
+		}
+		int count = super.getRowCount() ;
+		//当评论超过六条的时候才显示分页
+		if(count >6){
+			model.addAttribute("commentcount", count) ;
 		}
 		model.addAttribute("comments", comments) ;
 		

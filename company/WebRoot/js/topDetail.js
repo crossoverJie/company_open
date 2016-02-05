@@ -79,6 +79,25 @@ $(function(){
 });
 
 /**
+ * 评论的翻页  0：上一页    1：下一页
+ * @param obj
+ */
+function paginationComment(obj){
+	if(obj==0){
+		
+	}else{
+		$.ajax( {
+			type:"POST", 
+			url : "../comment/create",
+			data : json,
+			success : function(r) {
+				
+			}
+		});
+	}
+}
+
+/**
  * 提交评论
  */
 function comment(){

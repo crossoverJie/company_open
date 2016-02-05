@@ -104,43 +104,53 @@
 					全部回复
 				</span>
 			</h3>
-			<div class="panel panel-sucess">
 			
-				<c:forEach var="com" items="${comments }" varStatus="status" >
-				
-				
-				<div class="panel-heading">
-					<div class="row">
-							<div class="col-md-10">
-								<div class="row">
-									<div class="col-md-2">
-										<img id="sm-name" src="
-											<%=path %>/${com.user_head_img}
-									" class="img-responsive center-block img-circle" alt="图片无效">
-									<p class="text-center">
-									${com.username }
+			<div class="panel">
+			
+			<c:forEach var="com" items="${comments }" varStatus="status" >
+			
+			<div class="panel-heading">
+				<div class="row">
+						<div class="col-md-10">
+							<div class="row">
+								<div class="col-md-2">
+									<img id="sm-name" src="
+										<%=path %>/${com.user_head_img}
+								" class="img-responsive center-block img-circle" alt="图片无效">
+								<p class="text-center">
+								${com.username }
+								</p>
+								</div>
+								<div class="col-md-10">
+									<p>
+										${com.content }
 									</p>
-									</div>
-									<div class="col-md-10">
-										<p>
-											${com.content }
-										</p>
-									</div>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<!-- text-muted：字体颜色的样式 -->
-								<p class="text-muted text-right">${com.dateStr}
-								</p>
-							</div>
 						</div>
-					
-				</div>
-				</c:forEach>
-				
+						<div class="col-md-2">
+							<!-- text-muted：字体颜色的样式 -->
+							<p class="text-muted text-right">${com.dateStr}
+							</p>
+						</div>
+					</div>
 				
 			</div>
+			</c:forEach>
+			</div>
 			
+			<!-- 判断评论是否超过六条然后显示分页 -->
+			<c:if test="${!empty commentcount}">
+				<div class="panel-body">
+					<nav>
+					  <ul class="pager">
+					    <li><a href="<%=path %>/topic/${topic.id }?pageNum=${currentpage-1}" onclick="paginationComment(0);">上一页</a></li>
+					    <li>当前第${currentpage }页</li>
+					    <li><a href="<%=path %>/topic/${topic.id }?pageNum=${currentpage+1}">下一页</a></li>
+					  </ul>
+					</nav>	
+				</div>
+			</c:if>
 			<hr/>
 			<div class="panel panel-info review-panel">
 				
