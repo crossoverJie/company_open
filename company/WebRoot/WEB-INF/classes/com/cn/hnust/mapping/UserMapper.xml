@@ -65,6 +65,9 @@
       <if test="sex != null" >
         sex,
       </if>
+      <if test="img_id != null" >
+        img_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       #{id},
@@ -91,6 +94,9 @@
       </if>
       <if test="sex != null" >
         #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="img_id != null" >
+        #{img_id,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

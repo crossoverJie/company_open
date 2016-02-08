@@ -111,10 +111,16 @@ public class TopicController extends AbstractController {
 			String com_user_id = com.getUser_id() ;
 			User userById = userService.getUserById(Integer.parseInt(com_user_id));
 			com.setUsername(userById.getUsername());
-			Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
-			String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
-			if(topic_user_path != null){
-				com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+			String img_id = userById.getImg_id() ;
+			if(img_id != null){
+				Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
+				String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+				if(topic_user_path != null){
+					com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+				}
+			}else{
+				//如果注册用户没有上传图片
+				
 			}
 			
 		}
@@ -124,6 +130,7 @@ public class TopicController extends AbstractController {
 			model.addAttribute("commentcount", count) ;
 		}
 		model.addAttribute("comments", comments) ;
+		model.addAttribute("totalpage", super.getTotalPage()) ;
 		
 		return "front/topic/topicDetail" ;
 	}

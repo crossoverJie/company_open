@@ -33,10 +33,14 @@ $(function(){
 	/*检查用户名是否被注册*/
 	$("#register-username").blur(function(){
 		var username = $("#register-username").val() ;
-		if(username != undefined){
+		var json ={
+			"username":username
+		}
+		if(username != undefined && username != ""){
 			$.ajax( {
 				type:"POST", 
-				url : '../../index/checkIsRepeat?username='+username,
+				data:json,
+				url : '../../index/checkIsRepeat',
 				cache : false,
 				success : function(r) {
 					if(r=="true"){

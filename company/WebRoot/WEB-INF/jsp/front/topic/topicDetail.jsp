@@ -130,11 +130,18 @@
 						</div>
 						<div class="col-md-2">
 							<!-- text-muted：字体颜色的样式 -->
-							<p class="text-muted text-right">${com.dateStr}
+							<p class="text-muted text-right "> 
+								<span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;
+								${com.dateStr}
 							</p>
 						</div>
 					</div>
 				
+			</div>
+			<div class="panel-footer">
+				<p class="text-right"><a href="javascript:void(0)" onclick="openReply(this);">
+					<span class="glyphicon glyphicon-pencil"></span>回复</a> 
+				</p>
 			</div>
 			</c:forEach>
 			</div>
@@ -144,9 +151,17 @@
 				<div class="panel-body">
 					<nav>
 					  <ul class="pager">
-					    <li><a href="<%=path %>/topic/${topic.id }?pageNum=${currentpage-1}" onclick="paginationComment(0);">上一页</a></li>
+					    <li class=""><a href="<%=path %>/topic/${topic.id }?pageNum=${currentpage-1}" class="
+					    <c:if test="${currentpage ==1 }">
+					    	hidden
+					    </c:if>
+					    ">上一页</a></li>
 					    <li>当前第${currentpage }页</li>
-					    <li><a href="<%=path %>/topic/${topic.id }?pageNum=${currentpage+1}">下一页</a></li>
+					    <li><a href="<%=path %>/topic/${topic.id }?pageNum=${currentpage+1}" class="
+					    <c:if test="${currentpage >= totalpage }">
+					    	hidden
+					    </c:if>
+					    ">下一页</a></li>
 					  </ul>
 					</nav>	
 				</div>
@@ -180,6 +195,9 @@
 										</c:otherwise>
 									</c:choose>
 									" class="img-responsive center-block img-circle" alt="图片无效">
+								<p class="text-center text-danger">
+								${user.username }
+								</p>
 					</div>
 					
 					
@@ -239,6 +257,35 @@
 <!-- 弹出框 模态框登录 -->
 <jsp:include page="../../../../public/login&register.jsp"></jsp:include>
 <!-- 弹出框 模态框注册 -->
+
+
+
+<!-- 回复的模态框 -->
+<div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel_reply">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="reply_username"></h4>
+        <h6 class="modal-title" id="reply_username_content">
+        	
+        </h6>
+      </div>
+      <div class="modal-body">
+			<form id="replyForm" method="post" >
+			  <div class="form-group">
+			  	<textarea rows="" cols="" name="reply_content" required="required">
+			  	</textarea>
+			  	<script type="text/javascript">CKEDITOR.replace('reply_content');</script>
+			  </div>
+			  <div class="modal-footer">
+				  <button type="button" class="btn btn-primary">提交</button>
+		      </div>
+			</form>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

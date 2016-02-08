@@ -6,7 +6,7 @@ $(function(){
 	/*检查邮箱是否被注册*/
 	$("#register-email").blur(function(){
 		var email = $("#register-email").val() ;
-		if(email != undefined){
+		if(email != undefined && email != ""){
 			$.ajax( {
 				type:"POST", 
 				url : '../index/checkIsRepeat?email='+email,
@@ -32,10 +32,14 @@ $(function(){
 	/*检查用户名是否被注册*/
 	$("#register-username").blur(function(){
 		var username = $("#register-username").val() ;
-		if(username != undefined){
+		var json ={
+			"username":username
+		}
+		if(username != undefined && username != ""){
 			$.ajax( {
 				type:"POST", 
-				url : '../index/checkIsRepeat?username='+username,
+				data:json,
+				url : '../index/checkIsRepeat',
 				cache : false,
 				success : function(r) {
 					if(r=="true"){
@@ -121,6 +125,22 @@ function comment(){
 			window.location.href= url ;//然后再刷新当前界面
 		}
 	});
+}
+
+function openReply(obj){
+	//获取回复的人的名称
+	var username=$(obj).parent().parent().prev().children().children(".col-md-10")
+	.children().children(".col-md-2").html();
+	
+	var content=$(obj).parent().parent().prev().children().children(".col-md-10")
+	.children().children(".col-md-10").html();
+	
+	$("#reply_username").html("回复"+username) ;
+	$("#reply_username_content").html(content) ;
+	
+	
+	$("#reply").modal("show") ;
+	
 }
 
 /**

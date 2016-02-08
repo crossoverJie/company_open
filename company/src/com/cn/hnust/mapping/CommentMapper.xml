@@ -158,7 +158,7 @@
     <if test="parent_id != null" >
       and parent_id = #{news_id,jdbcType=VARCHAR} 
     </if>
-    order by id desc
+    order by id asc
    
    <if test="startIndex != null">
 	    <![CDATA[  

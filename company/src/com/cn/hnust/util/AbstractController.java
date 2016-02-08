@@ -7,6 +7,9 @@ public class AbstractController {
 	private Integer startIndex;
 	private Integer endIndex;
 	
+	/**总页数**/
+	private Integer totalPage ;
+	
 	public Integer getPageNum() {
 		return pageNum;
 	}
@@ -44,6 +47,7 @@ public class AbstractController {
 //		if(pageSize==null) pageSize = WebUtil.pageSize;
 		if(pageSize==null) pageSize = 6;
 		int sqlPage=(int)Math.ceil((double)rowCount/(double)pageSize);
+		this.setTotalPage(sqlPage);//设置总页数
 		if(pageNum >  sqlPage)
 		{
 			pageNum = sqlPage;
@@ -53,5 +57,11 @@ public class AbstractController {
 		}
 		startIndex = pageSize *(pageNum-1);
 		endIndex = pageSize * pageNum;
+	}
+	public Integer getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(Integer totalPage) {
+		this.totalPage = totalPage;
 	}
 }
