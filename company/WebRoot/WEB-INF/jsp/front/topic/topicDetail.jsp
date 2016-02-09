@@ -111,6 +111,7 @@
 			
 			<div class="panel-heading">
 				<div class="row">
+					<input type="hidden" class="comment_id" value="${com.id }"/>
 						<div class="col-md-10">
 							<div class="row">
 								<div class="col-md-2">
@@ -122,6 +123,19 @@
 								</p>
 								</div>
 								<div class="col-md-10">
+									<!-- 判断当前条评论的是不是有父评论，有就显示，没有就不显示 -->
+									<c:if test="${!empty com.parent_comment}">
+										<blockquote>
+										  <cite title="${com.parent_comment.username }" class="text-danger">
+										  <img id="sm-name" src="
+										<%=path %>/${com.parent_comment.user_head_img}
+								" class="img-responsive center-block img-circle" alt="图片无效">
+											${com.parent_comment.username }:
+										  </cite>
+										  ${com.parent_comment.content }
+										</blockquote>
+									</c:if>
+									
 									<p>
 										${com.content }
 									</p>
@@ -141,6 +155,7 @@
 			<div class="panel-footer">
 				<p class="text-right"><a href="javascript:void(0)" onclick="openReply(this);">
 					<span class="glyphicon glyphicon-pencil"></span>回复</a> 
+					<input type="hidden" id="session_username" value="${user.username }"/> 
 				</p>
 			</div>
 			</c:forEach>
@@ -212,7 +227,7 @@
 					
 				</div>
 				<p class="text-right">
-					<a class="btn btn-primary" onclick="comment();" href="javascript:void(0)" >提交</a>
+					<a class="btn btn-primary" onclick="saveReply();" href="javascript:void(0)" >提交</a>
 				</p>
 				</c:otherwise>
 				</c:choose>
@@ -279,7 +294,8 @@
 			  	<script type="text/javascript">CKEDITOR.replace('reply_content');</script>
 			  </div>
 			  <div class="modal-footer">
-				  <button type="button" class="btn btn-primary">提交</button>
+			  	  <input type="hidden" id="reply_comment_id" />
+				  <button type="button" onclick="replyComment();" class="btn btn-primary">提交</button>
 		      </div>
 			</form>
       </div>

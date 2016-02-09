@@ -127,7 +127,45 @@ function comment(){
 	});
 }
 
+function replyComment(){
+	var content = CKEDITOR.instances.reply_content.getData();
+	if(content == "" || content == undefined){
+		alert("请填写评论");
+		return ;
+	}
+	var comment_id=$("#reply_comment_id").val();//获取回复帖子的ID
+	var news_id = $("#topic_id").val() ;
+	var json ={
+		"content":content,
+		"parent_id":comment_id,
+		"news_id":news_id
+	};
+	$.ajax( {
+		type:"POST", 
+		url : "../comment/createParent",
+		data : json,
+		success : function(r) {
+			var url = window.location.href ;
+			window.location.href= url ;//然后再刷新当前界面
+		}
+	});
+	
+}
+
+/**
+ * 打开回复框
+ * 判断是否登录。
+ * @param obj
+ */
 function openReply(obj){
+	var username = $("#session_username").val() ;
+	if(username == ""){
+		alert("请登录之后再发表回复") ;
+		$('#login').modal('show') ;
+		return ;
+	}
+	
+	
 	//获取回复的人的名称
 	var username=$(obj).parent().parent().prev().children().children(".col-md-10")
 	.children().children(".col-md-2").html();
@@ -137,10 +175,9 @@ function openReply(obj){
 	
 	$("#reply_username").html("回复"+username) ;
 	$("#reply_username_content").html(content) ;
-	
-	
+	var comment_id=$(obj).parent().parent().prev().children().children(".comment_id").val();
+	$("#reply_comment_id").val(comment_id) ;
 	$("#reply").modal("show") ;
-	
 }
 
 /**

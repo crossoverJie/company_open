@@ -122,6 +122,25 @@ public class TopicController extends AbstractController {
 				//如果注册用户没有上传图片
 				
 			}
+			String parent_id = com.getParent_id() ;
+			if(!parent_id.equals("-1")){
+				Comment comment_parent = commentService.selectByPrimaryKey(Integer.parseInt(parent_id)) ;
+				com.setParent_comment(comment_parent);
+				
+				
+				String comment_parent_user_id = comment_parent.getUser_id() ;
+				User parent_user = userService.getUserById(Integer.parseInt(comment_parent_user_id));
+				comment_parent.setUsername(parent_user.getUsername());
+				String parent_img_id = parent_user.getImg_id() ;
+				if(parent_img_id != null){
+					Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(parent_user.getImg_id())) ;
+					String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+					if(topic_user_path != null){
+						comment_parent.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+					}
+				}
+			}
+			
 			
 		}
 		int count = super.getRowCount() ;

@@ -2,6 +2,7 @@ package com.cn.hnust.pojo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.cn.hnust.util.AbstractPojo;
 
@@ -15,6 +16,7 @@ import com.cn.hnust.util.AbstractPojo;
 public class Comment extends AbstractPojo {
 	private Integer id ;
 	private String parent_id ;//如果是顶节点就为-1
+	private Comment parent_comment ;//父节点的评论
 	private String news_id ;
 	private String user_id ;
 	private Date create_date ;
@@ -83,5 +85,11 @@ public class Comment extends AbstractPojo {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public Comment getParent_comment() {
+		return parent_comment;
+	}
+	public void setParent_comment(Comment parent_comment) {
+		this.parent_comment = parent_comment;
 	}
 }

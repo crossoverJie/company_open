@@ -156,7 +156,7 @@
       and news_id = #{news_id,jdbcType=VARCHAR} 
     </if>
     <if test="parent_id != null" >
-      and parent_id = #{news_id,jdbcType=VARCHAR} 
+      and parent_id = #{parent_id,jdbcType=VARCHAR} 
     </if>
     order by id asc
    
