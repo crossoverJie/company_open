@@ -65,6 +65,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
+				<a href="<%=path%>/frontuser/${author.id}">
 				<img src="
 				<c:choose>
 					<c:when test="${empty topicuser}">
@@ -75,8 +76,10 @@
 					</c:otherwise>
 				</c:choose>
 				" class="img-responsive center-block img-circle" alt="Responsive image">
+				</a>
 				<div class="center-block">
-					<p class="text-center text-info"><b>${author.username}</b></p>
+					<p class="text-center text-info"><b>
+					<a href="<%=path%>/frontuser/${author.id}">${author.username}</a></b></p>
 				</div>
 				
 			</div>
@@ -227,7 +230,7 @@
 					
 				</div>
 				<p class="text-right">
-					<a class="btn btn-primary" onclick="saveReply();" href="javascript:void(0)" >提交</a>
+					<a class="btn btn-primary" onclick="comment();" href="javascript:void(0)" >提交</a>
 				</p>
 				</c:otherwise>
 				</c:choose>

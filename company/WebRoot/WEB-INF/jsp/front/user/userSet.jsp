@@ -89,6 +89,12 @@
 							</td>
 						</tr>
 						<tr>
+							<td class="td-head"><h4>真实姓名</h4></td>
+						 	<td>
+								<h4><input type="text" class="form-control" name="realname" id="realname" value="${currentUser.realname }" /></h4>
+							</td>
+						</tr>
+						<tr>
 							<td class="td-head"><h4>简介</h4></td>
 						 	<td>
 								<h4><input type="text" class="form-control" name="remark" id="remark" value="${currentUser.remark }" /></h4>

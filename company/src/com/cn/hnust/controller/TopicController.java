@@ -42,6 +42,33 @@ public class TopicController extends AbstractController {
 	
 	@Autowired
 	private HttpSession session ;
+	/**
+	 * 
+	 * @Description: 显示查看用户的详细信息
+	 * @param @param id
+	 * @param @param model
+	 * @param @return   
+	 * @return String  
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月10日  下午10:16:09
+	 */
+	@RequestMapping("/frontuser/{id}")
+	public String showUserDetail(@PathVariable int id,Model model){
+		User user = userService.getUserById(id) ;
+		if(user != null){
+			model.addAttribute("frontuser", user) ;
+			
+			String img_id = user.getImg_id() ;
+			if(img_id != null){
+				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
+				model.addAttribute("frontuserheading", path) ;
+			}
+			
+		}
+		return "front/user/userDetail" ;
+	}
+	
 	
 	/**
 	 * 
