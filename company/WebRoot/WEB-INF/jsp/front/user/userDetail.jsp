@@ -54,6 +54,10 @@
     		width: 75px;
     		height: 75px;
     	}
+    	
+    	.postlist{
+    		height: 20px;
+    	}
     </style>
 </head>
 <body class="">
@@ -70,7 +74,7 @@
 				<div class="panel panel-info">
 					<div class="panel-heading">
 						<h3>
-						<p class="text-primary">
+						<p class="text-danger">
 						${frontuser.username }
 						<span class="glyphicon glyphicon-option-vertical"></span>
 						${frontuser.realname }
@@ -80,8 +84,48 @@
 					<div class="panel-body">
 						<p>简介：${frontuser.remark}</p>
 					</div>
-					
 				</div>
+				
+				<ul class="nav nav-pills" role="tablist" id="tab-list">
+			    <li role="presentation" class="active"><a href="#postlist" aria-controls="home" role="tab" data-toggle="tab">发帖<span class="badge">4</span></a></li>
+			    <li role="presentation"><a href="#replylist" aria-controls="profile" role="tab" data-toggle="tab">回复</a></li>
+			    <li role="presentation"><a href="#collectlist" aria-controls="profile" role="tab" data-toggle="tab">收藏</a></li>
+			  	</ul>
+			  	
+			  	
+			  	<div class="tab-content">
+		    	<div role="tabpanel" class="tab-pane active" id="postlist">
+		    		<div class="panel panel-primary ">
+		    			<div class="panel panel-heading">
+		    				<p>2月14日 18:52 发帖 那位大神能告诉我为什么zealer app用尽了以...</p>
+		    			</div>
+		    			<div class="panel panel-body">
+		    				<p>哪位大神知道？怎么破？</p>
+		    			</div>
+		    			
+		    			<div class="panel panel-heading">
+		    				<p>2月14日 18:52 发帖 那位大神能告诉我为什么zealer app用尽了以...</p>
+		    			</div>
+		    			<div class="panel panel-body">
+		    				<p>哪位大神知道？怎么破？</p>
+		    			</div>
+					</div>
+		    	</div>
+		    
+		    
+				<div role="tabpanel" class="tab-pane" id="replylist">
+					<div class="panle panel-info">
+					</div>
+				</div>
+			
+			<div role="tabpanel" class="tab-pane" id="collectlist">
+				<div class="panle panel-info">
+				</div>
+			</div>
+			
+			
+  		</div>
+				
 			</div>
 			
 		</div>

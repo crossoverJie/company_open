@@ -86,6 +86,7 @@
 							<div class="col-md-6">
 								<div class="row">
 									<div class="col-md-2">
+										<a href="<%=path %>/frontuser/${ns.user_id}">
 										<img id="sm-name" src="
 									<c:choose>
 										<c:when test="${empty ns.user_head_img}">
@@ -96,6 +97,7 @@
 										</c:otherwise>
 									</c:choose>
 									" class="img-responsive center-block img-circle" alt="图片无效">
+									</a>
 									</div>
 									<div class="col-md-10">
 										<b>

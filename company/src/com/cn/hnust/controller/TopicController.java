@@ -66,6 +66,17 @@ public class TopicController extends AbstractController {
 			}
 			
 		}
+		
+		//每个控制器都需要将当前用户的头像显示出来
+		User currenUser = (User) session.getAttribute("user") ;
+		if(currenUser != null){
+			String img_id = currenUser.getImg_id() ;
+			if(img_id != null){
+				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
+				model.addAttribute("headimg", path) ;
+			}
+		}
+		
 		return "front/user/userDetail" ;
 	}
 	
