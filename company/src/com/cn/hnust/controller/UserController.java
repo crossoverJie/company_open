@@ -87,7 +87,7 @@ public class UserController {
 			}
 			Date date = u.getLast_date() ;
 			if(date != null){
-				SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd") ;
+				SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
 				String strDate = sm.format(date) ;
 				u.setParsedate(strDate) ;
 			}

@@ -8,15 +8,17 @@
     <result column="realname" property="realname" jdbcType="VARCHAR" />
     <result column="role_id" property="role_id" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
-    <result column="last_date" property="last_date" jdbcType="DATE" />
+    <result column="last_date" property="last_date" jdbcType="TIMESTAMP" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="img_id" property="img_id" jdbcType="VARCHAR" />
+    <result column="register_date" property="register_date" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email,
     decode(sex,0,'女',1,'男') as sex,
-    img_id
+    img_id,
+    register_date
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -68,6 +70,9 @@
       <if test="img_id != null" >
         img_id,
       </if>
+      <if test="register_date != null" >
+        register_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       #{id},
@@ -87,7 +92,7 @@
         #{remark,jdbcType=VARCHAR},
       </if>
       <if test="last_date != null" >
-        #{last_date,jdbcType=DATE},
+        #{last_date},
       </if>
       <if test="email != null" >
         #{email,jdbcType=VARCHAR},
@@ -98,8 +103,13 @@
       <if test="img_id != null" >
         #{img_id,jdbcType=VARCHAR},
       </if>
+      <if test="register_date != null" >
+        #{register_date},
+      </if>
     </trim>
   </insert>
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.cn.hnust.pojo.User" >
     update t_user
     <set >
@@ -119,7 +129,7 @@
         role_id = #{role_id,jdbcType=VARCHAR},
       </if>
       <if test="last_date != null" >
-        last_date = #{last_date,jdbcType=DATE},
+        last_date = #{last_date},
       </if>
       <if test="email != null" >
         email = #{email,jdbcType=VARCHAR},
@@ -129,6 +139,9 @@
       </if>
       <if test="img_id != null" >
         img_id = #{img_id,jdbcType=VARCHAR},
+      </if>
+      <if test="register_date != null" >
+        register_date = #{register_date},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

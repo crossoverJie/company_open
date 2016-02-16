@@ -45,7 +45,7 @@ public class News extends AbstractPojo{
 	}
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
-		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd") ;
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
 		String date = sm.format(create_date) ;
 		this.setDateStr(date) ;
 	}

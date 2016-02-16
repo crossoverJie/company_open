@@ -58,6 +58,9 @@
     	.postlist{
     		height: 20px;
     	}
+    	.panel-primary{
+    		height: auto;
+    	}
     </style>
 </head>
 <body class="">
@@ -78,6 +81,9 @@
 						${frontuser.username }
 						<span class="glyphicon glyphicon-option-vertical"></span>
 						${frontuser.realname }
+						<span class="glyphicon glyphicon-option-vertical"></span>
+						<span class="glyphicon glyphicon-time"></span>
+						${frontuser.parsedate}
 						</p>
 						</h3>
 					</div>
@@ -87,34 +93,47 @@
 				</div>
 				
 				<ul class="nav nav-pills" role="tablist" id="tab-list">
-			    <li role="presentation" class="active"><a href="#postlist" aria-controls="home" role="tab" data-toggle="tab">发帖<span class="badge">4</span></a></li>
-			    <li role="presentation"><a href="#replylist" aria-controls="profile" role="tab" data-toggle="tab">回复</a></li>
+			    <li role="presentation" class="active"><a href="#postlist" aria-controls="home" role="tab" data-toggle="tab">发帖<span class="badge">${currentUserTopicCount}</span></a></li>
+			    <li role="presentation"><a href="#replylist" aria-controls="profile" role="tab" data-toggle="tab">回复<span class="badge">${currentUserCommentCount}</span></a></li>
 			    <li role="presentation"><a href="#collectlist" aria-controls="profile" role="tab" data-toggle="tab">收藏</a></li>
 			  	</ul>
 			  	
 			  	
 			  	<div class="tab-content">
 		    	<div role="tabpanel" class="tab-pane active" id="postlist">
-		    		<div class="panel panel-primary ">
-		    			<div class="panel panel-heading">
-		    				<p>2月14日 18:52 发帖 那位大神能告诉我为什么zealer app用尽了以...</p>
-		    			</div>
-		    			<div class="panel panel-body">
-		    				<p>哪位大神知道？怎么破？</p>
-		    			</div>
+		    		<div class="panel panel-success ">
+		    		
+		    			<c:forEach var="ns" items="${list_currentUserTopicCount }" varStatus="status" >
+			    			<div class="panel panel-heading">
+			    				<p>
+			    				${ns.dateStr }发帖
+			    				<a href="<%=path%>/topic/${ns.id}">
+			    				${ns.title }
+			    				</a>
+			    				</p>
+			    			</div>
+		    			</c:forEach>
+		    		
 		    			
-		    			<div class="panel panel-heading">
-		    				<p>2月14日 18:52 发帖 那位大神能告诉我为什么zealer app用尽了以...</p>
-		    			</div>
-		    			<div class="panel panel-body">
-		    				<p>哪位大神知道？怎么破？</p>
-		    			</div>
 					</div>
 		    	</div>
 		    
 		    
 				<div role="tabpanel" class="tab-pane" id="replylist">
-					<div class="panle panel-info">
+					<div class="panle panel-success">
+					
+						<c:forEach var="com" items="${list_currentUserComment }" varStatus="status" >
+			    			<div class="panel panel-heading">
+			    				<p>
+			    				${com.dateStr }回复
+			    				<a href="<%=path%>/topic/${com.news_id}">
+			    					${com.news_title}
+			    				</a>
+			    				${com.content }
+			    				</p>
+			    			</div>
+		    			</c:forEach>
+						
 					</div>
 				</div>
 			

@@ -195,7 +195,11 @@ public class IndexController extends AbstractController {
 	
 	@RequestMapping("/register")
 	public String register(User u,HttpServletRequest request) throws IOException{
+		//系统初始化的时候要上传一张默认头像
 		u.setImg_id("1001");//设置默认头像
+		u.setRemark("这家伙很懒，什么都没留下!");
+		u.setLast_date(new Date());
+		u.setRegister_date(new Date());
 		userService.createUser(u) ;
 //		注册完之后直接登录
 		request.getSession().setAttribute("user", u) ;

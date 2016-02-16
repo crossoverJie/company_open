@@ -1,5 +1,6 @@
 package com.cn.hnust.pojo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class User {
@@ -14,6 +15,7 @@ public class User {
     private String sex ; //0:女        1：男
     private String img_id ;//对应的图片ID 用户的头像
     
+    private Date register_date ;//注册时间
     
     /**用于显示格式化的日期**/
     private String parsedate ;
@@ -117,6 +119,19 @@ public class User {
 
 	public void setImg_id(String img_id) {
 		this.img_id = img_id;
+	}
+
+	public Date getRegister_date() {
+		return register_date;
+	}
+
+	public void setRegister_date(Date register_date) {
+		
+		this.register_date = register_date;
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
+		String date = sm.format(register_date) ;
+		
+		this.setParsedate(date);
 	}
 
 }

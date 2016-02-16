@@ -7,7 +7,7 @@
     <result column="news_id" property="news_id" jdbcType="VARCHAR" />
     <result column="user_id" property="user_id" jdbcType="VARCHAR" />
     <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="create_date" property="create_date" jdbcType="DATE" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, parent_id,news_id, content,create_date,user_id 
@@ -58,7 +58,7 @@
         #{news_id,jdbcType=VARCHAR},
       </if>
       <if test="create_date != null" >
-        #{create_date,jdbcType=DATE},
+        #{create_date},
       </if>
       <if test="user_id != null" >
         #{user_id,jdbcType=VARCHAR},

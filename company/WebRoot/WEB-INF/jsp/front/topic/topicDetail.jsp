@@ -118,22 +118,27 @@
 						<div class="col-md-10">
 							<div class="row">
 								<div class="col-md-2">
+									<a href="<%=path%>/frontuser/${com.user_id}">
 									<img id="sm-name" src="
 										<%=path %>/${com.user_head_img}
 								" class="img-responsive center-block img-circle" alt="图片无效">
+								</a>
 								<p class="text-center">
 								${com.username }
 								</p>
+								
 								</div>
 								<div class="col-md-10">
 									<!-- 判断当前条评论的是不是有父评论，有就显示，没有就不显示 -->
 									<c:if test="${!empty com.parent_comment}">
 										<blockquote>
 										  <cite title="${com.parent_comment.username }" class="text-danger">
+										  <a href="<%=path%>/frontuser/${com.parent_comment.user_id}">
 										  <img id="sm-name" src="
 										<%=path %>/${com.parent_comment.user_head_img}
-								" class="img-responsive center-block img-circle" alt="图片无效">
+								" class="img-responsive center-block img-circle" alt="该用户不存在">
 											${com.parent_comment.username }:
+										</a>
 										  </cite>
 										  ${com.parent_comment.content }
 										</blockquote>
@@ -212,7 +217,7 @@
 											<%=path %>/${headimg}
 										</c:otherwise>
 									</c:choose>
-									" class="img-responsive center-block img-circle" alt="图片无效">
+									" class="img-responsive center-block img-circle" alt="该用户不存在">
 								<p class="text-center text-danger">
 								${user.username }
 								</p>

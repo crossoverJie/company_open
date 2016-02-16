@@ -18,6 +18,7 @@ public class Comment extends AbstractPojo {
 	private String parent_id ;//如果是顶节点就为-1
 	private Comment parent_comment ;//父节点的评论
 	private String news_id ;
+	private String news_title ;//用于显示当前评论的帖子标题
 	private String user_id ;
 	private Date create_date ;
 	private String content ;
@@ -51,7 +52,7 @@ public class Comment extends AbstractPojo {
 	public void setCreate_date(Date create_date) {
 		
 		this.create_date = create_date;
-		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd") ;
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss") ;
 		String date = sm.format(create_date) ;
 		this.setDateStr(date) ;
 		
@@ -91,5 +92,11 @@ public class Comment extends AbstractPojo {
 	}
 	public void setParent_comment(Comment parent_comment) {
 		this.parent_comment = parent_comment;
+	}
+	public String getNews_title() {
+		return news_title;
+	}
+	public void setNews_title(String news_title) {
+		this.news_title = news_title;
 	}
 }

@@ -24,6 +24,8 @@ import com.cn.hnust.service.INewsService;
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.AbstractController;
 
+import sun.java2d.pipe.SpanShapeRenderer.Simple;
+
 @Controller
 @RequestMapping("/")
 public class TopicController extends AbstractController {
@@ -57,6 +59,7 @@ public class TopicController extends AbstractController {
 	public String showUserDetail(@PathVariable int id,Model model){
 		User user = userService.getUserById(id) ;
 		if(user != null){
+			
 			model.addAttribute("frontuser", user) ;
 			
 			String img_id = user.getImg_id() ;
@@ -76,6 +79,32 @@ public class TopicController extends AbstractController {
 				model.addAttribute("headimg", path) ;
 			}
 		}
+		//用于显示发帖详情和发帖数量
+		News ns = new News() ;
+		ns.setUser_id(id+"");
+		List<News> list_currentUserTopicCount = newsService.findAll(ns) ;
+		if(list_currentUserTopicCount != null){
+			model.addAttribute("list_currentUserTopicCount", list_currentUserTopicCount) ;
+			int currentUserTopicCount = list_currentUserTopicCount.size() ;
+			model.addAttribute("currentUserTopicCount", currentUserTopicCount) ;
+		}
+		
+		Comment com = new Comment() ;
+		com.setUser_id(id+"");
+		List<Comment> list_currentUserComment = commentService.findAll(com) ;
+		for(Comment ct : list_currentUserComment){
+			//获取当前评论的帖子标题
+			String news_id = ct.getNews_id() ;
+			News comment_news = newsService.selectByPrimaryKey(Integer.parseInt(news_id)) ;
+			ct.setNews_title(comment_news.getTitle());
+		}
+		if(list_currentUserComment != null){
+			model.addAttribute("list_currentUserComment", list_currentUserComment) ;
+			int currentUserCommentCount = list_currentUserComment.size() ;
+			model.addAttribute("currentUserCommentCount", currentUserCommentCount) ;
+			
+		}
+		
 		
 		return "front/user/userDetail" ;
 	}
@@ -122,7 +151,8 @@ public class TopicController extends AbstractController {
 		//每个控制器都需要将当前用户的头像显示出来
 		User currenUser = (User) session.getAttribute("user") ;
 		if(currenUser != null){
-			String img_id = currenUser.getImg_id() ;
+			User userById = userService.getUserById(currenUser.getId()) ;
+			String img_id = userById.getImg_id() ;
 			if(img_id != null){
 				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
 				model.addAttribute("headimg", path) ;
@@ -148,17 +178,20 @@ public class TopicController extends AbstractController {
 		for (Comment com : comments) {
 			String com_user_id = com.getUser_id() ;
 			User userById = userService.getUserById(Integer.parseInt(com_user_id));
-			com.setUsername(userById.getUsername());
-			String img_id = userById.getImg_id() ;
-			if(img_id != null){
-				Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
-				String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
-				if(topic_user_path != null){
-					com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
-				}
-			}else{
-				//如果注册用户没有上传图片
+			if(userById != null){
 				
+				com.setUsername(userById.getUsername());
+				String img_id = userById.getImg_id() ;
+				if(img_id != null){
+					Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
+					String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+					if(topic_user_path != null){
+						com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+					}
+				}else{
+					//如果注册用户没有上传图片
+					
+				}
 			}
 			String parent_id = com.getParent_id() ;
 			if(!parent_id.equals("-1")){
