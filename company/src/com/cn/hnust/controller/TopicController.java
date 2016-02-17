@@ -1,11 +1,13 @@
 package com.cn.hnust.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cn.hnust.pojo.Comment;
 import com.cn.hnust.pojo.Img;
 import com.cn.hnust.pojo.News;
+import com.cn.hnust.pojo.Praise;
 import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.ICommentService;
 import com.cn.hnust.service.IImgService;
 import com.cn.hnust.service.INewsService;
+import com.cn.hnust.service.IPraiseService;
 import com.cn.hnust.service.IUserService;
+import com.cn.hnust.service.impl.PraiseServiceImpl;
 import com.cn.hnust.util.AbstractController;
 
 import sun.java2d.pipe.SpanShapeRenderer.Simple;
@@ -43,7 +48,11 @@ public class TopicController extends AbstractController {
 	private ICommentService commentService ;
 	
 	@Autowired
+	private IPraiseService praiseService ;
+	
+	@Autowired
 	private HttpSession session ;
+	
 	/**
 	 * 
 	 * @Description: 显示查看用户的详细信息
@@ -127,7 +136,7 @@ public class TopicController extends AbstractController {
 		News news = newsService.selectByPrimaryKey(id) ;
 		model.addAttribute("topic", news) ;
 		String user_id = news.getUser_id() ;
-		
+		User currenUser = (User) session.getAttribute("user") ;
 		//帖子作者的详情
 		User user = userService.getUserById(Integer.parseInt(user_id)) ;
 		if(user != null){
@@ -149,7 +158,7 @@ public class TopicController extends AbstractController {
 			
 		}
 		//每个控制器都需要将当前用户的头像显示出来
-		User currenUser = (User) session.getAttribute("user") ;
+		
 		if(currenUser != null){
 			User userById = userService.getUserById(currenUser.getId()) ;
 			String img_id = userById.getImg_id() ;
@@ -157,6 +166,14 @@ public class TopicController extends AbstractController {
 				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
 				model.addAttribute("headimg", path) ;
 			}
+			
+			//查询当前用户是否点赞
+			String curentuser_user_id = currenUser.getId()+"" ;
+			Praise praise = new Praise() ;
+			praise.setNews_id(id+"");
+			praise.setUser_id(curentuser_user_id);
+			int praise_count = praiseService.findAllCount(praise) ;
+			model.addAttribute("praise_count", praise_count);
 		}
 		
 		//以下是为了显示评论的
@@ -222,6 +239,13 @@ public class TopicController extends AbstractController {
 		model.addAttribute("comments", comments) ;
 		model.addAttribute("totalpage", super.getTotalPage()) ;
 		
+		//显示有多少当前帖子点过赞
+		Praise onPraise = new Praise() ;
+		onPraise.setNews_id(id+"");
+		int onPraiseCount = praiseService.findAllCount(onPraise) ;
+		model.addAttribute("onPraiseCount", onPraiseCount) ;
+		
+		
 		return "front/topic/topicDetail" ;
 	}
 	
@@ -265,7 +289,17 @@ public class TopicController extends AbstractController {
 		return "redirect:index/turnToIndex/1" ;
 	}
 	
-	
+	/**
+	 * 
+	 * @Description: 跳转到新建帖子界面
+	 * @param @param session
+	 * @param @param model
+	 * @param @return   
+	 * @return String  
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月17日  下午12:09:49
+	 */
 	@RequestMapping("/turnToCreateTopic")
 	public String turnToCreateTopic(HttpSession session,Model model){
 		User user = (User) session.getAttribute("user") ;
@@ -281,4 +315,80 @@ public class TopicController extends AbstractController {
 			return "front/topic/createTopic" ;
 		}
 	}
+	
+	/**
+	 * 
+	 * @Description: 点赞
+	 * @param @param news_id
+	 * @param @param response   
+	 * @return void  
+	 * @throws IOException 
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月17日  下午12:15:16
+	 */
+	@RequestMapping("/onPraise")
+	public void onPraise(String news_id,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		User user = (User) session.getAttribute("user") ;
+		if(user!= null){
+			Praise praise = new Praise() ;
+			praise.setNews_id(news_id) ;
+			praise.setUser_id(user.getId()+"");
+			praise.setPraise_date(new Date()) ;
+			praiseService.insertSelective(praise) ;
+			response.getWriter().print("true");
+		}else{
+			response.getWriter().print("false");
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @Description: 取消点赞
+	 * @param @param news_id
+	 * @param @param response
+	 * @param @throws IOException   
+	 * @return void  
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月17日  下午2:27:27
+	 */
+	@RequestMapping("/cancelPraise")
+	public void cancelPraise(String news_id,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		User user = (User) session.getAttribute("user") ;
+		if(user!= null){
+			Praise praise = new Praise() ;
+			praise.setNews_id(news_id) ;
+			praise.setUser_id(user.getId()+"");
+			praise.setPraise_date(new Date()) ;
+			praiseService.deleteByCancelPraise(praise) ;
+			response.getWriter().print("true");
+		}else{
+			response.getWriter().print("false");
+		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 获取当前帖子的点赞数量
+	 * @param @param news_id
+	 * @param @param response
+	 * @param @throws IOException   
+	 * @return void  
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月17日  下午2:43:15
+	 */
+	@RequestMapping("/getPraiseCount")
+	public void getPraiseCount(String news_id,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		Praise onPraise = new Praise() ;
+		onPraise.setNews_id(news_id);
+		int onPraiseCount = praiseService.findAllCount(onPraise) ;
+		response.getWriter().print(onPraiseCount);
+	}
+	
 }

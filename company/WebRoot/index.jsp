@@ -169,14 +169,8 @@
 						</div>
 					<div class="panel-footer">
 						<p class="text-right">
-							<button type="button" class="btn btn-default btn-xs" >
-								<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-								2
-							</button>
-							&nbsp;&nbsp;&nbsp;&nbsp;
 							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-							12
-							
+							<span class="badge">${ns.comment_count }</span>
 						</p>
 					</div>
 				<hr class="divider"/>

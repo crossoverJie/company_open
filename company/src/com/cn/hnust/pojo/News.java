@@ -20,6 +20,8 @@ public class News extends AbstractPojo{
 	
 	private String is_index ;//是否上首页滚动 1：上首页
 	
+	private String comment_count ;//当前帖子的回复数量
+	
 	
 	private String parseDate ;//用于格式化日期
 	public Integer getId() {
@@ -96,5 +98,11 @@ public class News extends AbstractPojo{
 	}
 	public void setIs_index(String is_index) {
 		this.is_index = is_index;
+	}
+	public String getComment_count() {
+		return comment_count;
+	}
+	public void setComment_count(String comment_count) {
+		this.comment_count = comment_count;
 	}
 }

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.hnust.dao.IPraiseDao" >
+  <resultMap id="BaseResultMap" type="com.cn.hnust.pojo.Praise" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="news_id" property="news_id" jdbcType="VARCHAR" />
+    <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+    <result column="praise_date" property="praise_date" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID,news_id,praise_date,user_id 
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_Praise
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_Praise
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  
+  <delete id="deleteByCancelPraise" parameterType="map" >
+    delete from t_Praise
+    where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.cn.hnust.pojo.Praise" >
+    insert into t_Praise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       id,
+      <if test="news_id != null" >
+        news_id,
+      </if>
+      <if test="praise_date != null" >
+        praise_date,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      SEQ_T_Praise.Nextval,
+      <if test="news_id != null" >
+        #{news_id,jdbcType=VARCHAR},
+      </if>
+      <if test="praise_date != null" >
+        #{praise_date},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <select id="findAllCount" resultType="int" parameterType="map">
+  	select count(*) from t_Praise
+  	where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
+  <!-- 查询 -->
+  <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
+    select
+     <include refid="Base_Column_List" />
+    from t_Praise TB
+    where 1=1 
+    <if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    order by id desc
+  </select>
+  
+  <!-- 具有分页功能 -->
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.cn.hnust.pojo.Praise">
+	   <if test="startIndex != null">
+			select * from (select
+			my_table.*, rownum my_rownum from (
+	   </if>
+  	select <include refid="Base_Column_List" />
+  	from t_Praise
+  	where 1=1
+  	<if test="id != null" >
+      and ID = #{id,jdbcType=DECIMAL}
+    </if>
+    <if test="user_id != null" >
+      and user_id = #{user_id,jdbcType=VARCHAR} 
+    </if>
+    <if test="news_id != null" >
+      and news_id = #{news_id,jdbcType=VARCHAR} 
+    </if>
+    order by id asc
+   
+   <if test="startIndex != null">
+	    <![CDATA[  
+	   ) my_table where rownum <= #{endIndex} ) where my_rownum > #{startIndex}
+	   ]]>
+   </if>
+  </select>
+</mapper>

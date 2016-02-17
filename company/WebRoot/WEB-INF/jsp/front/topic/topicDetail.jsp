@@ -65,7 +65,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<a href="<%=path%>/frontuser/${author.id}">
+				<a title="${author.remark }" href="<%=path%>/frontuser/${author.id}">
 				<img src="
 				<c:choose>
 					<c:when test="${empty topicuser}">
@@ -86,6 +86,7 @@
 		</div>
 	</div>
 	<hr/>
+		
 <!-- 栅格系统 -->
 <div class="container-fluid">
 	<div class="row">
@@ -100,6 +101,32 @@
 			  </div>
 			</div>
 			
+			<hr/>
+			<p class="text-right">
+			<button type="button" class="btn btn-danger" >
+				<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+				收藏
+			</button>
+			
+			<c:choose>
+				<c:when test="${praise_count >0 }">
+					<button id="onPraise" type="button" onclick="onPraise();" class="btn btn-primary" >
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						已赞
+						<span class="badge">${onPraiseCount }</span>
+					</button>
+				</c:when>
+				
+				<c:otherwise>
+					<button id="onPraise" type="button" onclick="onPraise();" class="btn btn-success" >
+						<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+						赞
+						<span class="badge">${onPraiseCount }</span>
+					</button>
+				</c:otherwise>
+			</c:choose>
+			
+			</p>
 			<hr/>
 			<!-- 显示回复 -->
 			<h3>
@@ -201,6 +228,7 @@
 						&nbsp;&nbsp;
 						<a href="javascriot:void(0)" data-toggle="modal" data-target="#register">注册
 									<span class="glyphicon glyphicon-user"></span></a>
+						<input type="hidden" id="topic_id" value="${topic.id }"/>
 					</p>
 						
 				</c:when>

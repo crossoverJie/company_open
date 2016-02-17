@@ -127,6 +127,9 @@ function comment(){
 	});
 }
 
+/**
+ * 回复评论
+ */
 function replyComment(){
 	var content = CKEDITOR.instances.reply_content.getData();
 	if(content == "" || content == undefined){
@@ -211,6 +214,84 @@ function login(){
 			}
 		}
 	});
+}
+
+/**
+ * 点赞
+ */
+function onPraise(){
+	var news_id = $("#topic_id").val() ;
+	var json={
+		"news_id":news_id
+	};
+	//获取当前帖子点赞的数量
+	var praiseCount = 0;
+	$.ajax({
+		type:"POST", 
+		url : '../getPraiseCount',
+		data :json,
+		async:false,
+		success : function(r) {
+			praiseCount =r ;
+		}
+	});
+	
+	
+	var flag = false ;
+	
+	var button_class = $("#onPraise").attr("class") ;
+	var index = button_class.indexOf("btn-primary") ;
+	if(index >0){
+		//已经点赞了   再次点击就需要取消点赞
+		flag = true ;
+	}else{
+		//没有点赞 点击需要进行点赞
+		flag = false ;
+	}
+	
+	if(!flag){
+		//进行点赞
+		$.ajax({
+			type:"POST", 
+			url : '../onPraise',
+			data :json,
+			success : function(r) {
+				if(r=="true"){
+//				var url = window.location.href ;
+//				window.location.href= url ;//然后再刷新当前界面
+					var num = parseInt(praiseCount) +1;
+					$("#onPraise").removeClass() ;
+					$("#onPraise").addClass("btn btn-primary");
+					$("#onPraise").html("<span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span>已赞" +
+							"<span class='badge'>"+num+"</span>") ;
+				}else{
+					alert("请登录之后再点赞") ;
+					$('#login').modal('show') ;
+					return ;
+				}
+			}
+		});
+	}else{
+		//取消点赞
+		$.ajax({
+			type:"POST", 
+			url : '../cancelPraise',
+			data :json,
+			success : function(r) {
+				if(r=="true"){
+					var num = parseInt(praiseCount) -1;
+					$("#onPraise").removeClass() ;
+					$("#onPraise").addClass("btn btn-success");
+					$("#onPraise").html("<span class='glyphicon glyphicon-thumbs-up' aria-hidden='true'></span>赞" +
+							"<span class='badge'>"+num+"</span>") ;
+				}else{
+					alert("请登录之后再点赞") ;
+					$('#login').modal('show') ;
+					return ;
+				}
+			}
+		});
+	}
 }
 
 document.onkeydown = function(e) {
