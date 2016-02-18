@@ -54,6 +54,9 @@
     		width: 75px;
     		height: 75px;
     	}
+    	.panel-primary {
+		    height: 510px;
+		}
     </style>
 </head>
 <body class="">
@@ -94,6 +97,11 @@
 			<div class="jumbotron">
 			  <h3>${topic.title }</h3>
 			</div>
+		  <p class="text-right text-primary">
+		  	<span class="glyphicon glyphicon-time">
+		  	</span>
+	  		${topic.dateStr }
+		  </p>
 			
 			<div class="panel panel-default">
 			  <div class="panel-body " id="topic-content" >
@@ -283,6 +291,11 @@
 			    	<c:forEach var="ns" items="${allauthor }" varStatus="status" >
 			    		<li>
 			    			<a href="<%=path%>/topic/${ns.id}">${ns.title }</a>
+			    			<p class="text-right">
+			    				<span class="glyphicon glyphicon-time">
+							  	</span>
+						  		${ns.dateStr }
+			    			</p>
 			    		</li>
 			    		<br/>
 			    	</c:forEach>

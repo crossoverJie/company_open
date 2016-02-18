@@ -78,4 +78,9 @@ public class CommentServiceImpl implements ICommentService {
 		return dao.findAll(n);
 	}
 
+	@Override
+	public List<Comment> findHotTopic() {
+		return dao.findHotTopic();
+	}
+
 }

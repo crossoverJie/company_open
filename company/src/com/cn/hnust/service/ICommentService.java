@@ -22,5 +22,5 @@ public interface ICommentService {
 
 	int findAllCount(Comment ns);
 	List<Comment> findAll(Comment f) ;
-	
+	List<Comment> findHotTopic() ;
 }

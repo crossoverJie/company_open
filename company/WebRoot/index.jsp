@@ -169,8 +169,10 @@
 						</div>
 					<div class="panel-footer">
 						<p class="text-right">
+							<span class="label label-default">
 							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-							<span class="badge">${ns.comment_count }</span>
+							 ${ns.comment_count }
+							</span>
 						</p>
 					</div>
 				<hr class="divider"/>
@@ -188,9 +190,16 @@
 				<div class="panel-heading">
 					热门帖子
 				</div>
-			  	<div class="panel-body">
-			    Basic panel example
-			  	</div>
+				<c:forEach var="com" items="${hotTopic }" varStatus="status">
+				  	<div class="panel-body">
+				    	<a href="<%=path%>/topic/${com.news_id}">${com.news_title }</a>
+				    	<span class="label label-primary">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+							 ${com.count_news }
+						</span>
+				  	</div>
+				</c:forEach>
+				
 			</div>
 			
 			<hr class="hr-right"/>
@@ -205,15 +214,6 @@
 			</div>
 			
 			<hr class="hr-right"/>
-			
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					活跃用户
-				</div>
-			  	<div class="panel-body">
-			    Basic panel example
-			  	</div>
-			</div>
 			
 		</div>
 	</div>

@@ -28,6 +28,9 @@ public class Comment extends AbstractPojo {
 	private String dateStr ;//用于格式化日期
 	private String username ;//用于显示用户名 没有在数据库中存储
 	
+	/**计算热门帖子   规则：根据回复数量由高到底**/
+	private String count_news ;//帖子的回复数量
+	
 	public String getParent_id() {
 		return parent_id;
 	}
@@ -98,5 +101,11 @@ public class Comment extends AbstractPojo {
 	}
 	public void setNews_title(String news_title) {
 		this.news_title = news_title;
+	}
+	public String getCount_news() {
+		return count_news;
+	}
+	public void setCount_news(String count_news) {
+		this.count_news = count_news;
 	}
 }

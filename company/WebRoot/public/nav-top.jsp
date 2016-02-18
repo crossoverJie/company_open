@@ -17,7 +17,9 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<%=path %>/index/turnToIndex/1">咨询网 </a>
+				<a class="navbar-brand" href="<%=path %>/index/turnToIndex/1">
+					<img class="logo-img img-rounded" alt="logo" src="<%=path %>/include/img/logo.png">
+				</a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -27,18 +29,6 @@
 					<span class="sr-only">(current)</span>
 					</a></li>
 					<li><a href="#">basketball <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> </a></li>
-					<li class="dropdown">
-					<a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">特点 <span class="caret"></span> </a>
-						<ul class="dropdown-menu">
-							<li><a href="#chrome" >Chrome</a></li>
-							<li><a href="#firefox" >Firefox</a></li>
-							<li><a href="#opera">Opera</a></li>
-							<li><a href="#safari">Safari</a></li>
-							<li><a href="#ie">IE</a></li>
-						</ul>
-					</li>
 					<li><a href="#" data-toggle="modal" data-target="#about">关于</a></li>
 				</ul>
 				<form class="navbar-form navbar-left" action="<%=path %>/index/query" target="_blank" method="post" role="search">

@@ -110,6 +110,26 @@
     </if>
   </select>
   
+  <!-- 查询热门帖子 前十条 -->
+  <select id="findHotTopic" resultMap="BaseResultMap">
+	select news.title news_title, td.count_news,td.news_id
+	  from (select tb.news_id, tb.count_news
+	          from (select my_table.*, rownum my_rownum
+	                  from (
+	                        
+	                        select count(*) count_news, news_id
+	                          from t_comment t
+	                         group by t.news_id
+	                         ) my_table
+	                         <![CDATA[ 
+	                 where rownum <= 8) tb
+	         where my_rownum > 0) td
+	  join news
+	    on td.news_id = news.id 
+		 ]]>
+	order by td.count_news desc
+  </select>
+  
   <!-- 查询 -->
   <select id="findByParams" resultMap="BaseResultMap" parameterType="map" >
     select

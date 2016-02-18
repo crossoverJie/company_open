@@ -130,6 +130,11 @@ public class IndexController extends AbstractController {
 			
 		}
 		
+		//查询热门帖子 前10条
+		List<Comment> hotTopic = commentService.findHotTopic() ;
+		model.addAttribute("hotTopic", hotTopic) ;
+		
+		
 		return "../../index" ;
 	}
 	
