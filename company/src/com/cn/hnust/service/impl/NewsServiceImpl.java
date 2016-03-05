@@ -78,4 +78,9 @@ public class NewsServiceImpl implements INewsService {
 		return dao.findAll(n);
 	}
 
+	@Override
+	public List<News> findHotUser() {
+		return dao.findHotUser();
+	}
+
 }

@@ -173,4 +173,18 @@
 	   ]]>
    </if>
   </select>
+  
+  <select id="findHotUser" resultMap="BaseResultMap">
+  	select * from (
+	select my_table.*, rownum my_rownum
+	                    from (
+	select count(ns.user_id) post_user, ns.user_id
+	  from news ns
+	 group by ns.user_id order by post_user desc
+	) my_table
+	 <![CDATA[  
+	 where rownum <= 8) 
+  ]]>
+  </select>
+  
 </mapper>

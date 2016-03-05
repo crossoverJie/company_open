@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import com.cn.hnust.dao.IUserDao;
+import com.cn.hnust.pojo.News;
 import com.cn.hnust.pojo.User;
 import com.cn.hnust.service.IUserService;
 import com.cn.hnust.util.Page;
@@ -68,6 +69,11 @@ public class UserServiceImpl implements IUserService {
 	public int findAllCount(User u) {
 		// TODO Auto-generated method stub
 		return userDao.findAllCount(u) ;
+	}
+
+	@Override
+	public List<User> findHotUser() {
+		return userDao.findHotUser();
 	}
 	
 }

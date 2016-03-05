@@ -22,5 +22,5 @@ public interface INewsService {
 
 	int findAllCount(News ns);
 	List<News> findAll(News f) ;
-	
+	List<News> findHotUser() ;
 }

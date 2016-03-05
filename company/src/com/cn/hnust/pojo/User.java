@@ -24,6 +24,11 @@ public class User {
     /**角色名称**/
     private String rolename ;
 
+    /**查询的活用用户数量**/
+    private String post_user_count ;
+    /**用户头像路径**/
+    private String path ;
+    
     public Integer getId() {
         return id;
     }
@@ -141,6 +146,22 @@ public class User {
 
 	public void setStar_news_id(String star_news_id) {
 		this.star_news_id = star_news_id;
+	}
+
+	public String getPost_user_count() {
+		return post_user_count;
+	}
+
+	public void setPost_user_count(String post_user_count) {
+		this.post_user_count = post_user_count;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

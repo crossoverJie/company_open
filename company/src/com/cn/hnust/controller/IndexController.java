@@ -134,7 +134,9 @@ public class IndexController extends AbstractController {
 		List<Comment> hotTopic = commentService.findHotTopic() ;
 		model.addAttribute("hotTopic", hotTopic) ;
 		
-		
+		//查询活跃用户，前十条
+		List<User> hotUser = userService.findHotUser();
+		model.addAttribute("hotUser", hotUser) ;
 		return "../../index" ;
 	}
 	

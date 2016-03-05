@@ -1,6 +1,9 @@
 package com.cn.hnust.service;
 
 
+import java.util.List;
+
+import com.cn.hnust.pojo.News;
 import com.cn.hnust.pojo.User;
 import com.cn.hnust.util.Page;
 
@@ -12,4 +15,5 @@ public interface IUserService {
 	int deleteByPrimaryKey(Integer id);
 	int updateByPrimaryKeySelective(User record);
 	int findAllCount(User u) ;
+	List<User> findHotUser() ;
 }

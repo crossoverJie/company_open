@@ -207,9 +207,14 @@
 				<div class="panel-heading">
 					活跃用户
 				</div>
+				<c:forEach var="user" items="${hotUser }" varStatus="status">
 			  	<div class="panel-body">
-			    Basic panel example
+			  		<a href="<%=path%>/frontuser/${user.id}">
+			  		<img id="sm-name" src="<%=path%>/${user.path}" alt="" class="img-circle">
+			  		${user.username }</a>
+			  		<span class="badge">${user.post_user_count}</span>
 			  	</div>
+			  	</c:forEach>
 			</div>
 			
 			<hr class="hr-right"/>

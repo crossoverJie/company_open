@@ -224,4 +224,22 @@
     order by id desc
   </select>
   
+  <!-- 查询活跃用户 -->
+  <select id="findHotUser" resultMap="BaseResultMap">
+  	
+  	select tb.post_user_count, t.id, t.username, t.img_id, img.path
+	  from (select my_table.*, rownum my_rownum
+	          from (select count(ns.user_id) post_user_count, ns.user_id user_id
+	                  from news ns
+	                 group by ns.user_id) my_table
+	                 <![CDATA[
+	         where rownum <= 8) tb
+	  join t_user t
+	    on tb.user_id = t.id
+	  join t_img img
+	    on t.img_id = img.id
+	 order by tb.post_user_count desc
+  	]]>
+  </select>
+  
 </mapper>

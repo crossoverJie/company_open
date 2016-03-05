@@ -23,5 +23,5 @@ public interface INewsDao {
 
 	int findAllCount(News ns);
 	List<News> findAll(News f) ;
-	
+	List<News> findHotUser() ;
 }

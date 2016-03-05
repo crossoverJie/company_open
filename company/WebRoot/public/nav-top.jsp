@@ -22,10 +22,9 @@
 				</a>
 			</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="demo-navbar">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">science <span class="glyphicon glyphicon-phone" aria-hidden="true"></span> 
+					<li class="active"><a title="COJ" href="<%=path %>/index/turnToIndex/1"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> 
 					<span class="sr-only">(current)</span>
 					</a></li>
 					<li><a href="#">basketball <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span> </a></li>

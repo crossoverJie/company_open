@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
+import com.cn.hnust.pojo.News;
 import com.cn.hnust.pojo.User;
 
 public interface IUserDao {
@@ -24,4 +25,6 @@ public interface IUserDao {
     List<User> findByParams(User u,RowBounds rowBound) ;
 
 	int findAllCount(User u);
+	
+	List<User> findHotUser() ;
 }
