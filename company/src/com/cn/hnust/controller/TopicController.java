@@ -1,6 +1,7 @@
 package com.cn.hnust.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -107,6 +108,7 @@ public class TopicController extends AbstractController {
 			News comment_news = newsService.selectByPrimaryKey(Integer.parseInt(news_id)) ;
 			ct.setNews_title(comment_news.getTitle());
 		}
+		//显示评论数量
 		if(list_currentUserComment != null){
 			model.addAttribute("list_currentUserComment", list_currentUserComment) ;
 			int currentUserCommentCount = list_currentUserComment.size() ;
@@ -114,6 +116,17 @@ public class TopicController extends AbstractController {
 			
 		}
 		
+		List<News> star_news = new ArrayList<News>();
+		String star_id = user.getStar_news_id() ;
+		if(star_id != null){
+			String star_ids[] = star_id.split(",") ;
+			for(String news_id : star_ids){
+				News news = newsService.selectByPrimaryKey(Integer.parseInt(news_id)) ;
+				star_news.add(news);
+			}
+		}
+		model.addAttribute("star_news", star_news) ;
+		model.addAttribute("currentUserStarNewsCount", star_news.size()) ;
 		
 		return "front/user/userDetail" ;
 	}
@@ -157,8 +170,8 @@ public class TopicController extends AbstractController {
 			model.addAttribute("allauthor", all_author) ;//将当前这条帖子的作者的所有帖子都列展示出来。
 			
 		}
+		int is_star = 0 ;//0默认为没有收藏
 		//每个控制器都需要将当前用户的头像显示出来
-		
 		if(currenUser != null){
 			User userById = userService.getUserById(currenUser.getId()) ;
 			String img_id = userById.getImg_id() ;
@@ -168,13 +181,28 @@ public class TopicController extends AbstractController {
 			}
 			
 			//查询当前用户是否点赞
-			String curentuser_user_id = currenUser.getId()+"" ;
+			String curentuser_user_id = userById.getId()+"" ;
 			Praise praise = new Praise() ;
 			praise.setNews_id(id+"");
 			praise.setUser_id(curentuser_user_id);
 			int praise_count = praiseService.findAllCount(praise) ;
 			model.addAttribute("praise_count", praise_count);
+			
+			//判断当前用户对当前帖子是否有收藏
+			
+			String star_id = userById.getStar_news_id() ;
+			if(star_id == null){
+				is_star= 0 ;
+			}else{
+				String news_id[] = star_id.split(",") ;
+				for(String star_news_id : news_id ){
+					if(String.valueOf(id).equals(star_news_id.trim())){
+						is_star = 1;
+					}
+				}
+			}
 		}
+		model.addAttribute("is_star", is_star);
 		
 		//以下是为了显示评论的
 		Comment comment = new Comment() ;
@@ -245,7 +273,6 @@ public class TopicController extends AbstractController {
 		int onPraiseCount = praiseService.findAllCount(onPraise) ;
 		model.addAttribute("onPraiseCount", onPraiseCount) ;
 		
-		
 		return "front/topic/topicDetail" ;
 	}
 	
@@ -313,6 +340,73 @@ public class TopicController extends AbstractController {
 				model.addAttribute("headimg", path) ;
 			}
 			return "front/topic/createTopic" ;
+		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 收藏帖子
+	 * @param @param news_id
+	 * @param @param response   
+	 * @return void  
+	 * @throws IOException 
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月28日  下午8:00:20
+	 */
+	@RequestMapping("/onStar")
+	public void onStar(String news_id,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		User user = (User) session.getAttribute("user") ;
+		if(user!= null){
+			user = userService.getUserById(user.getId()) ;
+			String star_news_id = user.getStar_news_id() ;
+			if(star_news_id == null){
+				user.setSex(null);
+				String star_id = "" ;
+				star_id = news_id +"," ;
+				user.setStar_news_id(star_id); 
+				userService.updateByPrimaryKeySelective(user) ;
+				response.getWriter().print("true");
+			}else{
+				user.setSex(null);
+				String newsId = star_news_id + news_id +",";
+				user.setStar_news_id(newsId); 
+				userService.updateByPrimaryKeySelective(user) ;
+				response.getWriter().print("true");
+			}
+		}else{
+			response.getWriter().print("false");
+		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 取消收藏
+	 * @param @param news_id
+	 * @param @param response
+	 * @param @throws IOException   
+	 * @return void  
+	 * @throws
+	 * @author crossoverJie
+	 * @date 2016年2月28日  下午8:14:08
+	 */
+	@RequestMapping("/cancleStar")
+	public void cancleStar(String news_id,HttpServletResponse response) throws IOException{
+		response.setCharacterEncoding("utf-8");
+		User user = (User) session.getAttribute("user") ;
+		if(user!= null){
+			user = userService.getUserById(user.getId()) ;
+			String star_news_id = user.getStar_news_id() ;
+			if(star_news_id  != null){
+				user.setSex(null);
+				star_news_id = star_news_id.replace(news_id+",", "");
+				user.setStar_news_id(star_news_id);
+				userService.updateByPrimaryKeySelective(user) ;
+				response.getWriter().print("true");
+			}
+		}else{
+			response.getWriter().print("false");
 		}
 	}
 	

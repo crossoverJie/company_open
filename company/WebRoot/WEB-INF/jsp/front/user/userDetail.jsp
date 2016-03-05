@@ -84,6 +84,7 @@
 						<span class="glyphicon glyphicon-option-vertical"></span>
 						<span class="glyphicon glyphicon-time"></span>
 						${frontuser.parsedate}
+						加入
 						</p>
 						</h3>
 					</div>
@@ -95,7 +96,7 @@
 				<ul class="nav nav-pills" role="tablist" id="tab-list">
 			    <li role="presentation" class="active"><a href="#postlist" aria-controls="home" role="tab" data-toggle="tab">发帖<span class="badge">${currentUserTopicCount}</span></a></li>
 			    <li role="presentation"><a href="#replylist" aria-controls="profile" role="tab" data-toggle="tab">回复<span class="badge">${currentUserCommentCount}</span></a></li>
-			    <li role="presentation"><a href="#collectlist" aria-controls="profile" role="tab" data-toggle="tab">收藏</a></li>
+			    <li role="presentation"><a href="#collectlist" aria-controls="profile" role="tab" data-toggle="tab">收藏<span class="badge">${currentUserStarNewsCount }</span></a></li>
 			  	</ul>
 			  	
 			  	
@@ -139,6 +140,16 @@
 			
 			<div role="tabpanel" class="tab-pane" id="collectlist">
 				<div class="panle panel-info">
+					<c:forEach var="ns" items="${star_news }" varStatus="status" >
+			    			<div class="panel panel-heading">
+			    				<p>
+			    				
+			    				<a href="<%=path%>/topic/${ns.id}" target="_blank">
+			    				${ns.title }
+			    				</a>
+			    				</p>
+			    			</div>
+		    		</c:forEach>
 				</div>
 			</div>
 			
@@ -156,8 +167,7 @@
 
 
 
-<!-- 引入底部jsp -->
-<jsp:include page="../../../../public/nav-bottom.jsp"></jsp:include>
+
 
 <!-- 弹出框 模态框关于 -->
 <!-- 弹出框 模态框登录 -->
@@ -165,7 +175,8 @@
 <!-- 弹出框 模态框注册 -->
 
 
-
+<!-- 引入底部jsp -->
+<jsp:include page="../../../../public/nav-bottom.jsp"></jsp:include>
 
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

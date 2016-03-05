@@ -13,12 +13,14 @@
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="img_id" property="img_id" jdbcType="VARCHAR" />
     <result column="register_date" property="register_date" jdbcType="TIMESTAMP" />
+    <result column="star_news_id" property="star_news_id" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, USERNAME, PASSWORD, ROLE_ID, REALNAME, LAST_DATE, REMARK,email,
     decode(sex,0,'女',1,'男') as sex,
     img_id,
-    register_date
+    register_date,
+    star_news_id
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -142,6 +144,9 @@
       </if>
       <if test="register_date != null" >
         register_date = #{register_date},
+      </if>
+      <if test="star_news_id != null" >
+        star_news_id = #{star_news_id,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

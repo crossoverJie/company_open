@@ -111,10 +111,20 @@
 			
 			<hr/>
 			<p class="text-right">
-			<button type="button" class="btn btn-danger" >
-				<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-				收藏
-			</button>
+			<c:choose>
+				<c:when test="${is_star==0 }">
+					<button id="onStar" type="button" class="btn btn-danger" onclick="onStar()" >
+						<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+						收藏
+					</button>
+				</c:when>
+				<c:otherwise>
+					<button id="onStar" onclick="onStar()" type="button" class="btn btn-primary" >
+						<span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+						已收藏
+					</button>
+				</c:otherwise>
+			</c:choose>
 			
 			<c:choose>
 				<c:when test="${praise_count >0 }">

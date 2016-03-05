@@ -16,6 +16,7 @@ public class User {
     private String img_id ;//对应的图片ID 用户的头像
     
     private Date register_date ;//注册时间
+    private String star_news_id;//收藏的帖子ID
     
     /**用于显示格式化的日期**/
     private String parsedate ;
@@ -132,6 +133,14 @@ public class User {
 		String date = sm.format(register_date) ;
 		
 		this.setParsedate(date);
+	}
+
+	public String getStar_news_id() {
+		return star_news_id;
+	}
+
+	public void setStar_news_id(String star_news_id) {
+		this.star_news_id = star_news_id;
 	}
 
 }

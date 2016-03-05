@@ -42,8 +42,7 @@
 <!-- 顶部导航栏 -->
 <jsp:include page="public/nav-top.jsp"></jsp:include>
 	
-<!-- 底部导航栏 -->
-<jsp:include page="/public/nav-bottom.jsp"></jsp:include>
+
 
 	<div id="carousel-example-generic" class="carousel slide"
 		data-ride="carousel">
@@ -372,6 +371,9 @@
   </div>
 </div>
 
+  	<footer>
+		<p class="text-center">© 2016 crossoverJie</p>
+	</footer>
 
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>

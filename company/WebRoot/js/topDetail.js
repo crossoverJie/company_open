@@ -217,6 +217,61 @@ function login(){
 }
 
 /**
+ * 收藏或者是取消收藏
+ */
+function onStar(){
+	var news_id = $("#topic_id").val() ;
+	var json={
+		"news_id":news_id
+	};
+	
+	var flag = false ;
+	var button_class = $("#onStar").attr("class") ;
+	var index = button_class.indexOf("btn-danger") ;
+	if(index >0){
+		flag= true ;//表示还没有收藏，点击按钮是发起收藏。
+	}else{
+		flag= false ;
+	}
+	
+	if(flag){//进行收藏
+		$.ajax({
+			type:"POST", 
+			url : '../onStar',
+			data :json,
+			success : function(r) {
+				if(r=="true"){
+					$("#onStar").removeClass() ;
+					$("#onStar").addClass("btn btn-primary");
+					$("#onStar").html("<span class='glyphicon glyphicon-heart' aria-hidden='true'></span>已收藏") ;
+				}else{
+					alert("请登录之后再收藏") ;
+					$('#login').modal('show') ;
+					return ;
+				}
+			}
+		});
+	}else {
+		$.ajax({
+			type:"POST", 
+			url : '../cancleStar',
+			data :json,
+			success : function(r) {
+				if(r=="true"){
+					$("#onStar").removeClass() ;
+					$("#onStar").addClass("btn btn-danger");
+					$("#onStar").html("<span class='glyphicon glyphicon-heart-empty' aria-hidden='true'></span>收藏") ;
+				}else{
+					alert("请登录之后再收藏") ;
+					$('#login').modal('show') ;
+					return ;
+				}
+			}
+		});
+	}
+}
+
+/**
  * 点赞
  */
 function onPraise(){
