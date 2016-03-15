@@ -86,7 +86,7 @@
 			  </div>
 			  <div class="form-group" id="div-password2">
 			    <label for="exampleInputPassword2">确认密码</label>
-			    <input type="password" required="required" class="form-control" id="password2" placeholder="确认密码">\
+			    <input type="password" required="required" class="form-control" id="password2" placeholder="确认密码">
 							    
 			  </div>
 			  <div class="modal-footer">
