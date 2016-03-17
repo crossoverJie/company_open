@@ -78,7 +78,10 @@
 	<div data-options="region:'south',border:false"
 		style="height:40px;background:#A9FACD;padding:20px;">
 		<div class="center-block"></div>
-		<center>技术支持：crossoverJie</center>
+		<center>技术支持：crossoverJie
+		<script language="javascript" type="text/javascript" src="http://js.users.51.la/18800358.js"></script>
+		<noscript><a href="http://www.51.la/?18800358" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/18800358.asp" style="border:none" /></a></noscript>
+		</center>
 	</div>
 
 	<div id="password" class="easyui-window" align="left" title="修改密码"
