@@ -106,7 +106,9 @@ public class TopicController extends AbstractController {
 			//获取当前评论的帖子标题
 			String news_id = ct.getNews_id() ;
 			News comment_news = newsService.selectByPrimaryKey(Integer.parseInt(news_id)) ;
-			ct.setNews_title(comment_news.getTitle());
+			if (comment_news != null) {
+				ct.setNews_title(comment_news.getTitle());
+			}
 		}
 		//显示评论数量
 		if(list_currentUserComment != null){
