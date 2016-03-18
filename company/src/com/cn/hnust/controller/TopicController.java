@@ -108,6 +108,8 @@ public class TopicController extends AbstractController {
 			News comment_news = newsService.selectByPrimaryKey(Integer.parseInt(news_id)) ;
 			if (comment_news != null) {
 				ct.setNews_title(comment_news.getTitle());
+			}else{
+				ct.setNews_title("帖子已被删除！") ;
 			}
 		}
 		//显示评论数量
@@ -150,130 +152,133 @@ public class TopicController extends AbstractController {
 	public String showDetail(@PathVariable int id,String pageNum,HttpSession session,Model model){
 		News news = newsService.selectByPrimaryKey(id) ;
 		model.addAttribute("topic", news) ;
-		String user_id = news.getUser_id() ;
-		User currenUser = (User) session.getAttribute("user") ;
-		//帖子作者的详情
-		User user = userService.getUserById(Integer.parseInt(user_id)) ;
-		if(user != null){
-			model.addAttribute("author", user) ;
-			String img_id = user.getImg_id() ;
-			if(img_id != null){
-				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
-				model.addAttribute("topicuser", path) ;
-			}
-			News news_author = new News() ;
-			news_author.setUser_id(user.getId()+"");
-			super.setPageNum(1);//只显示当前用户的其他帖子      第一页的数据，也就是只显示六条数据。
-			super.setRowCount(newsService.findAllCount(news_author)) ;
-			super.getIndex();
-			news_author.setStartIndex(super.getStartIndex());
-			news_author.setEndIndex(super.getEndIndex()); 
-			List<News> all_author = newsService.findAll(news_author) ;//为了只显示最新的六条数据
-			model.addAttribute("allauthor", all_author) ;//将当前这条帖子的作者的所有帖子都列展示出来。
+		if(news != null){
 			
-		}
-		int is_star = 0 ;//0默认为没有收藏
-		//每个控制器都需要将当前用户的头像显示出来
-		if(currenUser != null){
-			User userById = userService.getUserById(currenUser.getId()) ;
-			String img_id = userById.getImg_id() ;
-			if(img_id != null){
-				String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
-				model.addAttribute("headimg", path) ;
-			}
-			
-			//查询当前用户是否点赞
-			String curentuser_user_id = userById.getId()+"" ;
-			Praise praise = new Praise() ;
-			praise.setNews_id(id+"");
-			praise.setUser_id(curentuser_user_id);
-			int praise_count = praiseService.findAllCount(praise) ;
-			model.addAttribute("praise_count", praise_count);
-			
-			//判断当前用户对当前帖子是否有收藏
-			
-			String star_id = userById.getStar_news_id() ;
-			if(star_id == null){
-				is_star= 0 ;
-			}else{
-				String news_id[] = star_id.split(",") ;
-				for(String star_news_id : news_id ){
-					if(String.valueOf(id).equals(star_news_id.trim())){
-						is_star = 1;
-					}
+			String user_id = news.getUser_id() ;
+			User currenUser = (User) session.getAttribute("user") ;
+			//帖子作者的详情
+			User user = userService.getUserById(Integer.parseInt(user_id)) ;
+			if(user != null){
+				model.addAttribute("author", user) ;
+				String img_id = user.getImg_id() ;
+				if(img_id != null){
+					String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
+					model.addAttribute("topicuser", path) ;
 				}
-			}
-		}
-		model.addAttribute("is_star", is_star);
-		
-		//以下是为了显示评论的
-		Comment comment = new Comment() ;
-		comment.setNews_id(id+"");
-		super.setRowCount(commentService.findAllCount(comment)) ;
-		if(pageNum == null){
-			super.setPageNum(1);//只显示两页的数据，也就是只显示12条数据。
-			model.addAttribute("currentpage", 1) ;
-		}else{
-			super.setPageNum(Integer.parseInt(pageNum));
-			model.addAttribute("currentpage", pageNum) ;
-		}
-		
-		super.getIndex();
-		comment.setStartIndex(super.getStartIndex());
-		comment.setEndIndex(super.getEndIndex()); 
-		List<Comment> comments = commentService.findAll(comment) ;
-		for (Comment com : comments) {
-			String com_user_id = com.getUser_id() ;
-			User userById = userService.getUserById(Integer.parseInt(com_user_id));
-			if(userById != null){
+				News news_author = new News() ;
+				news_author.setUser_id(user.getId()+"");
+				super.setPageNum(1);//只显示当前用户的其他帖子      第一页的数据，也就是只显示六条数据。
+				super.setRowCount(newsService.findAllCount(news_author)) ;
+				super.getIndex();
+				news_author.setStartIndex(super.getStartIndex());
+				news_author.setEndIndex(super.getEndIndex()); 
+				List<News> all_author = newsService.findAll(news_author) ;//为了只显示最新的六条数据
+				model.addAttribute("allauthor", all_author) ;//将当前这条帖子的作者的所有帖子都列展示出来。
 				
-				com.setUsername(userById.getUsername());
+			}
+			int is_star = 0 ;//0默认为没有收藏
+			//每个控制器都需要将当前用户的头像显示出来
+			if(currenUser != null){
+				User userById = userService.getUserById(currenUser.getId()) ;
 				String img_id = userById.getImg_id() ;
 				if(img_id != null){
-					Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
-					String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
-					if(topic_user_path != null){
-						com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
-					}
+					String path = imgService.selectByPrimaryKey(Integer.parseInt(img_id)).getPath() ;
+					model.addAttribute("headimg", path) ;
+				}
+				
+				//查询当前用户是否点赞
+				String curentuser_user_id = userById.getId()+"" ;
+				Praise praise = new Praise() ;
+				praise.setNews_id(id+"");
+				praise.setUser_id(curentuser_user_id);
+				int praise_count = praiseService.findAllCount(praise) ;
+				model.addAttribute("praise_count", praise_count);
+				
+				//判断当前用户对当前帖子是否有收藏
+				
+				String star_id = userById.getStar_news_id() ;
+				if(star_id == null){
+					is_star= 0 ;
 				}else{
-					//如果注册用户没有上传图片
-					
-				}
-			}
-			String parent_id = com.getParent_id() ;
-			if(!parent_id.equals("-1")){
-				Comment comment_parent = commentService.selectByPrimaryKey(Integer.parseInt(parent_id)) ;
-				com.setParent_comment(comment_parent);
-				
-				
-				String comment_parent_user_id = comment_parent.getUser_id() ;
-				User parent_user = userService.getUserById(Integer.parseInt(comment_parent_user_id));
-				comment_parent.setUsername(parent_user.getUsername());
-				String parent_img_id = parent_user.getImg_id() ;
-				if(parent_img_id != null){
-					Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(parent_user.getImg_id())) ;
-					String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
-					if(topic_user_path != null){
-						comment_parent.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+					String news_id[] = star_id.split(",") ;
+					for(String star_news_id : news_id ){
+						if(String.valueOf(id).equals(star_news_id.trim())){
+							is_star = 1;
+						}
 					}
 				}
 			}
+			model.addAttribute("is_star", is_star);
 			
+			//以下是为了显示评论的
+			Comment comment = new Comment() ;
+			comment.setNews_id(id+"");
+			super.setRowCount(commentService.findAllCount(comment)) ;
+			if(pageNum == null){
+				super.setPageNum(1);//只显示两页的数据，也就是只显示12条数据。
+				model.addAttribute("currentpage", 1) ;
+			}else{
+				super.setPageNum(Integer.parseInt(pageNum));
+				model.addAttribute("currentpage", pageNum) ;
+			}
 			
+			super.getIndex();
+			comment.setStartIndex(super.getStartIndex());
+			comment.setEndIndex(super.getEndIndex()); 
+			List<Comment> comments = commentService.findAll(comment) ;
+			for (Comment com : comments) {
+				String com_user_id = com.getUser_id() ;
+				User userById = userService.getUserById(Integer.parseInt(com_user_id));
+				if(userById != null){
+					
+					com.setUsername(userById.getUsername());
+					String img_id = userById.getImg_id() ;
+					if(img_id != null){
+						Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(userById.getImg_id())) ;
+						String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+						if(topic_user_path != null){
+							com.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+						}
+					}else{
+						//如果注册用户没有上传图片
+						
+					}
+				}
+				String parent_id = com.getParent_id() ;
+				if(!parent_id.equals("-1")){
+					Comment comment_parent = commentService.selectByPrimaryKey(Integer.parseInt(parent_id)) ;
+					com.setParent_comment(comment_parent);
+					
+					
+					String comment_parent_user_id = comment_parent.getUser_id() ;
+					User parent_user = userService.getUserById(Integer.parseInt(comment_parent_user_id));
+					comment_parent.setUsername(parent_user.getUsername());
+					String parent_img_id = parent_user.getImg_id() ;
+					if(parent_img_id != null){
+						Img img_user = imgService.selectByPrimaryKey(Integer.parseInt(parent_user.getImg_id())) ;
+						String topic_user_path = img_user.getPath() ;//获得当前帖子的创建者的头像
+						if(topic_user_path != null){
+							comment_parent.setUser_head_img(topic_user_path);//设置当前帖子的创建者的头像
+						}
+					}
+				}
+				
+				
+			}
+			int count = super.getRowCount() ;
+			//当评论超过六条的时候才显示分页
+			if(count >6){
+				model.addAttribute("commentcount", count) ;
+			}
+			model.addAttribute("comments", comments) ;
+			model.addAttribute("totalpage", super.getTotalPage()) ;
+			
+			//显示有多少当前帖子点过赞
+			Praise onPraise = new Praise() ;
+			onPraise.setNews_id(id+"");
+			int onPraiseCount = praiseService.findAllCount(onPraise) ;
+			model.addAttribute("onPraiseCount", onPraiseCount) ;
 		}
-		int count = super.getRowCount() ;
-		//当评论超过六条的时候才显示分页
-		if(count >6){
-			model.addAttribute("commentcount", count) ;
-		}
-		model.addAttribute("comments", comments) ;
-		model.addAttribute("totalpage", super.getTotalPage()) ;
-		
-		//显示有多少当前帖子点过赞
-		Praise onPraise = new Praise() ;
-		onPraise.setNews_id(id+"");
-		int onPraiseCount = praiseService.findAllCount(onPraise) ;
-		model.addAttribute("onPraiseCount", onPraiseCount) ;
 		
 		return "front/topic/topicDetail" ;
 	}
