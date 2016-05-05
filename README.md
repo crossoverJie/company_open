@@ -1,5 +1,5 @@
 # a personal forum
-> 一个资讯网站
+> 
 ***
 * *build by (spring springmvc mybatis)。*
 * *dbcp。*
