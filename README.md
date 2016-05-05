@@ -5,7 +5,7 @@
 * *dbcp。*
 * *use easyui(behind)。*
 * *use bootstrap(front)。*
-* *use ckeditor edit *
+* use ckeditor edit。
 
 ***
 **[github url](http://crossoverJie.github.io/company_open)**
