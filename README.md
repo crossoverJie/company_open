@@ -1,10 +1,11 @@
-# 资讯state
+# a personal forum
 > 一个资讯网站
 ***
-* *采用ssm(spring+spring mvc+mybatis)搭建。*
-* *使用dbcp连接池。*
-* *后台使用easyUI进行管理。*
-* *前端使用bootstrap展示。*
+* *build by (spring springmvc mybatis)。*
+* *dbcp。*
+* *use easyui(behind)。*
+* *use bootstrap(front)。*
+* *use ckeditor edit *
 
 ***
-**[github项目主页](http://crossoverJie.github.io/company_open)**
+**[github url](http://crossoverJie.github.io/company_open)**
